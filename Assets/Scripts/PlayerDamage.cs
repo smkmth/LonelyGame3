@@ -6,10 +6,13 @@ using UnityEngine.UI;
 public class PlayerDamage : MonoBehaviour
 {
     public bool isDamaged;
-    public GameObject image;
+    public GameObject bloodImage;
+    public GameObject screenFlash;
     public GameObject gameOver;
     public float timer;
     public float timeDamaged;
+    public AudioClip impactSound;
+    public AudioSource playerAudio;
 
     public void Start()
     {
@@ -20,22 +23,35 @@ public class PlayerDamage : MonoBehaviour
     {
         if (!isDamaged)
         {
+            playerAudio.PlayOneShot(impactSound, 100.0f);
+            StartCoroutine(DamageFlash());
             isDamaged = true;
 
         }
         else
         {
-            image.SetActive(false);
+            playerAudio.PlayOneShot(impactSound, 100.0f);
+            bloodImage.SetActive(false);
             gameOver.SetActive(true);
+            Time.timeScale = 0;
         }
+    }
+    public IEnumerator DamageFlash()
+    {
+        screenFlash.SetActive(true);
+
+        yield return new WaitForSeconds(.05f);
+        screenFlash.SetActive(false);
+
     }
     // Update is called once per frame
     void Update()
     {
         if (isDamaged)
         {
+            StartCoroutine(SpriteFade(bloodImage.GetComponent<Image>(), 0, 10.0f));
             timer -= Time.deltaTime;
-            image.SetActive(true);
+            bloodImage.SetActive(true);
             if (timer <= 0)
             {
                 timer = timeDamaged;
@@ -45,7 +61,26 @@ public class PlayerDamage : MonoBehaviour
         else
         {
             
-            image.SetActive(false);
+            bloodImage.SetActive(false);
         }
     }
+
+    IEnumerator SpriteFade(Image sprite,float targetOpacity, float duration)
+    {
+
+        float startAlpha = sprite.color.a;
+        float time = 0;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float blend = Mathf.Clamp(time, 0, duration);
+            startAlpha = Mathf.Lerp(startAlpha, targetOpacity, blend);
+            Color alpha = new Color(0,0,0,startAlpha);
+            sprite.color = alpha;
+            yield return null;
+        }
+
+    }
+
 }
