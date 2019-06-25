@@ -23,6 +23,82 @@ MonoBehaviour:
   fogType:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &-7892551614775827213
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3df29e7cc05fbec4aa43e06ea875565d, type: 3}
+  m_Name: ProceduralSky
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  rotation:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+    max: 360
+  skyIntensityMode:
+    m_OverrideState: 0
+    m_Value: 0
+  exposure:
+    m_OverrideState: 1
+    m_Value: 0
+  multiplier:
+    m_OverrideState: 1
+    m_Value: 1
+    min: 0
+  upperHemisphereLuxValue:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+  desiredLuxValue:
+    m_OverrideState: 0
+    m_Value: 20000
+  updateMode:
+    m_OverrideState: 1
+    m_Value: 0
+  updatePeriod:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+  includeSunInBaking:
+    m_OverrideState: 1
+    m_Value: 0
+  sunSize:
+    m_OverrideState: 1
+    m_Value: 0.04
+    min: 0
+    max: 1
+  sunSizeConvergence:
+    m_OverrideState: 1
+    m_Value: 5
+    min: 1
+    max: 10
+  atmosphereThickness:
+    m_OverrideState: 1
+    m_Value: 1
+    min: 0
+    max: 5
+  skyTint:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0.30855837, b: 0.5943396, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+  groundColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.17562908, g: 0.3018868, b: 0.118191525, a: 1}
+    hdr: 0
+    showAlpha: 1
+    showEyeDropper: 1
+  enableSunDisk:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &-6272713416506127266
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -139,78 +215,6 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
     min: 0.001
---- !u!114 &-5313199432274184396
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d08ce26990eb1a4a9177b860541e702, type: 3}
-  m_Name: Exposure
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  mode:
-    m_OverrideState: 1
-    m_Value: 1
-  meteringMode:
-    m_OverrideState: 0
-    m_Value: 2
-  luminanceSource:
-    m_OverrideState: 0
-    m_Value: 1
-  fixedExposure:
-    m_OverrideState: 1
-    m_Value: 0
-  compensation:
-    m_OverrideState: 0
-    m_Value: 0
-  limitMin:
-    m_OverrideState: 1
-    m_Value: 0.1
-  limitMax:
-    m_OverrideState: 1
-    m_Value: 20
-  curveMap:
-    m_OverrideState: 0
-    m_Value:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: -10
-        value: -10
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 20
-        value: 20
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  adaptationMode:
-    m_OverrideState: 1
-    m_Value: 1
-  adaptationSpeedDarkToLight:
-    m_OverrideState: 1
-    m_Value: 6
-    min: 0.001
-  adaptationSpeedLightToDark:
-    m_OverrideState: 1
-    m_Value: 9
-    min: 0.001
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,9 +234,56 @@ MonoBehaviour:
   - {fileID: 7176305121548276590}
   - {fileID: 4576086538581379334}
   - {fileID: -9123960100987027171}
-  - {fileID: -5313199432274184396}
   - {fileID: 2529156197193680621}
   - {fileID: -5823515740794869371}
+  - {fileID: -7892551614775827213}
+  - {fileID: 145866789303805744}
+  - {fileID: 6487985369971140919}
+--- !u!114 &145866789303805744
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56b145d2b9ee1ac4f846968484e7485a, type: 3}
+  m_Name: ContactShadows
+  m_EditorClassIdentifier: 
+  active: 0
+  m_AdvancedMode: 0
+  enable:
+    m_OverrideState: 1
+    m_Value: 1
+  length:
+    m_OverrideState: 1
+    m_Value: 0.15
+    min: 0
+    max: 1
+  opacity:
+    m_OverrideState: 1
+    m_Value: 1
+    min: 0
+    max: 1
+  distanceScaleFactor:
+    m_OverrideState: 1
+    m_Value: 0.5
+    min: 0
+    max: 1
+  maxDistance:
+    m_OverrideState: 1
+    m_Value: 100
+    min: 0
+  fadeDistance:
+    m_OverrideState: 1
+    m_Value: 5
+    min: 0
+  sampleCount:
+    m_OverrideState: 1
+    m_Value: 8
+    min: 4
+    max: 64
 --- !u!114 &2529156197193680621
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -252,18 +303,18 @@ MonoBehaviour:
     m_Value: 500
     min: 0
   cascadeShadowSplitCount:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 4
     min: 1
     max: 4
   cascadeShadowSplit0:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.05
   cascadeShadowSplit1:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.15
   cascadeShadowSplit2:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.3
   cascadeShadowBorder0:
     m_OverrideState: 0
@@ -373,6 +424,28 @@ MonoBehaviour:
     m_Value: 1
     min: 0
     max: 1
+--- !u!114 &6487985369971140919
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f034cba68ab55e046ae1445a42f18c0e, type: 3}
+  m_Name: IndirectLightingController
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  indirectSpecularIntensity:
+    m_OverrideState: 1
+    m_Value: 10
+    min: 0
+  indirectDiffuseIntensity:
+    m_OverrideState: 1
+    m_Value: 5
+    min: 0
 --- !u!114 &7176305121548276590
 MonoBehaviour:
   m_ObjectHideFlags: 3
