@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FirstPersonCharacterController : MonoBehaviour
 {
@@ -22,17 +23,20 @@ public class FirstPersonCharacterController : MonoBehaviour
 
     public float sprintTimer;
     public bool canRun;
-
+    public Slider energyBar;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         audioSource = GetComponent<AudioSource>();
+        energyBar.maxValue = sprintTime;
+
     }
 
 
     public void Update()
     {
+        energyBar.value = sprintTimer;
         if (characterIsActive)
         {
 
