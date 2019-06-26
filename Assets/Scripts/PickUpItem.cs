@@ -33,20 +33,27 @@ public class PickUpItem : MonoBehaviour {
     public bool canPutBack;
     public bool holdingObject = false;
     public bool objectBehindWall;
+    public bool isHoldingEndGameItem;
 
     public HoldState currentHoldState;
+    public InGameTextReader reader;
 
     // Use this for initialization
     void Start () {
         holdTimer = holdDelay;
         itemPrompt.gameObject.SetActive(true);
         itemPrompt.text = "";
+        reader = GetComponent<InGameTextReader>();
         currentHoldState = HoldState.notHoldingItem;
     }
 
 
     public void PickUp()
     {
+        if (heldObject.name == "EndGameObject")
+        {
+            isHoldingEndGameItem = true;
+        }
         itemPrompt.text = "";
         heldObject.GetComponent<Rigidbody>().isKinematic = true;
         distanceToHeldObject = Vector3.Distance(transform.position, heldObject.position);
@@ -63,6 +70,10 @@ public class PickUpItem : MonoBehaviour {
     }
     public void PutDown()
     {
+        if (heldObject.name == "EndGameObject")
+        {
+            isHoldingEndGameItem = false;
+        }
         heldObject.gameObject.layer = LayerMask.NameToLayer("Item");
         heldObject.parent = null;
         heldObject.GetComponent<Collider>().isTrigger = false;
@@ -145,6 +156,17 @@ public class PickUpItem : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, pickUpRange))
         {
+            if (hit.collider.tag == "TextObj")
+            {
+                itemPrompt.text = "Press E To Read";
+                if (Input.GetButtonDown("Interact"))
+                {
+                    InGameText textObj = hit.collider.gameObject.GetComponent<InGameTextObj>().textAsset;
+                    reader.DisplayText(textObj);
+
+                }
+                return;
+            }
             if (hit.collider.tag == "Interact")
             {
                 itemPrompt.text = "Press E To Interact"; 
@@ -203,6 +225,7 @@ public class PickUpItem : MonoBehaviour {
                     if (Input.GetButtonDown("Interact"))
                     {
                         heldObject = obj.transform;
+                        
                         PickUp();
                     }
 

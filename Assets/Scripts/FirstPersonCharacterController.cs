@@ -17,6 +17,7 @@ public class FirstPersonCharacterController : MonoBehaviour
     private float footsteptimer =0.0f;
     public float footstepTime;
     public float footstepRunTime;
+    public bool characterIsActive= true;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -27,39 +28,43 @@ public class FirstPersonCharacterController : MonoBehaviour
 
     public void Update()
     {
-        int index = Random.Range(0, footsteps.Length);
-        AudioClip footstep = footsteps[index];
-        if (walking)
+        if (characterIsActive)
         {
-            if (!isRunning)
-            {
 
-                if (footsteptimer >= footstepTime)
+            int index = Random.Range(0, footsteps.Length);
+            AudioClip footstep = footsteps[index];
+            if (walking)
+            {
+                if (!isRunning)
                 {
-                    audioSource.clip = footstep;
-                    audioSource.PlayOneShot(footstep, 0.5f);
-                    footsteptimer = 0;
+
+                    if (footsteptimer >= footstepTime)
+                    {
+                        audioSource.clip = footstep;
+                        audioSource.PlayOneShot(footstep, 0.5f);
+                        footsteptimer = 0;
+                    }
+                    else
+                    {
+                        footsteptimer += Time.deltaTime;
+                    }
                 }
                 else
                 {
-                    footsteptimer += Time.deltaTime;
-                }
-            }
-            else
-            {
 
-                if (footsteptimer >= footstepRunTime)
-                {
-                    audioSource.clip = footstep;
-                    audioSource.PlayOneShot(footstep, 0.5f);
-                    footsteptimer = 0;
+                    if (footsteptimer >= footstepRunTime)
+                    {
+                        audioSource.clip = footstep;
+                        audioSource.PlayOneShot(footstep, 0.5f);
+                        footsteptimer = 0;
+                    }
+                    else
+                    {
+                        footsteptimer += Time.deltaTime;
+                    }
                 }
-                else
-                {
-                    footsteptimer += Time.deltaTime;
-                }
-            }
 
+            }
         }
 
     }
