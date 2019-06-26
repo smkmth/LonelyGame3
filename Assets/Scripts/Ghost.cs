@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 public enum GhostState
 {
     Patrolling,
@@ -45,6 +46,7 @@ public class Ghost : MonoBehaviour
     public float ghostSpotDistance;
     public float ghostSpotRadius;
     public LayerMask playerLayer;
+    public LayerMask notGhostLayer;
     public float preTurnDist;
 
     [Header("Ghost Search AI")]
@@ -96,6 +98,9 @@ public class Ghost : MonoBehaviour
     public bool playerInHitBox;
     public float damageTimer;
     public float timeBetweenHits;
+
+    public TextMeshProUGUI debugText;
+
     private void Start()
     {
         GameObject playerObj = GameObject.Find("Player");
@@ -168,22 +173,32 @@ public class Ghost : MonoBehaviour
             Debug.DrawRay((transpos + transform.right * ghostSpotRadius * -1f), transform.forward * ghostSpotDistance, Color.green);
             Debug.DrawRay(transform.position, transform.forward * distanceToTarget, Color.red);
             RaycastHit hit;
-            if (Physics.SphereCast(transform.position, ghostSpotRadius, transform.forward,out hit, ghostSpotDistance))
+
+            if (Physics.SphereCast(transform.position, ghostSpotRadius, transform.forward,out hit, ghostSpotDistance, playerLayer))
             {
                
                 if (hit.collider.tag == "Player")
                 {
                     RaycastHit testHit;
-                    if (Physics.Raycast(transform.position, (player.position - transform.position), out testHit ,100000.0f ))
+                    if (Physics.Raycast(transform.position, (player.position - transform.position), out testHit ,100000.0f , notGhostLayer))
                     {
-                        Debug.DrawRay(transform.position, (hit.point - transform.position), Color.black);
                         if (testHit.collider.tag == "Player")
                         {
+                            Debug.DrawRay(transform.position, (player.position- transform.position), Color.yellow, 5.0f );
+                            Debug.Log("At " + Time.time + " I really Saw " + testHit.collider.name);
                             canSeePlayer = true;
 
                         }
+                        else
+                        {
+                            Debug.DrawRay(transform.position, (player.position - transform.position), Color.red, 5.0f);
 
+                            Debug.Log("At " + Time.time + " I got blocked by " + testHit.collider.name);
+
+                            canSeePlayer = false;
+                        }
                     }
+                   
 
                 }
                 else
@@ -244,16 +259,11 @@ public class Ghost : MonoBehaviour
                     var rotstep = rotSpeed * Time.deltaTime;
                     if (distanceToTarget > patrolStopDistance)
                     {
-                        if (distanceToTarget > preTurnDist)
-                        {
-                            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetVect, transform.up), rotstep);
 
-                        }
-                        else
-                        {
-                            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(points[(destPoint + 1) % points.Length].transform.position, transform.up), rotstep);
-                                
-                        }
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetVect, transform.up), rotstep);
+
+                        
+                     
 
                         transform.position += transform.forward * Time.deltaTime * currentMoveSpeed;
 
@@ -266,21 +276,18 @@ public class Ghost : MonoBehaviour
 
                     break;
                 case GhostState.Searching:
+
+                    MoveTowardsPlayer(lastKnownPos);
+                   
+                    transform.LookAt(lastKnownPos);
+
+
+
                     if (searchTimer <= 0)
                     {
                         ChangeGhostState(GhostState.Patrolling);
                     }
-                    if (!MoveTowardsPlayer(lastKnownPos))
-                    {
-                        transform.Rotate(Vector3.up, rotateTime * Time.deltaTime);
 
-                    }
-                    else
-                    {
-                        transform.LookAt(lastKnownPos);
-
-                    }
-                    
                     if (canSeePlayer)
                     {
                         ChangeGhostState(GhostState.Chasing);
