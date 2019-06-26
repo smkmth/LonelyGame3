@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.022237813, g: 0.034212742, b: 0.052978456, a: 1}
+  m_IndirectSpecularColor: {r: 0.033666365, g: 0.05634078, b: 0.12203297, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5616,6 +5616,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389178529}
   m_Mesh: {fileID: 4300000, guid: aab57b94b061c044ca3c99b2a7b8fa0a, type: 3}
+--- !u!114 &391308689 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5070230334203791847, guid: 9cd9884b73d532a4396d92fd1fd3f804,
+    type: 3}
+  m_PrefabInstance: {fileID: 1419813599}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee10547584f6e92498e89ff9f377ed33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &399206835
 GameObject:
   m_ObjectHideFlags: 0
@@ -8781,7 +8793,7 @@ GameObject:
   - component: {fileID: 1181622601}
   - component: {fileID: 1181622600}
   m_Layer: 0
-  m_Name: Issobella LP Test
+  m_Name: Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8802,7 +8814,7 @@ Transform:
   - {fileID: 1174285336}
   - {fileID: 869815150}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1181622599
 MonoBehaviour:
@@ -8890,7 +8902,7 @@ MonoBehaviour:
   floorPos: 1
   ghostModel: {fileID: 1174285337}
   ghostMat: {fileID: 2100000, guid: 4e941cb7ad17f3441b907655088c09c8, type: 2}
-  playerDamage: {fileID: 0}
+  playerDamage: {fileID: 391308689}
   playerInHitBox: 0
   damageTimer: 0
   timeBetweenHits: 2
@@ -12001,6 +12013,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5070230334021935477, guid: 9cd9884b73d532a4396d92fd1fd3f804,
+        type: 3}
+      propertyPath: Ghost
+      value: 
+      objectReference: {fileID: 1181622598}
     - target: {fileID: 5070230334760403505, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -12056,6 +12073,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5070230334720014358, guid: 9cd9884b73d532a4396d92fd1fd3f804,
+        type: 3}
+      propertyPath: ghost
+      value: 
+      objectReference: {fileID: 1181622599}
     - target: {fileID: 5070230335485207116, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -17845,7 +17867,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 8a439a724d8c76348aa0eef480e11ba3, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 8a439a724d8c76348aa0eef480e11ba3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
