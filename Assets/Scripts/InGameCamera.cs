@@ -27,7 +27,7 @@ public class InGameCamera : MonoBehaviour
     public bool isFlashOn;
     public Ghost ghost;
     public float cameraTimer;
-    public bool cameraIsActive;
+    public bool cameraIsActive =true;
     public float timeBetweenShots;
 
     public void Start()
