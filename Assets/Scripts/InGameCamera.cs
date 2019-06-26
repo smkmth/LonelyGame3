@@ -30,6 +30,8 @@ public class InGameCamera : MonoBehaviour
 
     public void Start()
     {
+        ghost = GameObject.Find("Ghost").GetComponent<Ghost>();
+
         spookyStingSource = GetComponent<AudioSource>();
         photoLibrary = GetComponent<PhotoLibrary>();
         isCameraActive = true;

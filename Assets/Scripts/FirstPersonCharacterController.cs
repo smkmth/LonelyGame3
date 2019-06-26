@@ -18,6 +18,13 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float footstepTime;
     public float footstepRunTime;
     public bool characterIsActive= true;
+    public float sprintTimer;
+    public float sprintTime;
+    public float recoverTimer;
+    public float sprintRecoverTime;
+    public bool isRecovering;
+
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -71,12 +78,38 @@ public class FirstPersonCharacterController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetButton("Run"))
+  
+
+        if (Input.GetButton("Run") && walking)
         {
-            isRunning = true;
+
+
+            if (sprintTimer < sprintTime)
+            {
+                sprintTimer += Time.deltaTime;
+                isRunning = true;
+
+            }
+            else
+            {
+                isRunning = false;
+            }
+
+
+        }
+        else if (!Input.GetButton("Run") || !walking)            
+        {
+
+            if (sprintTimer > 0)
+            {
+                sprintTimer -= Time.deltaTime;
+            }
+
+
         }
         else
         {
+       
             isRunning = false;
 
         }

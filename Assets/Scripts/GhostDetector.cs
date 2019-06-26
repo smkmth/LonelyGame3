@@ -9,13 +9,13 @@ public class GhostDetector : MonoBehaviour
     public float timer;
     public AudioClip[] gigerClicks;
     public AudioClip[] urgentGigerClicks;
-    public Transform Ghost;
+    public Transform ghost;
     private AudioSource audioSource;
     public float startDist;
     public float dist;
     public void Start()
     {
-
+        ghost = GameObject.Find("Ghost").transform;
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -24,7 +24,7 @@ public class GhostDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        dist = Mathf.Abs(Vector3.Distance(transform.position, Ghost.position));
+        dist = Mathf.Abs(Vector3.Distance(transform.position, ghost.position));
 
 
         spaceBetweenTicks = dist*dist * 0.01f;

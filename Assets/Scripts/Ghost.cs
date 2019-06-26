@@ -98,7 +98,9 @@ public class Ghost : MonoBehaviour
     public float timeBetweenHits;
     private void Start()
     {
-        player = GameObject.Find("Player").transform;
+        GameObject playerObj = GameObject.Find("Player");
+        player = playerObj.transform;
+        playerDamage = playerObj.GetComponentInChildren<PlayerDamage>();
         ghostAudio = GetComponent<AudioSource>();
         target = points[0];
         damageTimer = timeBetweenHits;
