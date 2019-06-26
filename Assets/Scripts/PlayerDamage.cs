@@ -32,6 +32,7 @@ public class PlayerDamage : MonoBehaviour
         {
             playerAudio.PlayOneShot(impactSound, 4.0f);
             bloodImage.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
             gameOver.SetActive(true);
             Time.timeScale = 0;
         }
