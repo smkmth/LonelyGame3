@@ -155,7 +155,7 @@ public class PickUpItem : MonoBehaviour {
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.SphereCast(ray, .5f, out hit, pickUpRange))
+        if (Physics.SphereCast(ray, 0.5f, out hit, pickUpRange))
         {
             if (hit.collider.tag == "Film")
             {
