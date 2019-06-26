@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 public enum TriggerType
 {
     OnEnterTriggerBox,
@@ -17,8 +19,16 @@ public class GameEventTrigger : MonoBehaviour {
     public AudioSource audioSource;
     public GameObject animatedObject;
     public float holdTimer;
-
+    public PickUpItem player;
     public Ghost ghost;
+    public Image winGameImage;
+
+    public void Start()
+    {
+
+        player = GameObject.Find("Player").GetComponent<PickUpItem>();
+       
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -71,6 +81,13 @@ public class GameEventTrigger : MonoBehaviour {
                         case GhostEventType.ActivateGhost:
                             ghost.OnFirstActivateGhost();
                             break;
+                    }
+                    break;
+                case EventType.GameWinEvent:
+                    if (player.isHoldingEndGameItem)
+                    {
+                        winGameImage.gameObject.SetActive(true);
+
                     }
                     break;
 

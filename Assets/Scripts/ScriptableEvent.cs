@@ -7,7 +7,8 @@ public enum EventType
     Sound,
     Animation,
     Debug,
-    GhostEvent
+    GhostEvent,
+    GameWinEvent
 
 }
 
