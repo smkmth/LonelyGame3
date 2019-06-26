@@ -27,6 +27,7 @@ public class InGameCamera : MonoBehaviour
     public bool isFlashOn;
     public Ghost ghost;
     public float cameraTimer;
+    public bool cameraIsActive;
     public float timeBetweenShots;
 
     public void Start()
@@ -55,10 +56,7 @@ public class InGameCamera : MonoBehaviour
             cameraTimer = timeBetweenShots;
         }
 
-        if (Input.GetButtonDown("Interact"))
-        {
-
-        }
+  
         if (Input.GetButtonDown("Flash"))
         {
             if (isFlashOn)
@@ -71,43 +69,45 @@ public class InGameCamera : MonoBehaviour
             }
         }
 
-
-        if (Input.GetButtonDown("TakePhoto"))
+        if (cameraIsActive)
         {
-            if (cameraTimer> timeBetweenShots && cameraShots > 0)
+            if (Input.GetButtonDown("TakePhoto"))
             {
-                cameraTimer = 0;
-                RaycastHit[] targets = Physics.SphereCastAll(transform.position, CameraRadius, transform.forward, CameraRange, clueLayerMask);
-                foreach (RaycastHit hit in targets)
+                if (cameraTimer > timeBetweenShots && cameraShots > 0)
                 {
-                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Clue"))
+                    cameraTimer = 0;
+                    RaycastHit[] targets = Physics.SphereCastAll(transform.position, CameraRadius, transform.forward, CameraRange, clueLayerMask);
+                    foreach (RaycastHit hit in targets)
                     {
-                        Clue clue = hit.collider.gameObject.GetComponent<Clue>();
-                        if (clue.clueType != ClueType.PhotoTarget)
+                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Clue"))
                         {
-                            return;
+                            Clue clue = hit.collider.gameObject.GetComponent<Clue>();
+                            if (clue.clueType != ClueType.PhotoTarget)
+                            {
+                                return;
+                            }
+                            if (!clue.foundClue)
+                            {
+                                clue.foundClue = true;
+                                energyBar.value += clue.energyValue;
+                            }
                         }
-                        if (!clue.foundClue)
+                        else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ghost"))
                         {
-                            clue.foundClue = true;
-                            energyBar.value += clue.energyValue;
-                        }
-                    }
-                    else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ghost"))
-                    {
-                        if (energyBar.value == 100)
-                        {
+                            if (energyBar.value == 100)
+                            {
 
-                            currentGhost = hit.collider.gameObject.GetComponent<SpriteRenderer>();
-                            currentGhost.enabled = true;
-                            spookyStingSource.Play();
+                                currentGhost = hit.collider.gameObject.GetComponent<SpriteRenderer>();
+                                currentGhost.enabled = true;
+                                spookyStingSource.Play();
+                            }
                         }
                     }
+                    cameraShots--;
+                    StartCoroutine(TakePhoto());
                 }
-                cameraShots--;
-                StartCoroutine(TakePhoto());
-            }
 
+            }
         }
 
         if (Input.GetButtonDown("ViewPhotos"))

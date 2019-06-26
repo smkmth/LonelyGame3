@@ -12,6 +12,7 @@ public class InGameTextReader : MonoBehaviour
     public FirstPersonCharacterController controller;
     public SmoothMouseLook mouseLook;
     public Button returnButton;
+    public InGameCamera gameCamera;
 
     public void Start()
     {
@@ -28,6 +29,7 @@ public class InGameTextReader : MonoBehaviour
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         mouseLook.cameraControl = false;
+        gameCamera.cameraIsActive = false;
 
 
     }
@@ -38,6 +40,7 @@ public class InGameTextReader : MonoBehaviour
         ReaderUI.SetActive(false);
         displayText.text = "";
         controller.characterIsActive = true;
+        gameCamera.cameraIsActive = true;
         Cursor.lockState = CursorLockMode.Locked;
         mouseLook.cameraControl = true;
 
