@@ -19,6 +19,7 @@ public class InGameTextReader : MonoBehaviour
         returnButton.onClick.AddListener(() => ResumeGame());
         ReaderUI.SetActive(false);
         controller = GetComponent<FirstPersonCharacterController>();
+        gameCamera = Camera.main.gameObject.GetComponent<InGameCamera>();
     }
 
     public void DisplayText(InGameText text)
