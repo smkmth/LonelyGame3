@@ -29,7 +29,7 @@ public class InGameCamera : MonoBehaviour
     public float cameraTimer;
     public bool cameraIsActive =true;
     public float timeBetweenShots;
-
+    public bool playerHasCamera;
     public void Start()
     {
         ghost = GameObject.Find("Ghost").GetComponent<Ghost>();
@@ -43,6 +43,11 @@ public class InGameCamera : MonoBehaviour
 
     void Update()
     {
+        if (playerHasCamera)
+        {
+            energyBar.gameObject.SetActive(true);
+            cameraIsActive = true;
+        }
         if (cameraTimer < timeBetweenShots )
         {
 

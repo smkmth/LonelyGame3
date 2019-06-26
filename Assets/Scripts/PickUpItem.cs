@@ -157,11 +157,23 @@ public class PickUpItem : MonoBehaviour {
         RaycastHit hit;
         if (Physics.SphereCast(ray, 0.5f, out hit, pickUpRange))
         {
+            if (hit.collider.tag == "Camera")
+            {
+                itemPrompt.text = "Press E To PickUp Camera";
+                if (Input.GetButtonDown("Interact"))
+                {
+
+                    inGameCamera.playerHasCamera = true;
+                    Destroy(hit.collider.gameObject);
+                }
+                return;
+            }
             if (hit.collider.tag == "Film")
             {
                 itemPrompt.text = "Press E To PickUp Film";
                 if (Input.GetButtonDown("Interact"))
                 {
+                    
                     inGameCamera.cameraShots += 3;
                     Destroy(hit.collider.gameObject);
                 }
@@ -185,6 +197,19 @@ public class PickUpItem : MonoBehaviour {
                 {
                     hit.collider.gameObject.GetComponent<GameEventTrigger>().TriggerEvent();
 
+                }
+                return;
+            }
+            if (hit.collider.tag == "EndGameItem")
+            {
+                if (isHoldingEndGameItem)
+                {
+                    itemPrompt.text = "Press E To Interact";
+                    if (Input.GetButtonDown("Interact"))
+                    {
+                        hit.collider.gameObject.GetComponent<GameEventTrigger>().TriggerEvent();
+
+                    }
                 }
                 return;
             }

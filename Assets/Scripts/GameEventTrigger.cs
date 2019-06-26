@@ -21,7 +21,7 @@ public class GameEventTrigger : MonoBehaviour {
     public float holdTimer;
     public PickUpItem player;
     public Ghost ghost;
-    public Image winGameImage;
+    public GameObject winGameImage;
 
     public void Start()
     {
@@ -86,7 +86,7 @@ public class GameEventTrigger : MonoBehaviour {
                 case EventType.GameWinEvent:
                     if (player.isHoldingEndGameItem)
                     {
-                        winGameImage.gameObject.SetActive(true);
+                        winGameImage.SetActive(true);
 
                     }
                     break;
