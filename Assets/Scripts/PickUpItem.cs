@@ -36,12 +36,14 @@ public class PickUpItem : MonoBehaviour {
     public bool isHoldingEndGameItem;
 
     public HoldState currentHoldState;
+    public InGameTextReader reader;
 
     // Use this for initialization
     void Start () {
         holdTimer = holdDelay;
         itemPrompt.gameObject.SetActive(true);
         itemPrompt.text = "";
+        reader = GetComponent<InGameTextReader>();
         currentHoldState = HoldState.notHoldingItem;
     }
 
@@ -154,6 +156,17 @@ public class PickUpItem : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, pickUpRange))
         {
+            if (hit.collider.tag == "TextObj")
+            {
+                itemPrompt.text = "Press E To Read";
+                if (Input.GetButtonDown("Interact"))
+                {
+                    InGameText textObj = hit.collider.gameObject.GetComponent<InGameTextObj>().textAsset;
+                    reader.DisplayText(textObj);
+
+                }
+                return;
+            }
             if (hit.collider.tag == "Interact")
             {
                 itemPrompt.text = "Press E To Interact"; 
