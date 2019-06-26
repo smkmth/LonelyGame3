@@ -18,11 +18,9 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float footstepTime;
     public float footstepRunTime;
     public bool characterIsActive= true;
-    public float sprintTimer;
+    private float sprintTimer;
     public float sprintTime;
-    public float recoverTimer;
-    public float sprintRecoverTime;
-    public bool isRecovering;
+
 
 
     private void Start()
