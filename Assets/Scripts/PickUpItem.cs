@@ -229,7 +229,7 @@ public class PickUpItem : MonoBehaviour {
                     itemPrompt.text = "Working...";
 
                     holdTimer -= Time.deltaTime;
-                    Debug.Log(holdTimer);
+
                     if (holdTimer < 0)
                     {
                         itemPrompt.text = "Done";
