@@ -23,14 +23,14 @@ public class PlayerDamage : MonoBehaviour
     {
         if (!isDamaged)
         {
-            playerAudio.PlayOneShot(impactSound, 100.0f);
+            playerAudio.PlayOneShot(impactSound, 4.0f);
             StartCoroutine(DamageFlash());
             isDamaged = true;
 
         }
         else
         {
-            playerAudio.PlayOneShot(impactSound, 100.0f);
+            playerAudio.PlayOneShot(impactSound, 4.0f);
             bloodImage.SetActive(false);
             gameOver.SetActive(true);
             Time.timeScale = 0;
