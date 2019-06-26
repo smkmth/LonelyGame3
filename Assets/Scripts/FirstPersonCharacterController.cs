@@ -10,7 +10,7 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float moveSpeed;
     public GameObject playerCamera;
     public float maxSpeed;
-    public bool walking;
+    public bool moving;
     public float runSpeed;
     public float maxRunSpeed;
     public bool isRunning;
@@ -18,10 +18,10 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float footstepTime;
     public float footstepRunTime;
     public bool characterIsActive= true;
-    private float sprintTimer;
     public float sprintTime;
 
-
+    public float sprintTimer;
+    public bool canRun;
 
     private void Start()
     {
@@ -38,7 +38,7 @@ public class FirstPersonCharacterController : MonoBehaviour
 
             int index = Random.Range(0, footsteps.Length);
             AudioClip footstep = footsteps[index];
-            if (walking)
+            if (moving)
             {
                 if (!isRunning)
                 {
@@ -78,51 +78,64 @@ public class FirstPersonCharacterController : MonoBehaviour
     {
   
 
-        if (Input.GetButton("Run") && walking)
-        {
-
-
-            if (sprintTimer < sprintTime)
-            {
-                sprintTimer += Time.deltaTime;
-                isRunning = true;
-
-            }
-            else
-            {
-                isRunning = false;
-            }
-
-
-        }
-        else if (!Input.GetButton("Run") || !walking)            
-        {
-
-            if (sprintTimer > 0)
-            {
-                sprintTimer -= Time.deltaTime;
-            }
-
-
-        }
-        else
-        {
-       
-            isRunning = false;
-
-        }
+     
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
         Vector3 movementVector = new Vector3(inputX, 0, inputY);
         if (movementVector != Vector3.zero)
         {
-            walking = true;
+            moving = true;
         }
         else
         {
-            walking = false;
+            moving = false;
 
         }
+
+
+        if (Input.GetButton("Run"))
+        {
+            if (canRun)
+            {
+                isRunning = true;
+            }
+        }
+        else
+        {
+            isRunning = false;
+
+        }
+
+
+        if (isRunning)
+        {
+            if (sprintTimer < sprintTime)
+            {
+                sprintTimer += Time.deltaTime;
+            }
+            else
+            {
+                canRun = false;
+                isRunning = false;
+
+            }
+         
+
+        }
+        else
+        {
+            if (sprintTimer > 0)
+            {
+                sprintTimer -= Time.deltaTime;
+            }
+            else
+            {
+                canRun = true;
+            }
+
+
+        }
+     
         movementVector = playerCamera.transform.TransformDirection(movementVector);
         movementVector.y = 0;
         if (!isRunning)
