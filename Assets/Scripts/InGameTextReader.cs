@@ -15,7 +15,7 @@ public class InGameTextReader : MonoBehaviour
     public void Start()
     {
         returnButton.onClick.AddListener(() => ResumeGame());
-
+        ReaderUI.SetActive(false);
         controller = GetComponent<FirstPersonCharacterController>();
     }
 
@@ -32,6 +32,7 @@ public class InGameTextReader : MonoBehaviour
     public void ResumeGame()
     {
         ReaderUI.SetActive(false);
+        displayText.text = "";
         controller.characterIsActive = true;
         Time.timeScale = 0;
 
