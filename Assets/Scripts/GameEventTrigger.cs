@@ -117,6 +117,7 @@ public class GameEventTrigger : MonoBehaviour {
                         case EventType.Animation:
                             AnimationEvent animationEvent = (AnimationEvent)gameevent;
                             animatedObject.GetComponent<Animator>().SetTrigger(animationEvent.parameterToTrigger);
+                            hasBeenTriggered = true;
                             break;
                         case EventType.Debug:
                             Debug.Log("Event Triggered");

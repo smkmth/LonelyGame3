@@ -31,10 +31,10 @@ public class PlayerDamage : MonoBehaviour
         else
         {
             playerAudio.PlayOneShot(impactSound, 4.0f);
+            Time.timeScale = 0;
             bloodImage.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
             gameOver.SetActive(true);
-            Time.timeScale = 0;
         }
     }
     public IEnumerator DamageFlash()
