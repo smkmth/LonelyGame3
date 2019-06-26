@@ -42,11 +42,12 @@ public class InGameCamera : MonoBehaviour
 
     void Update()
     {
-        if (cameraTimer < timeBetweenShots)
+        if (cameraTimer < timeBetweenShots )
         {
 
             cameraTimer += Time.deltaTime;
         }
+        
         energyBar.value = cameraTimer;
         if (cameraShots == 0)
         {

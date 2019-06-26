@@ -275,15 +275,19 @@ public class Ghost : MonoBehaviour
                         transform.Rotate(Vector3.up, rotateTime * Time.deltaTime);
 
                     }
-                    
-                    transform.LookAt(lastKnownPos);
-                    if (!canSeePlayer)
+                    else
                     {
-                        searchTimer -= Time.deltaTime;
+                        transform.LookAt(lastKnownPos);
+
+                    }
+                    
+                    if (canSeePlayer)
+                    {
+                        ChangeGhostState(GhostState.Chasing);
                     }
                     else
                     {
-                        ChangeGhostState(GhostState.Chasing);
+                        searchTimer -= Time.deltaTime;
                     }
                     break;
             }
