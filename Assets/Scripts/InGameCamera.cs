@@ -16,6 +16,7 @@ public class InGameCamera : MonoBehaviour
     public Sprite emptySprite;
     public PhotoLibrary photoLibrary;
     public Slider energyBar;
+    public Image energyFill;
     public bool isCameraActive;
     private SpriteRenderer currentGhost;
     public GameObject spotLight;
@@ -36,11 +37,23 @@ public class InGameCamera : MonoBehaviour
         photoLibrary = GetComponent<PhotoLibrary>();
         isCameraActive = true;
         isFlashOn = false;
+        energyBar.maxValue = timeBetweenShots;
     }
 
     void Update()
     {
-        cameraTimer -= Time.deltaTime;
+        if (cameraTimer < timeBetweenShots)
+        {
+
+            cameraTimer += Time.deltaTime;
+        }
+        energyBar.value = cameraTimer;
+        if (cameraShots == 0)
+        {
+            energyFill.color = Color.red;
+            cameraTimer = timeBetweenShots;
+        }
+
         if (Input.GetButtonDown("Interact"))
         {
 
@@ -60,9 +73,9 @@ public class InGameCamera : MonoBehaviour
 
         if (Input.GetButtonDown("TakePhoto"))
         {
-            if (cameraTimer< 0)
+            if (cameraTimer> timeBetweenShots && cameraShots > 0)
             {
-                cameraTimer = timeBetweenShots;
+                cameraTimer = 0;
                 RaycastHit[] targets = Physics.SphereCastAll(transform.position, CameraRadius, transform.forward, CameraRange, clueLayerMask);
                 foreach (RaycastHit hit in targets)
                 {
