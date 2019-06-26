@@ -23,12 +23,12 @@ public class InGameTextReader : MonoBehaviour
 
     public void DisplayText(InGameText text)
     {
+        Time.timeScale = 0;
         ReaderUI.SetActive(true);
         displayText.text = text.TextToDisplay;
-        controller.characterIsActive = false;
-        Time.timeScale = 0;
-        Cursor.lockState = CursorLockMode.None;
         mouseLook.cameraControl = false;
+        Cursor.lockState = CursorLockMode.None;
+        controller.characterIsActive = false;
         gameCamera.cameraIsActive = false;
 
 
@@ -39,10 +39,10 @@ public class InGameTextReader : MonoBehaviour
         Time.timeScale = 1;
         ReaderUI.SetActive(false);
         displayText.text = "";
+        mouseLook.cameraControl = true;
+        Cursor.lockState = CursorLockMode.Locked;
         controller.characterIsActive = true;
         gameCamera.cameraIsActive = true;
-        Cursor.lockState = CursorLockMode.Locked;
-        mouseLook.cameraControl = true;
 
     }
     

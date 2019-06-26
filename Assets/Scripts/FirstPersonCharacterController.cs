@@ -24,6 +24,10 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float sprintTimer;
     public bool canRun;
     public Slider energyBar;
+
+    public GameObject tutorial;
+    public bool tutorialOn;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -33,9 +37,30 @@ public class FirstPersonCharacterController : MonoBehaviour
 
     }
 
+    public void ToggleHelp()
+    {
+        if (!tutorialOn)
+        {
+            tutorialOn = true;
+            Time.timeScale = 0.0f;
+            tutorial.SetActive(true);
+        }
+        else
+        {
+            tutorialOn = false;
+            Time.timeScale = 1.0f;
+            tutorial.SetActive(false);
+        }
 
+    }
     public void Update()
     {
+
+        if (Input.GetButtonDown("Help"))
+        {
+            ToggleHelp();
+        }
+
         energyBar.value = sprintTimer;
         if (characterIsActive)
         {

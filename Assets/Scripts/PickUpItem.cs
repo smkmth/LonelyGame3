@@ -37,6 +37,7 @@ public class PickUpItem : MonoBehaviour {
 
     public HoldState currentHoldState;
     public InGameTextReader reader;
+    public InGameCamera inGameCamera;
 
     // Use this for initialization
     void Start () {
@@ -154,8 +155,18 @@ public class PickUpItem : MonoBehaviour {
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, pickUpRange))
+        if (Physics.SphereCast(ray, .5f, out hit, pickUpRange))
         {
+            if (hit.collider.tag == "Film")
+            {
+                itemPrompt.text = "Press E To PickUp Film";
+                if (Input.GetButtonDown("Interact"))
+                {
+                    inGameCamera.cameraShots += 3;
+                    Destroy(hit.collider.gameObject);
+                }
+                return;
+            }
             if (hit.collider.tag == "TextObj")
             {
                 itemPrompt.text = "Press E To Read";
