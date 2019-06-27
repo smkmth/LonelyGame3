@@ -91,6 +91,7 @@ public class GameEventTrigger : MonoBehaviour {
                     case EventType.GameWinEvent:
                         if (player.isHoldingEndGameItem)
                         {
+                            Cursor.visible = true;
                             Cursor.lockState = CursorLockMode.None;
 
                             winGameImage.SetActive(true);
@@ -134,6 +135,7 @@ public class GameEventTrigger : MonoBehaviour {
                         case EventType.GameWinEvent:
                             if (player.isHoldingEndGameItem)
                             {
+
                                 Cursor.lockState = CursorLockMode.None;
 
                                 winGameImage.SetActive(true);

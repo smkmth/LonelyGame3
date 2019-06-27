@@ -32,6 +32,7 @@ public class FirstPersonCharacterController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         audioSource = GetComponent<AudioSource>();
         energyBar.maxValue = sprintTime;
 
@@ -55,6 +56,14 @@ public class FirstPersonCharacterController : MonoBehaviour
     }
     public void Update()
     {
+        if (Input.GetButtonDown("VolUp"))
+        {
+            AudioListener.volume += 3.0f;
+        }
+        if (Input.GetButtonDown("VolDown"))
+        {
+            AudioListener.volume -= 3.0f;
+        }
 
         if (Input.GetButtonDown("Help"))
         {
