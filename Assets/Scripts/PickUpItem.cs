@@ -2,15 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public enum HoldState
-{
-    notHoldingItem,
-    delay,
-    holdingItem,
-    putItemBack,
-    itemBehindWall
-
-}
+/*
 public class PickUpItem : MonoBehaviour {
 
     public SmoothMouseLook smoothMouseLook;
@@ -49,78 +41,7 @@ public class PickUpItem : MonoBehaviour {
     }
 
 
-    public void PickUp()
-    {
-        if (heldObject.name == "EndGameObject")
-        {
-            isHoldingEndGameItem = true;
-        }
-        itemPrompt.text = "";
-        heldObject.GetComponent<Rigidbody>().isKinematic = true;
-        distanceToHeldObject = Vector3.Distance(transform.position, heldObject.position);
-        heldItemData = heldObject.GetComponent<Item>();
-        heldObject.GetComponent<Collider>().isTrigger = true;
-        heldObject.position = itemHeldTarget.position;
-        heldObject.rotation = itemHeldTarget.rotation;
-        heldObject.parent = itemHeldTarget;
-        heldObject.gameObject.layer = LayerMask.NameToLayer("NOCLEAR");
-        holdingObject = true;
-        currentHoldState = HoldState.delay;
-;
-
-    }
-    public void PutDown()
-    {
-        if (heldObject.name == "EndGameObject")
-        {
-            isHoldingEndGameItem = false;
-        }
-        heldObject.gameObject.layer = LayerMask.NameToLayer("Item");
-        heldObject.parent = null;
-        heldObject.GetComponent<Collider>().isTrigger = false;
-        heldItemData = null;
-        canPutBack = false;
-        heldObject = null;
-        holdingObject = false;
-        itemPrompt.text = "";
-        currentHoldState = HoldState.notHoldingItem;
-
-
-    }
-    public bool CanPutItemBack()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hit;
-        Physics.SphereCast(ray, 1.0f, out hit, putBackDistance);
-        if (Mathf.Abs(Vector3.Distance(hit.point, heldItemData.originalLocation)) < putBackDistance)
-        {
-            itemPrompt.text = "Put back " + heldItemData.itemname;
-            return true;
-        }
-        else
-        {
-            itemPrompt.text = "";
-            return false;
-
-        }
-
-    }
-
-    public bool IsItemBehindWall()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, (heldObject.position - transform.position), out hit, distanceToHeldObject, wallLayer))
-        {
-            return true;
-
-        }
-        else
-        {
-
-            return false;
-        }
-    }
+  
     public GameObject DetectObject(string tagToDetect)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -152,6 +73,7 @@ public class PickUpItem : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        /*
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -249,29 +171,16 @@ public class PickUpItem : MonoBehaviour {
 
         }
 
-
+        
 
         switch (currentHoldState)
         {
             case HoldState.notHoldingItem:
-                GameObject obj = DetectObject("Pickup");
-                if (obj)
-                {
-                    itemPrompt.text = "Pick up " + obj.GetComponent<Item>().itemname;
-                    if (Input.GetButtonDown("Interact"))
-                    {
-                        heldObject = obj.transform;
-                        
-                        PickUp();
-                    }
-
-                }
-                else
-                {
-                    itemPrompt.text = "";
-                }
+              
                 break;
             case HoldState.holdingItem:
+                itemPrompt.text = "";
+
                 if (CanPutItemBack())
                 {
                     currentHoldState = HoldState.putItemBack;
@@ -320,6 +229,8 @@ public class PickUpItem : MonoBehaviour {
                 }
                 break;
         }
+        
 
     }
 }
+*/

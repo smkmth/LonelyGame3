@@ -22,14 +22,14 @@ public class GameEventTrigger : MonoBehaviour {
     public AudioSource audioSource;
     public GameObject animatedObject;
     public float holdTimer;
-    public PickUpItem player;
+    public PlayerInteract player;
     public Ghost ghost;
     public GameObject winGameImage;
 
     public void Start()
     {
 
-        player = GameObject.Find("Player").GetComponent<PickUpItem>();
+        player = GameObject.Find("Player").GetComponent<PlayerInteract>();
        
     }
 
