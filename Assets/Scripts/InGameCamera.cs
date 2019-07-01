@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InGameCamera : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class InGameCamera : MonoBehaviour
     public bool cameraIsActive =true;
     public float timeBetweenShots;
     public bool playerHasCamera;
+    public TextMeshProUGUI counter;
+
     public void Start()
     {
         ghost = GameObject.Find("Ghost").GetComponent<Ghost>();
@@ -47,6 +50,15 @@ public class InGameCamera : MonoBehaviour
         {
             energyBar.gameObject.SetActive(true);
             cameraIsActive = true;
+            counter.text = cameraShots.ToString();
+
+        }
+        else
+        {
+            counter.text = "";
+            cameraIsActive = false;
+
+
         }
         if (cameraTimer < timeBetweenShots )
         {
@@ -62,70 +74,39 @@ public class InGameCamera : MonoBehaviour
         }
 
   
-        if (Input.GetButtonDown("Flash"))
-        {
-            if (isFlashOn)
-            {
-                isFlashOn = false;
-            }
-            else
-            {
-                isFlashOn = true;
-            }
-        }
+       
 
         if (cameraIsActive)
         {
-            if (Input.GetButtonDown("TakePhoto"))
+            if (Input.GetButton("AimCamera"))
             {
-                if (cameraTimer > timeBetweenShots && cameraShots > 0)
+
+                if (Input.GetButtonDown("Interact"))
                 {
-                    cameraTimer = 0;
-                    RaycastHit[] targets = Physics.SphereCastAll(transform.position, CameraRadius, transform.forward, CameraRange, clueLayerMask);
-                    foreach (RaycastHit hit in targets)
+                    if (cameraTimer > timeBetweenShots && cameraShots > 0)
                     {
-                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Clue"))
+                        cameraTimer = 0;
+                        RaycastHit[] targets = Physics.SphereCastAll(transform.position, CameraRadius, transform.forward, CameraRange, clueLayerMask);
+                        foreach (RaycastHit hit in targets)
                         {
-                            Clue clue = hit.collider.gameObject.GetComponent<Clue>();
-                            if (clue.clueType != ClueType.PhotoTarget)
+                            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ghost"))
                             {
-                                return;
-                            }
-                            if (!clue.foundClue)
-                            {
-                                clue.foundClue = true;
-                                energyBar.value += clue.energyValue;
-                            }
-                        }
-                        else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ghost"))
-                        {
-                            if (energyBar.value == 100)
-                            {
+                                if (energyBar.value == 100)
+                                {
 
-                                currentGhost = hit.collider.gameObject.GetComponent<SpriteRenderer>();
-                                currentGhost.enabled = true;
-                                spookyStingSource.Play();
+                                    currentGhost = hit.collider.gameObject.GetComponent<SpriteRenderer>();
+                                    currentGhost.enabled = true;
+                                    spookyStingSource.Play();
+                                }
                             }
                         }
+                        counter.text = cameraShots.ToString();
+                        cameraShots--;
+
+                        StartCoroutine(TakePhoto());
                     }
-                    cameraShots--;
-                    StartCoroutine(TakePhoto());
+
                 }
-
-            }
-        }
-
-        if (Input.GetButtonDown("ViewPhotos"))
-        {
-            photoLibrary.TogglePhotoLibrary();
-            if (photoLibrary.isLibraryActive)
-            {
-                isCameraActive = false;
-            }
-            else
-            {
-                isCameraActive = true;
-
             }
         }
 

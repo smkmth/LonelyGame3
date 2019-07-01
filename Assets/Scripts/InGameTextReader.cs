@@ -14,41 +14,69 @@ public class InGameTextReader : MonoBehaviour
     public Button returnButton;
     public InGameCamera gameCamera;
 
+    public PlayerManager playerManager;
+
+    private float timer;
+
+    public float inputInactive =.3f;
+
+    private bool canClick = false;
+
     public void Start()
     {
+        playerManager = GetComponent<PlayerManager>();
         returnButton.onClick.AddListener(() => ResumeGame());
         ReaderUI.SetActive(false);
-        controller = GetComponent<FirstPersonCharacterController>();
-        gameCamera = Camera.main.gameObject.GetComponent<InGameCamera>();
+    }
+
+    private void Update()
+    {
+        if (timer <= 0)
+        {
+            canClick = true;
+        }
+        else
+        {
+            timer -= Time.unscaledDeltaTime;
+        }
+
+
+        if (Input.GetButtonDown("Interact"))
+        {
+
+        }
+
+        if (canClick)
+        {
+           
+
+            if (Input.GetButtonDown("Interact"))
+            {
+                ResumeGame();
+            }
+        }
+      
     }
 
     public void DisplayText(InGameText text)
     {
-        Time.timeScale = 0;
+        Debug.Log("Display text");
+        canClick = false;
+        timer = inputInactive;
         ReaderUI.SetActive(true);
         displayText.text = text.TextToDisplay;
-        mouseLook.cameraControl = false;
-        Cursor.visible = true;
-
-        Cursor.lockState = CursorLockMode.None;
-        controller.characterIsActive = false;
-        gameCamera.cameraIsActive = false;
-
+        playerManager.ChangePlayerState(PlayerState.fullyPaused);
 
     }
 
     public void ResumeGame()
     {
-        Time.timeScale = 1;
+
+        playerManager.ChangePlayerState(PlayerState.freeMovement);
         ReaderUI.SetActive(false);
         displayText.text = "";
-        mouseLook.cameraControl = true;
-        Cursor.visible = false;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        controller.characterIsActive = true;
-        gameCamera.cameraIsActive = true;
 
     }
-    
+
 }
