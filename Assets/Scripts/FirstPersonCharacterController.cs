@@ -115,88 +115,91 @@ public class FirstPersonCharacterController : MonoBehaviour
     private void FixedUpdate()
     {
   
-
-     
-        float inputX = Input.GetAxis("Horizontal");
-        float inputY = Input.GetAxis("Vertical");
-        Vector3 movementVector = new Vector3(inputX, 0, inputY);
-        if (movementVector != Vector3.zero)
+        if (characterIsActive)
         {
-            moving = true;
-        }
-        else
-        {
-            moving = false;
-
-        }
 
 
-        if (Input.GetButton("Run"))
-        {
-            if (canRun)
+            float inputX = Input.GetAxis("Horizontal");
+            float inputY = Input.GetAxis("Vertical");
+            Vector3 movementVector = new Vector3(inputX, 0, inputY);
+            if (movementVector != Vector3.zero)
             {
-                isRunning = true;
-            }
-        }
-        else
-        {
-            isRunning = false;
-
-        }
-
-
-        if (isRunning)
-        {
-            if (sprintTimer < sprintTime)
-            {
-                sprintTimer += Time.deltaTime;
+                moving = true;
             }
             else
             {
-                canRun = false;
+                moving = false;
+
+            }
+
+
+            if (Input.GetButton("Run"))
+            {
+                if (canRun)
+                {
+                    isRunning = true;
+                }
+            }
+            else
+            {
                 isRunning = false;
 
             }
-         
 
-        }
-        else
-        {
-            if (sprintTimer > 0)
+
+            if (isRunning)
             {
-                sprintTimer -= Time.deltaTime;
+                if (sprintTimer < sprintTime)
+                {
+                    sprintTimer += Time.deltaTime;
+                }
+                else
+                {
+                    canRun = false;
+                    isRunning = false;
+
+                }
+
+
             }
             else
             {
-                canRun = true;
-            }
-
-
-        }
-     
-        movementVector = playerCamera.transform.TransformDirection(movementVector);
-        movementVector.y = 0;
-        if (!isRunning)
-        {
-
-            if (rb.velocity.magnitude < maxSpeed)
-            {
-
-                rb.AddForce(movementVector * moveSpeed, ForceMode.Acceleration);
-
+                if (sprintTimer > 0)
+                {
+                    sprintTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    canRun = true;
+                }
 
 
             }
-        }
-        else
-        {
-            if (rb.velocity.magnitude < maxRunSpeed)
+
+            movementVector = playerCamera.transform.TransformDirection(movementVector);
+            movementVector.y = 0;
+            if (!isRunning)
             {
+
+                if (rb.velocity.magnitude < maxSpeed)
+                {
+
+                    rb.AddForce(movementVector * moveSpeed, ForceMode.Acceleration);
+
+
+
+                }
+            }
+            else
+            {
+                if (rb.velocity.magnitude < maxRunSpeed)
+                {
 
                     rb.AddForce(movementVector * runSpeed, ForceMode.Acceleration);
-            
-            }
 
+                }
+
+            }
         }
 
 

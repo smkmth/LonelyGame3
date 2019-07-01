@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InGameCamera : MonoBehaviour
 {
@@ -29,7 +30,6 @@ public class InGameCamera : MonoBehaviour
     public bool cameraIsActive =true;
     public float timeBetweenShots;
     public bool playerHasCamera;
-    public TextMeshProUGUI cameraCounter;
 
     public void Start()
     {
@@ -47,13 +47,6 @@ public class InGameCamera : MonoBehaviour
         if (playerHasCamera)
         {
             cameraIsActive = true;
-            energyBar.gameObject.SetActive(true);
-            cameraCounter.text = cameraShots.ToString();
-        }
-        else
-        {
-            cameraIsActive = false;
-
 
         }
 
@@ -74,33 +67,21 @@ public class InGameCamera : MonoBehaviour
             cameraTimer = timeBetweenShots;
         }
 
+
         if (cameraIsActive)
         {
-            if (Input.GetButtonDown("TakePhoto"))
+            if (Input.GetButton("AimCamera"))
             {
-                if (cameraTimer > timeBetweenShots && cameraShots > 0)
+
+                if (Input.GetButtonDown("Interact"))
                 {
-                    cameraTimer = 0;
-                    RaycastHit[] targets = Physics.SphereCastAll(transform.position, CameraRadius, transform.forward, CameraRange, clueLayerMask);
-                    foreach (RaycastHit hit in targets)
+                    if (cameraTimer > timeBetweenShots && cameraShots > 0)
                     {
-                     
-                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ghost"))
-                        {
-                          //  ghost = hit.collider.gameObject.GetComponent<Ghost>();
+
                         }
-                    }
-                    cameraShots--;
-                    cameraCounter.text = cameraShots.ToString();
 
 
-                    StartCoroutine(TakePhoto());
-                }
 
-            }
-        }
-
-   
 
 
     }

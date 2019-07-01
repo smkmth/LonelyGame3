@@ -8,7 +8,8 @@ public enum HoldState
     delay,
     holdingItem,
     putItemBack,
-    itemBehindWall
+    inspectingItem,
+    itemBehindWall,
 
 }
 public enum ItemTypes
@@ -60,180 +61,190 @@ public class PlayerInteract : MonoBehaviour
     public bool isHoldingEndGameItem;
 
     public GameObject detectedObj;
-    public ItemTypes thisItemType;
+    //public ItemTypes thisItemType;
     private InGameCamera inGameCamera;
-    public GameObject redical;
+    public HoldState nextHoldState;
+    public float inspectRotSpeed;
+    private PlayerManager manager;
+    public SmoothMouseLook aiming;
+    public FirstPersonCharacterController controller;
+    public bool interactIsActive =true;
+
 
     public void Start()
     {
+        manager = GetComponent<PlayerManager>();
         reader = GetComponent<InGameTextReader>();
         currentHoldState = HoldState.notHoldingItem;
         inGameCamera =Camera.main.gameObject.GetComponent<InGameCamera>();
+        controller = GetComponent<FirstPersonCharacterController>();
     }
 
    
     public void Update()
     {
-
-        detectedObj = DetectObject();
-        thisItemType = CheckDetectedObject(detectedObj);
-        if (detectedObj != null)
+        if (interactIsActive)
         {
-            distanceToObject = Vector3.Distance(detectedObj.transform.position, transform.position);
+
+            detectedObj = DetectObject();
+            ItemTypes selectedItemType = CheckDetectedObject(detectedObj);
+            if (detectedObj != null)
+            {
+                distanceToObject = Vector3.Distance(detectedObj.transform.position, transform.position);
+
+            }
+            CheckCurser(selectedItemType);
+
+            switch (currentHoldState)
+            {
+                case HoldState.notHoldingItem:
+                    break;
+                case HoldState.holdingItem:
+
+                    if (Input.GetButton("InspectItem"))
+                    {
+                        ChangeHoldState(HoldState.inspectingItem);
+
+
+                    }
+                    break;
+                case HoldState.delay:
+                    InputDelay();
+                    break;
+                case HoldState.inspectingItem:
+                    if (!Input.GetButton("InspectItem"))
+                    {
+                        ChangeHoldState(HoldState.holdingItem, false);
+
+                    }
+                    heldObject.Rotate(Vector3.up, Input.GetAxis("Mouse X") * inspectRotSpeed * Time.deltaTime);
+                    break;
+
+            }
+        }
+    }
+
+  
+    public void InputDelay()
+    {
+        if (holdTimer > 0)
+        {
+            holdTimer -= Time.deltaTime;
 
         }
-        switch (thisItemType)
+        else
         {
-            case ItemTypes.Book:
-                itemPrompt.text = "Press E To Read";
-                redical.SetActive(true);
-                if (distanceToObject < readDistance)
-                {
-
-                    if (Input.GetButtonDown("Interact"))
-                    {
-                        reader.DisplayText(detectedObj.GetComponent<InGameTextObj>().textAsset);
-                    }
-                }
-
-                break;
-            case ItemTypes.Pickup:
-                redical.SetActive(true);
-
-                if (currentHoldState == HoldState.notHoldingItem)
-                {
-                    itemPrompt.text = "Press E To PickUp " + detectedObj.name;
-                    if (Input.GetButtonDown("Interact"))
-                    {
-                        PickUp(detectedObj);
-                    }
-                }
-                break;
-            case ItemTypes.Film:
-                redical.SetActive(true);
-
-                itemPrompt.text = "Press E To PickUp Film";
-                if (Input.GetButtonDown("Interact"))
-                {
-                    inGameCamera.cameraShots += 3;
-                    Destroy(detectedObj);
-                }
-                break;
-
-            case ItemTypes.Camera:
-                redical.SetActive(true);
-
-                itemPrompt.text = "Press E To PickUp Camera";
-                if (Input.GetButtonDown("Interact"))
-                {
-                    inGameCamera.playerHasCamera = true;
-                    inGameCamera.ActivateCamera();
-                    Destroy(detectedObj);
-                }
-                break;
-            case ItemTypes.Interact:
-                redical.SetActive(true);
-
-                itemPrompt.text = "Press E To Interact";
-                if (Input.GetButtonDown("Interact"))
-                {
-                    detectedObj.GetComponent<GameEventTrigger>().TriggerEvent();
-
-                }
-                break;
-            case ItemTypes.HoldInteract:
-                redical.SetActive(true);
-
-
-                itemPrompt.text = "Hold E To Interact";
-
-                if (Input.GetButtonDown("Interact"))
-                {
-
-                    holdTimer = detectedObj.GetComponent<GameEventTrigger>().holdTimer;
-
-
-                }
-                if (Input.GetButton("Interact"))
-                {
-                    itemPrompt.text = "Working...";
-
-                    holdTimer -= Time.deltaTime;
-
-                    if (holdTimer < 0)
-                    {
-                        itemPrompt.text = "Done";
-
-                        detectedObj.GetComponent<GameEventTrigger>().TriggerEvent();
-                    }
-
-                }
-                break;
-            case ItemTypes.Surface:
-
-                if (currentHoldState == HoldState.holdingItem)
-                {
-                    itemPrompt.text = "Put Down?";
-                    redical.SetActive(true);
-
-                    if (Input.GetButtonDown("Interact"))
-                    {
-
-                        for (int i = 0; i < detectedObj.transform.childCount; i++)
-                        {
-                            Transform child = detectedObj.transform.GetChild(i);
-                            if (child.tag == "ItemSlot")
-                            {
-                                if (child.transform.childCount == 0)
-                                {
-                                    heldObject.parent = child;
-                                    heldObject.transform.position = child.transform.position;
-                                    heldObject.transform.rotation = Quaternion.identity;
-                                    PutDown();
-                                    itemPrompt.text = "";
-                                    break;
-
-                                }
-                            }
-                        }
-                    }
-                }
-                break;
-            case ItemTypes.Wall:
-                itemPrompt.text = "";
-                redical.SetActive(false);
-
-                break;
-
-            case ItemTypes.Unknown:
-                itemPrompt.text = "";
-                redical.SetActive(false);
-
-                break;
-
+            holdTimer = holdDelay;
+            currentHoldState = nextHoldState;
         }
+    } 
 
 
+    public void ChangeHoldState(HoldState newHoldState, bool holdDelay = true)
+    {
 
-        switch (currentHoldState)
+        switch (newHoldState)
         {
-            case HoldState.notHoldingItem:
-                break;
             case HoldState.holdingItem:
-                break;
-            case HoldState.delay:
-                if (holdTimer > 0)
-                {
-                    holdTimer -= Time.deltaTime;
+                heldObject.transform.position = itemHeldTarget.position;
+                manager.ChangePlayerState(PlayerState.freeMovement);
 
-                }
-                else
-                {
-                    holdTimer = holdDelay;
-                    currentHoldState = HoldState.holdingItem;
-                }
                 break;
-      
+            case HoldState.inspectingItem:
+                heldObject.transform.position = inspectItemTarget.position;
+                manager.ChangePlayerState(PlayerState.noCameraAndMovement);
+
+                break;
+            case HoldState.notHoldingItem:
+                controller.characterIsActive = true;
+                aiming.cameraControl = true;
+                break;
+            
+        }
+        if (holdDelay)
+        {
+            nextHoldState = newHoldState;
+            currentHoldState = HoldState.delay;
+
+        }
+        else
+        {
+            currentHoldState = newHoldState;
+
+        }
+    }
+  
+
+ 
+
+    public void PickUp(GameObject itemToHold)
+    {
+        heldObject = itemToHold.transform;
+        heldObject.parent = null;
+        if (heldObject.name == "EndGameObject")
+        {
+            isHoldingEndGameItem = true;
+        }
+        heldObject.gameObject.layer = LayerMask.NameToLayer("HeldItem");
+        heldObject.GetComponent<Rigidbody>().isKinematic = true;
+        distanceToHeldObject = Vector3.Distance(transform.position, heldObject.position);
+        heldItemData = heldObject.GetComponent<Item>();
+        heldObject.GetComponent<Collider>().isTrigger = true;
+        heldObject.position = itemHeldTarget.position;
+        heldObject.rotation = itemHeldTarget.rotation;
+        heldObject.parent = itemHeldTarget;
+        holdingObject = true;
+        ChangeHoldState(HoldState.holdingItem);
+        
+
+    }
+    public void PutDown()
+    {
+        if (heldObject.name == "EndGameObject")
+        {
+            isHoldingEndGameItem = false; 
+        }
+        heldObject.gameObject.layer = LayerMask.NameToLayer("Item");
+        heldObject.GetComponent<Collider>().isTrigger = false;
+        heldItemData = null;
+        canPutBack = false;
+        heldObject = null;
+        holdingObject = false;
+
+        ChangeHoldState(HoldState.notHoldingItem, false);
+
+    }
+
+    public void Drop()
+    {
+        heldObject.GetComponent<Collider>().isTrigger = false;
+        heldObject.GetComponent<Rigidbody>().isKinematic = false;
+        heldObject.GetComponent<Rigidbody>().AddForce(smoothMouseLook.transform.forward * throwForce, ForceMode.Impulse);
+        heldObject.gameObject.layer = LayerMask.NameToLayer("Item");
+
+        heldObject.parent = null;
+        heldItemData = null;
+        canPutBack = false;
+        heldObject = null;
+        holdingObject = false;
+        ChangeHoldState(HoldState.notHoldingItem, false);
+
+
+    }
+
+
+    public bool IsItemBehindWall()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, (heldObject.position - transform.position), out hit, distanceToHeldObject, wallLayer))
+        {
+            return true;
+
+        }
+        else
+        {
+
+            return false;
         }
     }
 
@@ -265,7 +276,7 @@ public class PlayerInteract : MonoBehaviour
             return ItemTypes.Wall;
         }
 
-        if(obj.tag == "Candle")
+        if (obj.tag == "Candle")
         {
 
         }
@@ -276,12 +287,12 @@ public class PlayerInteract : MonoBehaviour
 
         if (obj.tag == "Pickup")
         {
-           
+
             return ItemTypes.Pickup;
         }
         if (obj.tag == "Camera")
         {
-            itemPrompt.text = "Press E To PickUp Camera";
+            itemPrompt.text = "Press LMB to PickUp Camera";
 
             return ItemTypes.Camera;
         }
@@ -289,17 +300,17 @@ public class PlayerInteract : MonoBehaviour
         {
 
             return ItemTypes.Film;
-            
+
         }
         if (obj.tag == "TextObj")
         {
 
-            
+
             return ItemTypes.Book;
         }
         if (obj.tag == "Interact")
         {
-            itemPrompt.text = "Press E To Interact";
+            itemPrompt.text = "Press LMB to Interact";
 
             return ItemTypes.Interact;
         }
@@ -309,7 +320,7 @@ public class PlayerInteract : MonoBehaviour
         }
         if (obj.tag == "HoldInteract")
         {
-            itemPrompt.text = "Hold E To Interact";
+            itemPrompt.text = "Hold LMB to Interact";
 
 
             if (Input.GetButton("Interact"))
@@ -325,56 +336,141 @@ public class PlayerInteract : MonoBehaviour
 
     }
 
-    public void PickUp(GameObject itemToHold)
+    private void CheckCurser(ItemTypes thisItemType)
     {
-        
-        currentHoldState = HoldState.delay;
-        heldObject = itemToHold.transform;
-        heldObject.parent = null;
-        if (heldObject.name == "EndGameObject")
+        if (distanceToObject < pickUpDistance)
         {
-            isHoldingEndGameItem = true;
-        }
-        heldObject.GetComponent<Rigidbody>().isKinematic = true;
-        distanceToHeldObject = Vector3.Distance(transform.position, heldObject.position);
-        heldItemData = heldObject.GetComponent<Item>();
-        heldObject.GetComponent<Collider>().isTrigger = true;
-        heldObject.position = itemHeldTarget.position;
-        heldObject.rotation = itemHeldTarget.rotation;
-        heldObject.parent = itemHeldTarget;
-        holdingObject = true;
-        ;
+            switch (thisItemType)
+            {
+                case ItemTypes.Book:
 
-    }
-    public void PutDown()
-    {
-        if (heldObject.name == "EndGameObject")
-        {
-            isHoldingEndGameItem = false;
-        }
-        heldObject.GetComponent<Collider>().isTrigger = false;
-        heldItemData = null;
-        canPutBack = false;
-        heldObject = null;
-        holdingObject = false;
-        currentHoldState = HoldState.notHoldingItem;
+                    itemPrompt.text = "Press LMB to Read";
+
+                    if (Input.GetButtonDown("Interact"))
+                    {
+                        reader.DisplayText(detectedObj.GetComponent<InGameTextObj>().textAsset);
+                    }
+
+                    break;
+                case ItemTypes.Pickup:
+                    if (currentHoldState == HoldState.notHoldingItem)
+                    {
+                        
+                        itemPrompt.text = "Press LMB to PickUp " + detectedObj.name;
+                        if (Input.GetButtonDown("Interact"))
+                        {
+                            PickUp(detectedObj);
+                        }
+                        
+                       
+                    }
+                    break;
+                case ItemTypes.Film:
+                    itemPrompt.text = "Press LMB to PickUp Film";
+                    if (Input.GetButtonDown("Interact"))
+                    {
+                        inGameCamera.cameraShots += 3;
+                        Destroy(detectedObj);
+                    }
+                    break;
+
+                case ItemTypes.Camera:
+                    itemPrompt.text = "Press LMB to PickUp Camera";
+                    if (Input.GetButtonDown("Interact"))
+                    {
+
+                        inGameCamera.playerHasCamera = true;
+                        Destroy(detectedObj);
+                    }
+                    break;
+                case ItemTypes.Interact:
+                    itemPrompt.text = "Press LMB to Interact";
+                    if (Input.GetButtonDown("Interact"))
+                    {
+                        detectedObj.GetComponent<GameEventTrigger>().TriggerEvent();
+
+                    }
+                    break;
+                case ItemTypes.HoldInteract:
+
+                    itemPrompt.text = "Hold LMB to Interact";
+
+                    if (Input.GetButtonDown("Interact"))
+                    {
+
+                        holdTimer = detectedObj.GetComponent<GameEventTrigger>().holdTimer;
 
 
-    }
+                    }
+                    if (Input.GetButton("Interact"))
+                    {
+                        itemPrompt.text = "Working...";
+
+                        holdTimer -= Time.deltaTime;
+
+                        if (holdTimer < 0)
+                        {
+                            itemPrompt.text = "Done";
+
+                            detectedObj.GetComponent<GameEventTrigger>().TriggerEvent();
+                        }
+
+                    }
+                    break;
+                case ItemTypes.Surface:
+                    if (currentHoldState == HoldState.holdingItem)
+                    {
 
 
-    public bool IsItemBehindWall()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, (heldObject.position - transform.position), out hit, distanceToHeldObject, wallLayer))
-        {
-            return true;
+                        itemPrompt.text = "Put Down?";
+                        if (Input.GetButtonDown("Interact"))
+                        {
+
+                            for (int i = 0; i < detectedObj.transform.childCount; i++)
+                            {
+                                Transform child = detectedObj.transform.GetChild(i);
+                                if (child.tag == "ItemSlot")
+                                {
+                                    if (child.transform.childCount == 0)
+                                    {
+                                        heldObject.parent = child;
+                                        heldObject.transform.position = child.transform.position;
+                                        heldObject.transform.rotation = Quaternion.identity;
+                                        PutDown();
+                                        itemPrompt.text = "";
+                                        break;
+
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                    break;
+                case ItemTypes.Wall:
+                    itemPrompt.text = "";
+                    break;
+
+                case ItemTypes.Unknown:
+                    itemPrompt.text = "";
+                    break;
+
+            }
+            
 
         }
         else
         {
+            itemPrompt.text = "";
+        }
 
-            return false;
+        if (currentHoldState == HoldState.holdingItem)
+        {
+            if (Input.GetButtonDown("Interact"))
+            { 
+                Drop();
+            }
         }
     }
 }

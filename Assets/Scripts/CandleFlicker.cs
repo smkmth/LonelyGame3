@@ -17,45 +17,85 @@ public class CandleFlicker : MonoBehaviour {
     private float randomLow;
     private float randomHigh;
     public bool initial =true;
+    public bool lightIsOn;
 
     // Use this for initialization
     void Start () {
 
+        lightIsOn = true;
         candleLight = GetComponent<Light>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-
-        if (currentTime <= timeToMove)
+    public void ToggleLight(bool lampIsOn)
+    {
+        if (lampIsOn)
         {
-            
-            currentTime += Time.deltaTime * 10.0f;
-            if (initial)
+            lightIsOn = false;
+            StartCoroutine(LightFade(candleLight, 0.0f, .3f));
+        }
+        else
+        {
+            lightIsOn = true;
+
+        }
+    }
+
+    IEnumerator LightFade(Light lightToFade, float targetBrightness, float duration)
+    {
+
+        float startBrightness = lightToFade.intensity;
+        float time = 0;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float blend =0f;
+            if (time > 0)
             {
-                candleLight.intensity = Mathf.Lerp(randomLow, randomHigh, currentTime / timeToMove);
-                initial = false;
+                blend = time / duration;
+            }
+            lightToFade.intensity = Mathf.Lerp(startBrightness, targetBrightness, blend);
+            yield return null;
+        }
+
+    }
+    // Update is called once per frame
+    void Update () {
+
+        if (lightIsOn)
+        {
+
+            if (currentTime <= timeToMove)
+            {
+            
+                currentTime += Time.deltaTime * 10.0f;
+                if (initial)
+                {
+                    candleLight.intensity = Mathf.Lerp(randomLow, randomHigh, currentTime / timeToMove);
+                    initial = false;
+
+                }
+                else
+                {
+                    candleLight.intensity = Mathf.Lerp(randomHigh, randomLow, currentTime / timeToMove);
+                }
 
             }
             else
             {
-                candleLight.intensity = Mathf.Lerp(randomHigh, randomLow, currentTime / timeToMove);
-            }
+                if (!initial)
+                {
+                    initial = true;
+                    timeToMove = Random.Range(lowMoveTime, randomHigh);
+                    randomLow = Random.Range(lowestVal, midVal);
+                    randomHigh = Random.Range(midVal, randomHigh);
 
-        }
-        else
-        {
-            if (!initial)
-            {
-                initial = true;
-                timeToMove = Random.Range(lowMoveTime, randomHigh);
-                randomLow = Random.Range(lowestVal, midVal);
-                randomHigh = Random.Range(midVal, randomHigh);
-
+                }
+                candleLight.intensity = midVal;
+                currentTime = 0f;
             }
-            candleLight.intensity = midVal;
-            currentTime = 0f;
         }
+        
 
 
     }
