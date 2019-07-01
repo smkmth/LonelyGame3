@@ -30,7 +30,9 @@ public class InGameCamera : MonoBehaviour
     public bool cameraIsActive =true;
     public float timeBetweenShots;
     public bool playerHasCamera;
-
+    public TextMeshProUGUI cameraCounter;
+    public PlayerManager manager;
+    private bool startedAiming;
     public void Start()
     {
         ghost = GameObject.Find("Ghost").GetComponent<Ghost>();
@@ -41,25 +43,18 @@ public class InGameCamera : MonoBehaviour
         isFlashOn = false;
         energyBar.maxValue = timeBetweenShots;
     }
-    public void ActivateCamera()
-    {
 
-        if (playerHasCamera)
-        {
-            cameraIsActive = true;
-
-        }
-
-    }
     void Update()
     {
+        if (!playerHasCamera)
+        {
+            return;
+        }
 
         if (cameraTimer < timeBetweenShots )
         {
-
             cameraTimer += Time.deltaTime;
         }
-        
         energyBar.value = cameraTimer;
         if (cameraShots == 0)
         {
@@ -67,18 +62,45 @@ public class InGameCamera : MonoBehaviour
             cameraTimer = timeBetweenShots;
         }
 
-
-        if (cameraIsActive)
+        if (!cameraIsActive)
         {
-            if (Input.GetButton("AimCamera"))
+            manager.ChangePlayerState(PlayerState.freeMovement);
+            return;
+        }
+        
+
+
+        if (Input.GetButton("AimCamera"))
+        {
+            if (!startedAiming){
+                manager.ChangePlayerState(PlayerState.cameraAimMode);
+                startedAiming = true;
+
+            }
+
+
+
+            if (Input.GetButtonDown("Interact"))
             {
-
-                if (Input.GetButtonDown("Interact"))
+                if (cameraTimer > timeBetweenShots && cameraShots >= 0)
                 {
-                    if (cameraTimer > timeBetweenShots && cameraShots > 0)
-                    {
+                    cameraShots--;
+                    cameraCounter.text = cameraShots.ToString();
+                    cameraTimer = 0;
+                    StartCoroutine(TakePhoto());
+                }
 
-                        }
+            }
+        }
+        else
+        {
+            manager.ChangePlayerState(PlayerState.freeMovement);
+            startedAiming = false;
+
+        }
+
+
+
 
 
 
@@ -92,6 +114,11 @@ public class InGameCamera : MonoBehaviour
         yield return new WaitForSeconds(flashTime);
         ghost.ToggleGhost(false);
         
+
+    }
+    public void UpdateShots()
+    {
+        cameraCounter.text = cameraShots.ToString();
 
     }
 }

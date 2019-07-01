@@ -22,11 +22,12 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float sprintTime;
 
     public float sprintTimer;
-    public bool canRun;
+    public bool enoughStamina;
     public Slider energyBar;
 
     public GameObject tutorial;
     public bool tutorialOn;
+    public bool playerCanRun;
 
     private void Start()
     {
@@ -131,19 +132,20 @@ public class FirstPersonCharacterController : MonoBehaviour
                 moving = false;
 
             }
-
-
-            if (Input.GetButton("Run"))
+            if (playerCanRun)
             {
-                if (canRun)
+                if (Input.GetButton("Run"))
                 {
-                    isRunning = true;
+                    if (enoughStamina)
+                    {
+                        isRunning = true;
+                    }
                 }
-            }
-            else
-            {
-                isRunning = false;
+                else
+                {
+                    isRunning = false;
 
+                }
             }
 
 
@@ -155,7 +157,7 @@ public class FirstPersonCharacterController : MonoBehaviour
                 }
                 else
                 {
-                    canRun = false;
+                    enoughStamina = false;
                     isRunning = false;
 
                 }
@@ -170,7 +172,7 @@ public class FirstPersonCharacterController : MonoBehaviour
                 }
                 else
                 {
-                    canRun = true;
+                    enoughStamina = true;
                 }
 
 

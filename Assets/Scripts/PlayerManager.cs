@@ -6,9 +6,10 @@ public enum PlayerState
     freeMovement,
     noMovement,
     noCameraMovement,
-    noCameraAndMovement,
+    inspectMode,
     noCameraAndMovementCursorFree,
     fullyPaused,
+    cameraAimMode,
     delay
 }
 public class PlayerManager : MonoBehaviour
@@ -32,6 +33,9 @@ public class PlayerManager : MonoBehaviour
 
     public float playerStateTimer;
     public float playerStateChangeDelay;
+
+    public float normalMoveSpeed;
+    public float cameraMoveSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -98,6 +102,10 @@ public class PlayerManager : MonoBehaviour
 
     public void ChangePlayerState(PlayerState newPlayerState, bool stateChangeDelay =true)
     {
+        if (newPlayerState == currentPlayerState)
+        {
+            return;
+        }
         switch (newPlayerState)
         {
             case PlayerState.freeMovement:
@@ -105,7 +113,9 @@ public class PlayerManager : MonoBehaviour
                 interact.interactIsActive = true;
                 controller.characterIsActive = true;
                 mouseLook.cameraControl = true;
+
                 inGameCamera.cameraIsActive = true;
+                controller.playerCanRun = true;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 break;
@@ -115,7 +125,9 @@ public class PlayerManager : MonoBehaviour
                 Time.timeScale = 1;
                 controller.characterIsActive = false;
                 mouseLook.cameraControl = true;
-                inGameCamera.cameraIsActive = true;
+
+                inGameCamera.cameraIsActive = false;
+                controller.playerCanRun = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
 
@@ -125,23 +137,28 @@ public class PlayerManager : MonoBehaviour
                 Time.timeScale = 1;
                 controller.characterIsActive = true;
                 mouseLook.cameraControl = false;
-                inGameCamera.cameraIsActive = true;
+                inGameCamera.cameraIsActive = false;
+                controller.playerCanRun = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
 
                 break;
-            case PlayerState.noCameraAndMovement:
+            case PlayerState.inspectMode:
                 interact.interactIsActive = true;
                 Time.timeScale = 1;
                 controller.characterIsActive = false;
+                controller.playerCanRun = false;
+
                 mouseLook.cameraControl = false;
                 inGameCamera.cameraIsActive = false;
+
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 break;
             case PlayerState.noCameraAndMovementCursorFree:
                 Time.timeScale = 1;
                 interact.interactIsActive = false;
+                controller.playerCanRun = false;
                 controller.characterIsActive = false;
                 mouseLook.cameraControl = false;
                 inGameCamera.cameraIsActive = false;
@@ -153,12 +170,26 @@ public class PlayerManager : MonoBehaviour
             case PlayerState.fullyPaused:
                 interact.interactIsActive = false;
                 controller.characterIsActive = false;
+                controller.playerCanRun = false;
                 mouseLook.cameraControl = false;
-                inGameCamera.cameraIsActive = false;
+                inGameCamera.cameraIsActive =false;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 Time.timeScale = 0;
                 break;
+            case PlayerState.cameraAimMode:
+                Time.timeScale = 1;
+                interact.interactIsActive = true;
+                controller.characterIsActive = true;
+                controller.playerCanRun = false;
+                mouseLook.cameraControl = true;
+                inGameCamera.cameraIsActive = true;
+
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                break;
+
+
             case PlayerState.delay:
                 break;
         }

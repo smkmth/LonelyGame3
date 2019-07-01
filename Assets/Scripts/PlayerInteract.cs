@@ -152,7 +152,7 @@ public class PlayerInteract : MonoBehaviour
                 break;
             case HoldState.inspectingItem:
                 heldObject.transform.position = inspectItemTarget.position;
-                manager.ChangePlayerState(PlayerState.noCameraAndMovement);
+                manager.ChangePlayerState(PlayerState.inspectMode);
 
                 break;
             case HoldState.notHoldingItem:
@@ -378,8 +378,10 @@ public class PlayerInteract : MonoBehaviour
                     itemPrompt.text = "Press LMB to PickUp Camera";
                     if (Input.GetButtonDown("Interact"))
                     {
-
                         inGameCamera.playerHasCamera = true;
+                        inGameCamera.cameraIsActive = true;
+                        inGameCamera.energyBar.gameObject.SetActive(true);
+                        inGameCamera.UpdateShots();
                         Destroy(detectedObj);
                     }
                     break;
