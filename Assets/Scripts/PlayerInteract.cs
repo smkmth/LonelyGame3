@@ -62,6 +62,7 @@ public class PlayerInteract : MonoBehaviour
     public GameObject detectedObj;
     public ItemTypes thisItemType;
     private InGameCamera inGameCamera;
+    public GameObject redical;
 
     public void Start()
     {
@@ -85,6 +86,7 @@ public class PlayerInteract : MonoBehaviour
         {
             case ItemTypes.Book:
                 itemPrompt.text = "Press E To Read";
+                redical.SetActive(true);
                 if (distanceToObject < readDistance)
                 {
 
@@ -96,6 +98,8 @@ public class PlayerInteract : MonoBehaviour
 
                 break;
             case ItemTypes.Pickup:
+                redical.SetActive(true);
+
                 if (currentHoldState == HoldState.notHoldingItem)
                 {
                     itemPrompt.text = "Press E To PickUp " + detectedObj.name;
@@ -106,6 +110,8 @@ public class PlayerInteract : MonoBehaviour
                 }
                 break;
             case ItemTypes.Film:
+                redical.SetActive(true);
+
                 itemPrompt.text = "Press E To PickUp Film";
                 if (Input.GetButtonDown("Interact"))
                 {
@@ -115,15 +121,19 @@ public class PlayerInteract : MonoBehaviour
                 break;
 
             case ItemTypes.Camera:
+                redical.SetActive(true);
+
                 itemPrompt.text = "Press E To PickUp Camera";
                 if (Input.GetButtonDown("Interact"))
                 {
-
                     inGameCamera.playerHasCamera = true;
+                    inGameCamera.ActivateCamera();
                     Destroy(detectedObj);
                 }
                 break;
             case ItemTypes.Interact:
+                redical.SetActive(true);
+
                 itemPrompt.text = "Press E To Interact";
                 if (Input.GetButtonDown("Interact"))
                 {
@@ -132,6 +142,8 @@ public class PlayerInteract : MonoBehaviour
                 }
                 break;
             case ItemTypes.HoldInteract:
+                redical.SetActive(true);
+
 
                 itemPrompt.text = "Hold E To Interact";
 
@@ -158,9 +170,11 @@ public class PlayerInteract : MonoBehaviour
                 }
                 break;
             case ItemTypes.Surface:
+
                 if (currentHoldState == HoldState.holdingItem)
                 {
                     itemPrompt.text = "Put Down?";
+                    redical.SetActive(true);
 
                     if (Input.GetButtonDown("Interact"))
                     {
@@ -187,10 +201,14 @@ public class PlayerInteract : MonoBehaviour
                 break;
             case ItemTypes.Wall:
                 itemPrompt.text = "";
+                redical.SetActive(false);
+
                 break;
 
             case ItemTypes.Unknown:
                 itemPrompt.text = "";
+                redical.SetActive(false);
+
                 break;
 
         }

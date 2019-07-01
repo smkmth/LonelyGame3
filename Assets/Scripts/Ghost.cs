@@ -7,12 +7,13 @@ public enum GhostState
 {
     Patrolling,
     Chasing,
-    Searching
+    Searching,
+    GoToPlace
 }
 public class Ghost : MonoBehaviour
 {
 
-
+    public bool drawDebugGhost =false;
     private AudioSource ghostAudio;
     public AudioClip ambiant;
     public AudioClip scare;
@@ -57,7 +58,11 @@ public class Ghost : MonoBehaviour
     public float arc;
     Vector3 lastKnownPos;
 
-     [Header("Ghost Audio")]
+    [Header("Ghost Search AI")]
+    public Vector3 gotToPlaceTarget;
+
+
+    [Header("Ghost Audio")]
     public float timeBetweeIdleNoises;
     private float ghostIdleTimer;
     public float chanceOfIdleNoise;
@@ -298,6 +303,16 @@ public class Ghost : MonoBehaviour
                         searchTimer -= Time.deltaTime;
                     }
                     break;
+                case GhostState.GoToPlace:
+                    if (MoveTowardsPlayer(gotToPlaceTarget))
+                    {
+                        ChangeGhostState(GhostState.Patrolling);
+                    }
+                    if (canSeePlayer)
+                    {
+                        ChangeGhostState(GhostState.Chasing);
+                    }
+                    break;
             }
         
         }
@@ -359,18 +374,23 @@ public class Ghost : MonoBehaviour
         currentGhostState = newGhostState;
 
     }
+
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position + transform.forward * overlapOffset, closeToPlayerRad);
-        if (currentGhostState == GhostState.Searching)
+        if (drawDebugGhost)
         {
-            // Draw a yellow cube at the transform position
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireCube(lastKnownPos, new Vector3(1, 1, 1));
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position + transform.forward * overlapOffset, closeToPlayerRad);
+            if (currentGhostState == GhostState.Searching)
+            {
+                // Draw a yellow cube at the transform position
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawWireCube(lastKnownPos, new Vector3(1, 1, 1));
 
+            }
         }
     }
+
     public int FindNearestPoint()
     {
         float dist = 99999.0f;

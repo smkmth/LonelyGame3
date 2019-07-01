@@ -24,6 +24,7 @@ public class InGameTextReader : MonoBehaviour
 
     public void DisplayText(InGameText text)
     {
+        gameCamera.cameraIsActive = false;
         Time.timeScale = 0;
         ReaderUI.SetActive(true);
         displayText.text = text.TextToDisplay;
@@ -32,7 +33,6 @@ public class InGameTextReader : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         controller.characterIsActive = false;
-        gameCamera.cameraIsActive = false;
 
 
     }
@@ -47,7 +47,7 @@ public class InGameTextReader : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         controller.characterIsActive = true;
-        gameCamera.cameraIsActive = true;
+        gameCamera.ActivateCamera();
 
     }
     

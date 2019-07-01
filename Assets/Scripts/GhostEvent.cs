@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum GhostEventType
 {
-    ActivateGhost
+    ActivateGhost,
+    MoveGhost
 }
 [CreateAssetMenu(menuName = "GhostEvent")]
 public class GhostEvent : ScriptableEvent
 {
     public GhostEventType thisGhostEvent;
-   
+    public Vector3 ghostTarget;
 
 }

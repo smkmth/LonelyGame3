@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,8 +18,6 @@ public class InGameCamera : MonoBehaviour
     public PhotoLibrary photoLibrary;
     public Slider energyBar;
     public Image energyFill;
-    public bool isCameraActive;
-    private SpriteRenderer currentGhost;
     public GameObject spotLight;
     public int cameraShots;
     public float flashTime;
@@ -30,24 +29,38 @@ public class InGameCamera : MonoBehaviour
     public bool cameraIsActive =true;
     public float timeBetweenShots;
     public bool playerHasCamera;
+    public TextMeshProUGUI cameraCounter;
+
     public void Start()
     {
         ghost = GameObject.Find("Ghost").GetComponent<Ghost>();
 
         spookyStingSource = GetComponent<AudioSource>();
         photoLibrary = GetComponent<PhotoLibrary>();
-        isCameraActive = true;
+        cameraIsActive = false;
         isFlashOn = false;
         energyBar.maxValue = timeBetweenShots;
     }
-
-    void Update()
+    public void ActivateCamera()
     {
+
         if (playerHasCamera)
         {
-            energyBar.gameObject.SetActive(true);
             cameraIsActive = true;
+            energyBar.gameObject.SetActive(true);
+            cameraCounter.text = cameraShots.ToString();
         }
+        else
+        {
+            cameraIsActive = false;
+
+
+        }
+
+    }
+    void Update()
+    {
+
         if (cameraTimer < timeBetweenShots )
         {
 
@@ -61,19 +74,6 @@ public class InGameCamera : MonoBehaviour
             cameraTimer = timeBetweenShots;
         }
 
-  
-        if (Input.GetButtonDown("Flash"))
-        {
-            if (isFlashOn)
-            {
-                isFlashOn = false;
-            }
-            else
-            {
-                isFlashOn = true;
-            }
-        }
-
         if (cameraIsActive)
         {
             if (Input.GetButtonDown("TakePhoto"))
@@ -84,50 +84,23 @@ public class InGameCamera : MonoBehaviour
                     RaycastHit[] targets = Physics.SphereCastAll(transform.position, CameraRadius, transform.forward, CameraRange, clueLayerMask);
                     foreach (RaycastHit hit in targets)
                     {
-                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Clue"))
+                     
+                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ghost"))
                         {
-                            Clue clue = hit.collider.gameObject.GetComponent<Clue>();
-                            if (clue.clueType != ClueType.PhotoTarget)
-                            {
-                                return;
-                            }
-                            if (!clue.foundClue)
-                            {
-                                clue.foundClue = true;
-                                energyBar.value += clue.energyValue;
-                            }
-                        }
-                        else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ghost"))
-                        {
-                            if (energyBar.value == 100)
-                            {
-
-                                currentGhost = hit.collider.gameObject.GetComponent<SpriteRenderer>();
-                                currentGhost.enabled = true;
-                                spookyStingSource.Play();
-                            }
+                          //  ghost = hit.collider.gameObject.GetComponent<Ghost>();
                         }
                     }
                     cameraShots--;
+                    cameraCounter.text = cameraShots.ToString();
+
+
                     StartCoroutine(TakePhoto());
                 }
 
             }
         }
 
-        if (Input.GetButtonDown("ViewPhotos"))
-        {
-            photoLibrary.TogglePhotoLibrary();
-            if (photoLibrary.isLibraryActive)
-            {
-                isCameraActive = false;
-            }
-            else
-            {
-                isCameraActive = true;
-
-            }
-        }
+   
 
 
     }
@@ -137,6 +110,7 @@ public class InGameCamera : MonoBehaviour
         ghost.ToggleGhost(true);
         yield return new WaitForSeconds(flashTime);
         ghost.ToggleGhost(false);
+        
 
     }
 }
