@@ -43,6 +43,10 @@ public class InGameCamera : MonoBehaviour
     public float cameraOffSet =17;
     public TextMeshProUGUI filmCounterRect;
 
+    public AudioSource source;
+    public AudioClip cameraReady;
+    public AudioClip cameraShot;
+
     public void Start()
     {
         ghost = GameObject.Find("Ghost").GetComponent<Ghost>();
@@ -86,6 +90,7 @@ public class InGameCamera : MonoBehaviour
                 manager.ChangePlayerState(PlayerState.cameraAimMode);
                 startedAiming = true;
                 cameraLense.SetActive(true);
+                source.PlayOneShot(cameraReady, 1.0f);
 
             }
             shutter.transform.position = shutterDefaultPos.position;
@@ -137,6 +142,7 @@ public class InGameCamera : MonoBehaviour
             
 
         }
+        source.PlayOneShot(cameraShot, 3.0f);
         elapsedTime = 0;
         while (elapsedTime < shutterTime)
         {
@@ -146,6 +152,7 @@ public class InGameCamera : MonoBehaviour
 
 
         }
+
         shutter.SetActive(false);
 
         ghost.ToggleGhost(true);
