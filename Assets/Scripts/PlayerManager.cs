@@ -36,7 +36,7 @@ public class PlayerManager : MonoBehaviour
 
     public float normalMoveSpeed;
     public float cameraMoveSpeed;
-
+    public GameObject crosshair;
     // Start is called before the first frame update
     void Start()
     {
@@ -118,6 +118,8 @@ public class PlayerManager : MonoBehaviour
                 controller.playerCanRun = true;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+                crosshair.SetActive(true);
+
                 break;
 
             case PlayerState.noMovement:
@@ -130,6 +132,7 @@ public class PlayerManager : MonoBehaviour
                 controller.playerCanRun = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+                crosshair.SetActive(true);
 
                 break;
             case PlayerState.noCameraMovement:
@@ -141,6 +144,8 @@ public class PlayerManager : MonoBehaviour
                 controller.playerCanRun = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+                crosshair.SetActive(true);
+
 
                 break;
             case PlayerState.inspectMode:
@@ -154,6 +159,8 @@ public class PlayerManager : MonoBehaviour
 
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+                crosshair.SetActive(true);
+
                 break;
             case PlayerState.noCameraAndMovementCursorFree:
                 Time.timeScale = 1;
@@ -164,6 +171,7 @@ public class PlayerManager : MonoBehaviour
                 inGameCamera.cameraIsActive = false;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+                crosshair.SetActive(true);
 
                 break;
 
@@ -175,6 +183,8 @@ public class PlayerManager : MonoBehaviour
                 inGameCamera.cameraIsActive =false;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+                crosshair.SetActive(true);
+
                 Time.timeScale = 0;
                 break;
             case PlayerState.cameraAimMode:
@@ -184,7 +194,7 @@ public class PlayerManager : MonoBehaviour
                 controller.playerCanRun = false;
                 mouseLook.cameraControl = true;
                 inGameCamera.cameraIsActive = true;
-
+                crosshair.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 break;
