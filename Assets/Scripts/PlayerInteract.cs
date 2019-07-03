@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
 public enum HoldState
 {
     notHoldingItem,
@@ -69,6 +71,8 @@ public class PlayerInteract : MonoBehaviour
     public SmoothMouseLook aiming;
     public FirstPersonCharacterController controller;
     public bool interactIsActive =true;
+
+    public Image crosshair;
 
 
     public void Start()
@@ -343,6 +347,7 @@ public class PlayerInteract : MonoBehaviour
             switch (thisItemType)
             {
                 case ItemTypes.Book:
+                   
 
                     itemPrompt.text = "Press LMB to Read";
 
@@ -353,6 +358,8 @@ public class PlayerInteract : MonoBehaviour
 
                     break;
                 case ItemTypes.Pickup:
+                   
+
                     if (currentHoldState == HoldState.notHoldingItem)
                     {
                         
@@ -366,34 +373,45 @@ public class PlayerInteract : MonoBehaviour
                     }
                     break;
                 case ItemTypes.Film:
+                   
+
                     itemPrompt.text = "Press LMB to PickUp Film";
                     if (Input.GetButtonDown("Interact"))
                     {
-                        inGameCamera.cameraShots += 3;
+
+                        inGameCamera.UpdateShots(3);
+                        
                         Destroy(detectedObj);
                     }
                     break;
 
                 case ItemTypes.Camera:
+                   
+
                     itemPrompt.text = "Press LMB to PickUp Camera";
                     if (Input.GetButtonDown("Interact"))
-                    {
+                    { 
+
+                        inGameCamera.UpdateShots(3);
                         inGameCamera.playerHasCamera = true;
                         inGameCamera.cameraIsActive = true;
                         inGameCamera.energyBar.gameObject.SetActive(true);
-                        inGameCamera.UpdateShots();
                         Destroy(detectedObj);
                     }
                     break;
                 case ItemTypes.Interact:
+                   
+
                     itemPrompt.text = "Press LMB to Interact";
                     if (Input.GetButtonDown("Interact"))
                     {
+
                         detectedObj.GetComponent<GameEventTrigger>().TriggerEvent();
 
                     }
                     break;
                 case ItemTypes.HoldInteract:
+                   
 
                     itemPrompt.text = "Hold LMB to Interact";
 
@@ -423,6 +441,7 @@ public class PlayerInteract : MonoBehaviour
                     if (currentHoldState == HoldState.holdingItem)
                     {
 
+                       
 
                         itemPrompt.text = "Put Down?";
                         if (Input.GetButtonDown("Interact"))
