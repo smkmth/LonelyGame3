@@ -29,46 +29,47 @@ public enum ItemTypes
 }
 public class PlayerInteract : MonoBehaviour
 {
+    private InGameTextReader reader;
+    private PlayerManager manager;
+    public GameObject cameraObj;                        //players main camera tagged as main camera, got from Camera.main
+
+    [Header("Player View")]
+    public LayerMask blockingLayer;
+    public LayerMask interactLayer;
+    public LayerMask wallLayer;
     public float lookRadius;
     public float lookRange;
     public float maxLookAngle;
+    [ReadOnly] public GameObject detectedObj;
     public TextMeshProUGUI itemPrompt;
-    public LayerMask blockingLayer;
-    public LayerMask interactLayer;
-    public InGameTextReader reader;
-    float distanceToObject;
+
+
+    [ReadOnly] public float distanceToObject;
+
+    [Header("Holding Object")]
+    public Image curser;
+    public Color interactColor;
+    public Color noColor;
+    public Transform itemHeldTarget;
+    public Transform inspectItemTarget;
+
     public float readDistance;
     public float pickUpDistance;
 
-    public Transform heldObject;
-    public HoldState currentHoldState;
-    public SmoothMouseLook smoothMouseLook;
-
-    public LayerMask wallLayer;
-    public Item heldItemData;
-    public float pickUpRange;
-    public float pickUpRadius;
-    public Transform itemHeldTarget;
-    public Transform inspectItemTarget;
+    private Transform heldObject;
+    [ReadOnly] public HoldState currentHoldState;
     public float throwForce;
-    public float holdDelay;
-    public float holdTimer;
-    public float maxInteractAngle;
-    public float putBackDistance;
-    public float distanceToHeldObject;
 
-    public bool canPutBack;
-    public bool holdingObject = false;
-    public bool objectBehindWall;
+    public float holdStateDelay;
+    [ReadOnly] public float holdTimer;
+    [ReadOnly] public float distanceToHeldObject;
+
     public bool isHoldingEndGameItem;
 
-    public GameObject detectedObj;
     //public ItemTypes thisItemType;
     private InGameCamera inGameCamera;
     public HoldState nextHoldState;
     public float inspectRotSpeed;
-    private PlayerManager manager;
-    public SmoothMouseLook aiming;
     public FirstPersonCharacterController controller;
     public bool interactIsActive =true;
 
@@ -77,6 +78,8 @@ public class PlayerInteract : MonoBehaviour
 
     public void Start()
     {
+        cameraObj = Camera.main.gameObject;
+        
         manager = GetComponent<PlayerManager>();
         reader = GetComponent<InGameTextReader>();
         currentHoldState = HoldState.notHoldingItem;
@@ -108,8 +111,6 @@ public class PlayerInteract : MonoBehaviour
                     if (Input.GetButton("InspectItem"))
                     {
                         ChangeHoldState(HoldState.inspectingItem);
-
-
                     }
                     break;
                 case HoldState.delay:
@@ -138,7 +139,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else
         {
-            holdTimer = holdDelay;
+            holdTimer = holdStateDelay;
             currentHoldState = nextHoldState;
         }
     } 
@@ -146,6 +147,7 @@ public class PlayerInteract : MonoBehaviour
 
     public void ChangeHoldState(HoldState newHoldState, bool holdDelay = true)
     {
+      //  Debug.Log("current hold state is " + currentHoldState + " new hold state is " + newHoldState);
 
         switch (newHoldState)
         {
@@ -161,7 +163,8 @@ public class PlayerInteract : MonoBehaviour
                 break;
             case HoldState.notHoldingItem:
                 controller.characterIsActive = true;
-                aiming.cameraControl = true;
+                manager.ChangePlayerState(PlayerState.freeMovement);
+
                 break;
             
         }
@@ -192,12 +195,11 @@ public class PlayerInteract : MonoBehaviour
         heldObject.gameObject.layer = LayerMask.NameToLayer("HeldItem");
         heldObject.GetComponent<Rigidbody>().isKinematic = true;
         distanceToHeldObject = Vector3.Distance(transform.position, heldObject.position);
-        heldItemData = heldObject.GetComponent<Item>();
         heldObject.GetComponent<Collider>().isTrigger = true;
         heldObject.position = itemHeldTarget.position;
         heldObject.rotation = itemHeldTarget.rotation;
         heldObject.parent = itemHeldTarget;
-        holdingObject = true;
+        
         ChangeHoldState(HoldState.holdingItem);
         
 
@@ -210,10 +212,7 @@ public class PlayerInteract : MonoBehaviour
         }
         heldObject.gameObject.layer = LayerMask.NameToLayer("Item");
         heldObject.GetComponent<Collider>().isTrigger = false;
-        heldItemData = null;
-        canPutBack = false;
         heldObject = null;
-        holdingObject = false;
 
         ChangeHoldState(HoldState.notHoldingItem, false);
 
@@ -221,16 +220,17 @@ public class PlayerInteract : MonoBehaviour
 
     public void Drop()
     {
+        if (IsItemBehindWall())
+        {
+            return;
+        }
         heldObject.GetComponent<Collider>().isTrigger = false;
         heldObject.GetComponent<Rigidbody>().isKinematic = false;
-        heldObject.GetComponent<Rigidbody>().AddForce(smoothMouseLook.transform.forward * throwForce, ForceMode.Impulse);
+        heldObject.GetComponent<Rigidbody>().AddForce(cameraObj.transform.forward * throwForce, ForceMode.Impulse);
         heldObject.gameObject.layer = LayerMask.NameToLayer("Item");
 
         heldObject.parent = null;
-        heldItemData = null;
-        canPutBack = false;
         heldObject = null;
-        holdingObject = false;
         ChangeHoldState(HoldState.notHoldingItem, false);
 
 
@@ -254,10 +254,9 @@ public class PlayerInteract : MonoBehaviour
 
     public GameObject DetectObject()
     {
-        //   Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward, Color.blue, 200.0f);
-
+        //Debug.DrawRay(cameraObj.transform.position, cameraObj.transform.forward, Color.blue, 200.0f);
         RaycastHit hit;
-        if (Physics.SphereCast(Camera.main.transform.position, lookRadius, Camera.main.transform.forward, out hit, lookRange, interactLayer))
+        if (Physics.SphereCast(cameraObj.transform.position, lookRadius, cameraObj.transform.forward, out hit, lookRange, interactLayer))
         {
             return hit.collider.gameObject;
         }
@@ -320,7 +319,14 @@ public class PlayerInteract : MonoBehaviour
         }
         if (obj.tag == "EndGameItem")
         {
+            if (Input.GetButtonDown("Interact"))
+            {
 
+                if (isHoldingEndGameItem)
+                {
+                    manager.WinGame();
+                }
+            }
         }
         if (obj.tag == "HoldInteract")
         {
@@ -342,6 +348,8 @@ public class PlayerInteract : MonoBehaviour
 
     private void CheckCurser(ItemTypes thisItemType)
     {
+
+        curser.color = noColor;
         if (distanceToObject < pickUpDistance)
         {
             switch (thisItemType)
@@ -350,10 +358,11 @@ public class PlayerInteract : MonoBehaviour
                    
 
                     itemPrompt.text = "Press LMB to Read";
-
+                    curser.color = interactColor;
                     if (Input.GetButtonDown("Interact"))
                     {
                         reader.DisplayText(detectedObj.GetComponent<InGameTextObj>().textAsset);
+                        return;
                     }
 
                     break;
@@ -362,7 +371,8 @@ public class PlayerInteract : MonoBehaviour
 
                     if (currentHoldState == HoldState.notHoldingItem)
                     {
-                        
+                        curser.color = interactColor;
+
                         itemPrompt.text = "Press LMB to PickUp " + detectedObj.name;
                         if (Input.GetButtonDown("Interact"))
                         {
@@ -373,26 +383,28 @@ public class PlayerInteract : MonoBehaviour
                     }
                     break;
                 case ItemTypes.Film:
-                   
+
+                    curser.color = interactColor;
 
                     itemPrompt.text = "Press LMB to PickUp Film";
                     if (Input.GetButtonDown("Interact"))
                     {
 
-                        inGameCamera.UpdateShots(3);
+                        inGameCamera.filmCanisters += 1;
                         
                         Destroy(detectedObj);
                     }
                     break;
 
                 case ItemTypes.Camera:
-                   
+
+                    curser.color = interactColor;
 
                     itemPrompt.text = "Press LMB to PickUp Camera";
                     if (Input.GetButtonDown("Interact"))
                     { 
 
-                        inGameCamera.UpdateShots(3);
+                        inGameCamera.UpdateShots(12);
                         inGameCamera.playerHasCamera = true;
                         inGameCamera.cameraIsActive = true;
                         inGameCamera.energyBar.gameObject.SetActive(true);
@@ -400,18 +412,21 @@ public class PlayerInteract : MonoBehaviour
                     }
                     break;
                 case ItemTypes.Interact:
-                   
+
+                    curser.color = interactColor;
 
                     itemPrompt.text = "Press LMB to Interact";
                     if (Input.GetButtonDown("Interact"))
                     {
 
                         detectedObj.GetComponent<GameEventTrigger>().TriggerEvent();
+                        return;
 
                     }
                     break;
                 case ItemTypes.HoldInteract:
-                   
+
+                    curser.color = interactColor;
 
                     itemPrompt.text = "Hold LMB to Interact";
 
@@ -433,6 +448,7 @@ public class PlayerInteract : MonoBehaviour
                             itemPrompt.text = "Done";
 
                             detectedObj.GetComponent<GameEventTrigger>().TriggerEvent();
+
                         }
 
                     }
@@ -441,8 +457,7 @@ public class PlayerInteract : MonoBehaviour
                     if (currentHoldState == HoldState.holdingItem)
                     {
 
-                       
-
+                        curser.color = interactColor;
                         itemPrompt.text = "Put Down?";
                         if (Input.GetButtonDown("Interact"))
                         {
@@ -470,10 +485,14 @@ public class PlayerInteract : MonoBehaviour
                     }
                     break;
                 case ItemTypes.Wall:
+                    curser.color = noColor;
+
                     itemPrompt.text = "";
                     break;
 
                 case ItemTypes.Unknown:
+
+                    curser.color = noColor;
                     itemPrompt.text = "";
                     break;
 

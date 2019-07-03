@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
 public enum PlayerState
 {
     freeMovement,
@@ -14,7 +16,6 @@ public enum PlayerState
 }
 public class PlayerManager : MonoBehaviour
 {
-
     public FirstPersonCharacterController controller;
     public Rigidbody rb;
     public AudioSource footstepsAudioSource;
@@ -37,6 +38,11 @@ public class PlayerManager : MonoBehaviour
     public float normalMoveSpeed;
     public float cameraMoveSpeed;
     public GameObject crosshair;
+
+    public TextMeshProUGUI gameOverTextObj;
+    public string gameWinText;
+    public string gameLooseText;
+    public GameObject gameWinScreen;
     // Start is called before the first frame update
     void Start()
     {
@@ -100,8 +106,24 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void GameLose()
+    {
+
+        ChangePlayerState(PlayerState.fullyPaused);
+        gameWinScreen.SetActive(true);
+        gameOverTextObj.text = gameLooseText;
+
+    }
+
+    public void WinGame()
+    {
+        ChangePlayerState(PlayerState.fullyPaused);
+        gameWinScreen.SetActive(true);
+        gameOverTextObj.text = gameWinText;
+    }
     public void ChangePlayerState(PlayerState newPlayerState, bool stateChangeDelay =true)
     {
+        Debug.Log("Change State from " + currentPlayerState + " To " + newPlayerState);
         if (newPlayerState == currentPlayerState)
         {
             return;
@@ -153,13 +175,12 @@ public class PlayerManager : MonoBehaviour
                 Time.timeScale = 1;
                 controller.characterIsActive = false;
                 controller.playerCanRun = false;
-
                 mouseLook.cameraControl = false;
                 inGameCamera.cameraIsActive = false;
 
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
-                crosshair.SetActive(true);
+                crosshair.SetActive(false);
 
                 break;
             case PlayerState.noCameraAndMovementCursorFree:
@@ -203,6 +224,7 @@ public class PlayerManager : MonoBehaviour
             case PlayerState.delay:
                 break;
         }
+
         if (stateChangeDelay)
         {
             nextPlayerState = newPlayerState;

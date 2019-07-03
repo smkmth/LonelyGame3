@@ -21,6 +21,7 @@ public class InGameTextReader : MonoBehaviour
     public float inputInactive =.3f;
 
     private bool canClick = false;
+    public bool playerIsReading =false;
 
     public void Start()
     {
@@ -31,6 +32,11 @@ public class InGameTextReader : MonoBehaviour
 
     private void Update()
     {
+        if (!playerIsReading)
+        {
+            return;
+        }
+
         if (timer <= 0)
         {
             canClick = true;
@@ -41,10 +47,6 @@ public class InGameTextReader : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Interact"))
-        {
-
-        }
 
         if (canClick)
         {
@@ -60,7 +62,7 @@ public class InGameTextReader : MonoBehaviour
 
     public void DisplayText(InGameText text)
     {
-        Debug.Log("Display text");
+        playerIsReading = true;
         canClick = false;
         timer = inputInactive;
         ReaderUI.SetActive(true);
@@ -71,7 +73,7 @@ public class InGameTextReader : MonoBehaviour
 
     public void ResumeGame()
     {
-
+        playerIsReading = false;
         playerManager.ChangePlayerState(PlayerState.freeMovement);
         ReaderUI.SetActive(false);
         displayText.text = "";

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerDamage : MonoBehaviour
 {
+    public PlayerManager manager;
     public bool isDamaged;
     public GameObject bloodImage;
     public GameObject screenFlash;
@@ -16,6 +17,7 @@ public class PlayerDamage : MonoBehaviour
 
     public void Start()
     {
+        
         timer = timeDamaged;
     }
 
@@ -35,7 +37,7 @@ public class PlayerDamage : MonoBehaviour
             bloodImage.SetActive(false);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            gameOver.SetActive(true);
+            manager.GameLose();
         }
     }
     public IEnumerator DamageFlash()
