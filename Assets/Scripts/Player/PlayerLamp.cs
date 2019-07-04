@@ -14,7 +14,7 @@ public class PlayerLamp : MonoBehaviour
 
     private float timeStartedLerp;
     private bool isLerping;
-    
+    public bool canUseLamp;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,13 +30,13 @@ public class PlayerLamp : MonoBehaviour
             float percentageComplete = timeSinceStarted / timeToDrop;
             if (!lampOn)
             {
-                playerLightPos.position = Vector3.Lerp(heldPos.position,droppedPos.position, percentageComplete);
 
+                playerLightPos.position = Vector3.Lerp(heldPos.position,droppedPos.position, percentageComplete);
             }
             else
             {
-                playerLightPos.position = Vector3.Lerp(droppedPos.position,  heldPos.position, percentageComplete);
 
+                playerLightPos.position = Vector3.Lerp(droppedPos.position,  heldPos.position, percentageComplete);
             }
 
 
@@ -48,16 +48,22 @@ public class PlayerLamp : MonoBehaviour
         }
         if (Input.GetButtonDown("Lamp"))
         {
-            playerLight.ToggleLight(lampOn);
-            StartLerpingPos();
-            if (lampOn)
+            if (canUseLamp)
             {
-                lampOn = false;
+                if (lampOn)
+                {
+
+                    lampOn = false;
+                    ToggleLamp(false);
+                }
+                else
+                {
+                    lampOn = true;
+                    ToggleLamp(true);
+                }
+
             }
-            else
-            {
-                lampOn = true;
-            }
+           
 
         }
     }
@@ -68,6 +74,13 @@ public class PlayerLamp : MonoBehaviour
         timeStartedLerp = Time.time;
 
 
+    }
+    public void ToggleLamp(bool isLampOn )
+    {
+        lampOn = isLampOn;
+        playerLight.ToggleLight(isLampOn);
+        StartLerpingPos();
+      
     }
 
 }

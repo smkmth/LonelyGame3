@@ -43,6 +43,8 @@ public class PlayerManager : MonoBehaviour
     public string gameWinText;
     public string gameLooseText;
     public GameObject gameWinScreen;
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -135,7 +137,7 @@ public class PlayerManager : MonoBehaviour
                 interact.interactIsActive = true;
                 controller.characterIsActive = true;
                 mouseLook.cameraControl = true;
-
+                lamp.canUseLamp = true;
                 inGameCamera.cameraIsActive = true;
                 controller.playerCanRun = true;
                 Cursor.lockState = CursorLockMode.Locked;
@@ -149,6 +151,7 @@ public class PlayerManager : MonoBehaviour
                 Time.timeScale = 1;
                 controller.characterIsActive = false;
                 mouseLook.cameraControl = true;
+                lamp.canUseLamp = true;
 
                 inGameCamera.cameraIsActive = false;
                 controller.playerCanRun = false;
@@ -167,6 +170,7 @@ public class PlayerManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 crosshair.SetActive(true);
+                lamp.canUseLamp = true;
 
 
                 break;
@@ -177,6 +181,7 @@ public class PlayerManager : MonoBehaviour
                 controller.playerCanRun = false;
                 mouseLook.cameraControl = false;
                 inGameCamera.cameraIsActive = false;
+                lamp.canUseLamp = true;
 
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -191,6 +196,8 @@ public class PlayerManager : MonoBehaviour
                 mouseLook.cameraControl = false;
                 inGameCamera.cameraIsActive = false;
                 Cursor.visible = true;
+                lamp.canUseLamp = true;
+
                 Cursor.lockState = CursorLockMode.None;
                 crosshair.SetActive(true);
 
@@ -203,6 +210,8 @@ public class PlayerManager : MonoBehaviour
                 mouseLook.cameraControl = false;
                 inGameCamera.cameraIsActive =false;
                 Cursor.visible = true;
+                lamp.canUseLamp = true;
+
                 Cursor.lockState = CursorLockMode.None;
                 crosshair.SetActive(true);
 
@@ -216,6 +225,9 @@ public class PlayerManager : MonoBehaviour
                 mouseLook.cameraControl = true;
                 inGameCamera.cameraIsActive = true;
                 crosshair.SetActive(false);
+                lamp.canUseLamp = false;
+                lamp.ToggleLamp(false);
+
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 break;

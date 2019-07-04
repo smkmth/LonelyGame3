@@ -30,12 +30,12 @@ public class CandleFlicker : MonoBehaviour {
     {
         if (lampIsOn)
         {
-            lightIsOn = false;
-            StartCoroutine(LightFade(candleLight, 0.0f, .3f));
+            lightIsOn = true;
         }
         else
         {
-            lightIsOn = true;
+            lightIsOn = false;
+            StartCoroutine(LightFade(candleLight, 0.0f, .3f));
 
         }
     }

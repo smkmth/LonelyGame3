@@ -8,7 +8,7 @@ public enum ClueType
     PhotoTarget
 
 }
-public class Clue : MonoBehaviour {
+public class Clue : Item {
 
     public ClueType clueType;
     public string clueText;
