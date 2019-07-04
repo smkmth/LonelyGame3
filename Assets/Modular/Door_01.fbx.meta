@@ -3,7 +3,12 @@ guid: f426fb88da2086d429270f3e30e57e09
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Door1
+    second: {fileID: 2100000, guid: 34fb31ea4be5e7644abc4d14d525f65f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -81,12 +86,12 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: 
+    rootMotionBoneName: DoorJoint
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
