@@ -44,6 +44,17 @@ public class PlayerManager : MonoBehaviour
     public string gameLooseText;
     public GameObject gameWinScreen;
 
+
+    public TextMeshProUGUI hintText;
+    public bool showHints;
+    public bool hintOnScreen;
+    public float hintOnScreenTime;
+    private float hintTimer;
+
+    public List<string> seenHints;
+    public bool viewingSeenHints;
+    public TextMeshProUGUI seenHintsText;
+    public GameObject seenHintsUI;
     
     // Start is called before the first frame update
     void Start()
@@ -123,6 +134,7 @@ public class PlayerManager : MonoBehaviour
         gameWinScreen.SetActive(true);
         gameOverTextObj.text = gameWinText;
     }
+
     public void ChangePlayerState(PlayerState newPlayerState, bool stateChangeDelay =true)
     {
         Debug.Log("Change State from " + currentPlayerState + " To " + newPlayerState);
@@ -142,6 +154,7 @@ public class PlayerManager : MonoBehaviour
                 controller.playerCanRun = true;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+                hintText.gameObject.SetActive(true);
                 crosshair.SetActive(true);
 
                 break;
@@ -158,6 +171,7 @@ public class PlayerManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 crosshair.SetActive(true);
+                hintText.gameObject.SetActive(true);
 
                 break;
             case PlayerState.noCameraMovement:
@@ -171,6 +185,7 @@ public class PlayerManager : MonoBehaviour
                 Cursor.visible = false;
                 crosshair.SetActive(true);
                 lamp.canUseLamp = true;
+                hintText.gameObject.SetActive(true);
 
 
                 break;
@@ -182,6 +197,7 @@ public class PlayerManager : MonoBehaviour
                 mouseLook.cameraControl = false;
                 inGameCamera.cameraIsActive = false;
                 lamp.canUseLamp = true;
+                hintText.gameObject.SetActive(true);
 
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -197,6 +213,7 @@ public class PlayerManager : MonoBehaviour
                 inGameCamera.cameraIsActive = false;
                 Cursor.visible = true;
                 lamp.canUseLamp = true;
+                hintText.gameObject.SetActive(true);
 
                 Cursor.lockState = CursorLockMode.None;
                 crosshair.SetActive(true);
@@ -211,6 +228,7 @@ public class PlayerManager : MonoBehaviour
                 inGameCamera.cameraIsActive =false;
                 Cursor.visible = true;
                 lamp.canUseLamp = true;
+                hintText.gameObject.SetActive(false);
 
                 Cursor.lockState = CursorLockMode.None;
                 crosshair.SetActive(true);
@@ -227,6 +245,7 @@ public class PlayerManager : MonoBehaviour
                 crosshair.SetActive(false);
                 lamp.canUseLamp = false;
                 lamp.ToggleLamp(false);
+                hintText.gameObject.SetActive(true);
 
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -253,6 +272,15 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (hintOnScreen)
+        {
+            hintTimer -= Time.deltaTime;
+            if (hintTimer <= 0.0f)
+            {
+                hintText.text = "";
+                hintOnScreen = false;
+            }
+        }
         switch (currentPlayerState)
         {
             case PlayerState.delay:
@@ -266,5 +294,34 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
         }
+        if (Input.GetButtonDown("Help"))
+        {
+            if (viewingSeenHints)
+            {
+
+            }
+        }
+    }
+
+    public void DisplayHint(string hintString ,float hintOnScreenTime)
+    {
+        if (showHints)
+        {
+            
+            hintOnScreen = true;
+            hintText.text += "\n" + hintString;
+            seenHints.Add("\n" + hintString);
+            hintTimer = hintOnScreenTime;
+
+        }
+        
+
+    }
+
+    public void ToggleViewdHints()
+    {
+        ChangePlayerState(PlayerState.fullyPaused);
+
+
     }
 }

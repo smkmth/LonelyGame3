@@ -23,6 +23,7 @@ public enum ItemTypes
     Film,
     Camera,
     Book,
+    LookAtObj,
     Interact,
     Unknown,
     HoldInteract
@@ -74,6 +75,10 @@ public class PlayerInteract : MonoBehaviour
     public bool interactIsActive =true;
 
     public Image crosshair;
+
+    //LookAt event stuff
+    public GameEventTrigger lookAtEventObj;
+    public bool lookingAt;
 
 
     public void Start()
@@ -341,6 +346,11 @@ public class PlayerInteract : MonoBehaviour
             }
             return ItemTypes.HoldInteract;
 
+
+        }
+        if (obj.tag == "LookAt")
+        {
+            return ItemTypes.LookAtObj;
         }
         return ItemTypes.Unknown;
 
@@ -348,19 +358,57 @@ public class PlayerInteract : MonoBehaviour
 
     private void CheckCurser(ItemTypes thisItemType)
     {
+        /*
+        if (lookingAt)
+        {
+            if (detectedObj.name != lookAtEventObj.name)
+            {
+                lookingAt = false;
+                lookAtEventObj.TriggerEvent();
+                lookAtEventObj = null;
+            }
+        }
+        */
+        if (thisItemType == ItemTypes.LookAtObj)
+        {
+            GameEventTrigger trigger = detectedObj.GetComponent<GameEventTrigger>();
+            if (trigger)
+            {
+                if (trigger.howEventIsTriggered == TriggerType.LookAwayFromTriggerBox)
+                {
+                    trigger.lookedAt = true;
+                    lookingAt = true;
+                    lookAtEventObj = trigger;
+                }
+                else if (trigger.howEventIsTriggered == TriggerType.LookAtTriggerBox)
+                {
+                   trigger.TriggerEvent();
 
+                }
+            }
+            else
+            {
+                Debug.LogError("No GameEventTrigger on LookAtObj");
+            }
+        }
         curser.color = noColor;
-        if (distanceToObject < pickUpDistance)
+       
+        GameEventTrigger trigger = detectedObj.GetComponent<GameEventTrigger>();
+        if (distanceToObject <= pickUpDistance)
         {
             switch (thisItemType)
             {
+                
                 case ItemTypes.Book:
-                   
-
                     itemPrompt.text = "Press LMB to Read";
                     curser.color = interactColor;
                     if (Input.GetButtonDown("Interact"))
                     {
+
+                        if (trigger)
+                        {
+                            trigger.TriggerEvent();
+                        }
                         reader.DisplayText(detectedObj.GetComponent<InGameTextObj>().textAsset);
                         return;
                     }
@@ -402,8 +450,9 @@ public class PlayerInteract : MonoBehaviour
 
                     itemPrompt.text = "Press LMB to PickUp Camera";
                     if (Input.GetButtonDown("Interact"))
-                    { 
+                    {
 
+                        trigger.TriggerEvent();
                         inGameCamera.UpdateShots(12);
                         inGameCamera.playerHasCamera = true;
                         inGameCamera.cameraIsActive = true;

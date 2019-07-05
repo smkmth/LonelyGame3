@@ -7,12 +7,15 @@ public enum TriggerType
 {
     OnEnterTriggerBox,
     OnExitTriggerBox,
+    OnTriggerBoxStay,
     Interact,
-    HoldInteract
+    HoldInteract,
+    LookAtTriggerBox,
+    LookAwayFromTriggerBox
 }
 public class GameEventTrigger : MonoBehaviour
 {
-
+    
     public TriggerType howEventIsTriggered;
     private GameEventReceiver[] eventReceivers;
 
@@ -22,17 +25,59 @@ public class GameEventTrigger : MonoBehaviour
     public bool afterTime;
     public float timeToWait;
     private float timer;
-    public bool timerStarted;
+
+    public bool deactivateSelfOnFinish;
+
+    [ReadOnly] public bool timerStarted;
+    [ReadOnly] public bool timerFinished;
+    [ReadOnly] public bool lookedAt;
+
+    Collider objCollider;
+    Camera cam;
+    Plane[] planes;
+
 
     public void Start()
     {
-
+        if (howEventIsTriggered == TriggerType.LookAwayFromTriggerBox)
+        {
+            cam = Camera.main;
+            objCollider = GetComponent<Collider>();
+        }
+       if (howEventIsTriggered == TriggerType.LookAtTriggerBox)
+        {
+            tag = "LookAt";
+        }
+       if (howEventIsTriggered == TriggerType.OnTriggerBoxStay)
+        {
+            if (afterTime == false || timeToWait <= 0)
+            {
+                Debug.LogError("To Do TriggerBox stay, you need to mark AfterTime as true, and the time to wait as greater that zero, " +
+                    "this is not true for " + gameObject.name);
+            }
+        }
         eventReceivers = GetComponents<GameEventReceiver>();
         timer = 0.0f;
       
     }
     public void Update()
     {
+        if (howEventIsTriggered == TriggerType.LookAwayFromTriggerBox)
+        {
+            if (lookedAt)
+            {
+                planes = GeometryUtility.CalculateFrustumPlanes(cam);
+                if (GeometryUtility.TestPlanesAABB(planes, objCollider.bounds))
+                {
+
+                }
+                else
+                {
+
+                    TriggerEvent();
+                }
+            }
+        }
         if (afterTime && (!hasBeenTriggered || canTriggerAgain))
         {
             if (timerStarted)
@@ -41,6 +86,7 @@ public class GameEventTrigger : MonoBehaviour
                 if (timer >= timeToWait)
                 {
                     TriggerEvent();
+                    timerFinished =true;
                     timer = 0.0f;
                 }
                 else
@@ -49,6 +95,7 @@ public class GameEventTrigger : MonoBehaviour
                 }
             }
         }
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -58,16 +105,16 @@ public class GameEventTrigger : MonoBehaviour
         {
             if (howEventIsTriggered == TriggerType.OnEnterTriggerBox)
             {
-                if (!afterTime)
-                {
-
-                    TriggerEvent();
-                }
-                else
-                {
-                    timerStarted = true;
-                }
+               
+                TriggerEvent();
+              
             }
+            else if (howEventIsTriggered == TriggerType.OnTriggerBoxStay)
+            {
+                TriggerEvent();
+
+            }
+        
 
 
         }
@@ -79,15 +126,16 @@ public class GameEventTrigger : MonoBehaviour
         {
             if (howEventIsTriggered == TriggerType.OnExitTriggerBox)
             {
-                if (!afterTime)
-                {
+              
+                TriggerEvent();
+               
 
-                    TriggerEvent();
-                }
-                else
-                {
-                    timerStarted = true;
-                }
+            }
+            else if (howEventIsTriggered == TriggerType.OnTriggerBoxStay)
+            {
+                timerStarted = false;
+                hasBeenTriggered = true;
+
             }
 
         }
@@ -99,12 +147,25 @@ public class GameEventTrigger : MonoBehaviour
         if (!hasBeenTriggered || canTriggerAgain)
         {
 
-            foreach (GameEventReceiver receiver in eventReceivers)
+            if (!afterTime || timerFinished )
             {
-                receiver.DoEvent();
+
+                foreach (GameEventReceiver receiver in eventReceivers)
+                {
+                    receiver.DoEvent();
+                    if (deactivateSelfOnFinish)
+                    {
+                        gameObject.SetActive(false);
+                    }
+
+                }
+                hasBeenTriggered = true;
+            }
+            else
+            {
+                timerStarted = true;
 
             }
-            hasBeenTriggered = true;
         }
     }
 

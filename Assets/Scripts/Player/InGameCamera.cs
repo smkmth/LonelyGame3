@@ -74,15 +74,7 @@ public class InGameCamera : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("GetCamera"))
-        {
-
-            UpdateShots(12);
-            playerHasCamera = true;
-            cameraIsActive = true;
-            energyBar.gameObject.SetActive(true);
-
-        }
+        
         if (!playerHasCamera)
         {
             return;

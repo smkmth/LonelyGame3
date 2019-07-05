@@ -98,9 +98,7 @@ public class InventoryDisplayer : MonoBehaviour
                     Key keyItem = (Key)selectedItem;
                
                     break;
-                case ItemType.Clue:
-                    Clue clueItem = (Clue)selectedItem;
-                    break;
+          
                 case ItemType.Film:
                     Film filmItem = (Film)selectedItem;
                     break;
