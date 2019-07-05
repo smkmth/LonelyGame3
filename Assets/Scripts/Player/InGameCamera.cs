@@ -29,9 +29,9 @@ public class InGameCamera : MonoBehaviour
     public float ghostOnScreenTime;
     public Ghost ghostObj;
 
+    public bool playerHasCamera =false;
 
     [ReadOnly] public bool cameraIsActive =true;
-    [ReadOnly] public bool playerHasCamera =false;
     [ReadOnly] public bool justStartedAiming;
     [ReadOnly] public bool justStoppedAiming;
 
@@ -74,6 +74,15 @@ public class InGameCamera : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetButtonDown("GetCamera"))
+        {
+
+            UpdateShots(12);
+            playerHasCamera = true;
+            cameraIsActive = true;
+            energyBar.gameObject.SetActive(true);
+
+        }
         if (!playerHasCamera)
         {
             return;
@@ -84,7 +93,6 @@ public class InGameCamera : MonoBehaviour
             {
                 filmCounterRect.rectTransform.localPosition = Vector3.Lerp( filmCounterEndPos, filmCounterCurrentPos, Mathf.Clamp01((reloadTimer / reloadTime)));
                 reloadTimer -= Time.deltaTime;
-                return;
             }
             else
             {
@@ -128,11 +136,15 @@ public class InGameCamera : MonoBehaviour
             
             if (Input.GetButtonDown("Interact"))
             {
-                if (timerBetweenShotsTime > timeBetweenShots && cameraShots >= 1)
+                if (!reloadingFilm)
                 {
-                    timerBetweenShotsTime = 0;
-                    StartCoroutine(TakePhoto());
-                    UpdateShots(-1);
+
+                    if (timerBetweenShotsTime > timeBetweenShots && cameraShots >= 1)
+                    {
+                        timerBetweenShotsTime = 0;
+                        StartCoroutine(TakePhoto());
+                        UpdateShots(-1);
+                    }
                 }
 
             }

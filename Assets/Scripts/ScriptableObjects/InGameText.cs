@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "InGameText")]
-public class InGameText : ScriptableObject
+public class InGameText : Item
 {
     public string TextToDisplay;
 }

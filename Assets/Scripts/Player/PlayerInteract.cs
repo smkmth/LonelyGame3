@@ -433,7 +433,7 @@ public class PlayerInteract : MonoBehaviour
                     if (Input.GetButtonDown("Interact"))
                     {
 
-                        holdTimer = detectedObj.GetComponent<GameEventTrigger>().holdTimer;
+
 
 
                     }

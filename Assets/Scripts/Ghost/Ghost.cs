@@ -59,7 +59,7 @@ public class Ghost : MonoBehaviour
     Vector3 lastKnownPos;
 
     [Header("Ghost Search AI")]
-    public Vector3 gotToPlaceTarget;
+    public Transform gotToPlaceTarget;
 
 
     [Header("Ghost Audio")]
@@ -191,7 +191,7 @@ public class Ghost : MonoBehaviour
                         if (testHit.collider.tag == "Player")
                         {
                             Debug.DrawRay(transform.position, (player.position- transform.position), Color.yellow, 5.0f );
-                            Debug.Log("At " + Time.time + " I really Saw " + testHit.collider.name);
+
                             canSeePlayer = true;
 
                         }
@@ -199,7 +199,6 @@ public class Ghost : MonoBehaviour
                         {
                             Debug.DrawRay(transform.position, (player.position - transform.position), Color.red, 5.0f);
 
-                            Debug.Log("At " + Time.time + " I got blocked by " + testHit.collider.name);
 
                             canSeePlayer = false;
                         }
@@ -304,7 +303,7 @@ public class Ghost : MonoBehaviour
                     }
                     break;
                 case GhostState.GoToPlace:
-                    if (MoveTowardsPlayer(gotToPlaceTarget))
+                    if (MoveTowardsPlayer(gotToPlaceTarget.position))
                     {
                         ChangeGhostState(GhostState.Patrolling);
                     }
@@ -318,9 +317,14 @@ public class Ghost : MonoBehaviour
         }
         
     }
-
+    public void DeactivateGhost()
+    {
+        ghostActive = false;
+        gameObject.SetActive(false);
+    }
     public bool MoveTowardsPlayer(Vector3 targetPos)
     {
+        transform.LookAt(targetPos);
         if (distanceToTarget > stopDistance)
         {
             if (distanceToTarget > slowdownDistance)
@@ -368,6 +372,9 @@ public class Ghost : MonoBehaviour
                 lastKnownPos = target.position;
                 Debug.Log("searching");
                 searchTimer = searchTime;
+                break;
+            case GhostState.GoToPlace:
+                target = gotToPlaceTarget;
                 break;
 
         }

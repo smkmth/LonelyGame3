@@ -28,6 +28,11 @@ public class FirstPersonCharacterController : MonoBehaviour
     public GameObject tutorial;
     public bool tutorialOn;
     public bool playerCanRun;
+    public Transform standingPos;
+    public Vector3 crouchingScale;
+    public Transform crouchingPos;
+    public bool playerIsCrouching;
+    public Transform playerCollider;
 
     private void Start()
     {
@@ -55,6 +60,42 @@ public class FirstPersonCharacterController : MonoBehaviour
         }
 
     }
+    public void ToggleCrouch(bool isCrouching)
+    {
+        if (isCrouching)
+        {
+            playerCamera.transform.position = crouchingPos.position;
+            playerCollider.localScale= crouchingScale;
+            playerIsCrouching = true;
+            transform.position = new Vector3(transform.position.x, .3f, transform.position.z);
+        }
+        else
+        {
+           
+            if (CanStand())
+            {
+
+                playerCamera.transform.position = standingPos.position;
+                playerCollider.localScale = Vector3.one;
+                playerIsCrouching = false;
+            }
+
+        }
+
+    }
+    public bool CanStand()
+    {
+        if(Physics.Raycast(transform.position,Vector3.up, 1))
+        {
+            Debug.Log("somthing up");
+            return false;
+        }
+        else
+        {
+            return true;
+
+        }
+    }
     public void Update()
     {
         if (Input.GetButtonDown("VolUp"))
@@ -74,7 +115,66 @@ public class FirstPersonCharacterController : MonoBehaviour
         energyBar.value = sprintTimer;
         if (characterIsActive)
         {
+            if (Input.GetButton("Crouch"))
+            {
+                if (!playerIsCrouching)
+                {
+                    ToggleCrouch(true);
 
+                }
+            }
+            else
+            {
+                if (playerIsCrouching)
+                {
+                    ToggleCrouch(false);
+                }
+            }
+            if (playerCanRun)
+            {
+                if (Input.GetButton("Run"))
+                {
+                    if (enoughStamina)
+                    {
+                        isRunning = true;
+                    }
+                }
+                else
+                {
+                    isRunning = false;
+
+                }
+            }
+
+
+            if (isRunning)
+            {
+                if (sprintTimer < sprintTime)
+                {
+                    sprintTimer += Time.deltaTime;
+                }
+                else
+                {
+                    enoughStamina = false;
+                    isRunning = false;
+
+                }
+
+
+            }
+            else
+            {
+                if (sprintTimer > 0)
+                {
+                    sprintTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    enoughStamina = true;
+                }
+
+
+            }
             int index = Random.Range(0, footsteps.Length);
             AudioClip footstep = footsteps[index];
             if (moving)
@@ -132,51 +232,7 @@ public class FirstPersonCharacterController : MonoBehaviour
                 moving = false;
 
             }
-            if (playerCanRun)
-            {
-                if (Input.GetButton("Run"))
-                {
-                    if (enoughStamina)
-                    {
-                        isRunning = true;
-                    }
-                }
-                else
-                {
-                    isRunning = false;
-
-                }
-            }
-
-
-            if (isRunning)
-            {
-                if (sprintTimer < sprintTime)
-                {
-                    sprintTimer += Time.deltaTime;
-                }
-                else
-                {
-                    enoughStamina = false;
-                    isRunning = false;
-
-                }
-
-
-            }
-            else
-            {
-                if (sprintTimer > 0)
-                {
-                    sprintTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    enoughStamina = true;
-                }
-
-
-            }
+         
 
             movementVector = playerCamera.transform.TransformDirection(movementVector);
             movementVector.y = 0;
