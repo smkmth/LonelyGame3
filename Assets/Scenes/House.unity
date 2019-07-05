@@ -2490,7 +2490,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintToDisplay: You can look down the viewfinder of your Camera by holding the right
-    mouse button.
+    mouse button. While looking down the viewfinder, you can take photos with the
+    left mouse button.
   lengthOfTimeToDisplayHint: 5
 --- !u!114 &103074769
 MonoBehaviour:
@@ -16099,6 +16100,8 @@ GameObject:
   - component: {fileID: 848157396}
   - component: {fileID: 848157395}
   - component: {fileID: 848157394}
+  - component: {fileID: 848157399}
+  - component: {fileID: 848157398}
   m_Layer: 16
   m_Name: Cube (1)
   m_TagString: TextObj
@@ -16191,6 +16194,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848157392}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &848157398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848157392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a31790f5a0fa434b808a70a80f736ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugMessage: event
+--- !u!114 &848157399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848157392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e75108fa2450a14c9827e3ceca0685c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  howEventIsTriggered: 3
+  canTriggerAgain: 0
+  hasBeenTriggered: 0
+  afterTime: 0
+  timeToWait: 0
+  deactivateSelfOnFinish: 0
+  timerStarted: 0
+  timerFinished: 0
+  lookedAt: 0
 --- !u!4 &861325946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: efa1de7811f8ee944a09554a65a91c7b,

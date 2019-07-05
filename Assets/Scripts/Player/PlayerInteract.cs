@@ -371,18 +371,18 @@ public class PlayerInteract : MonoBehaviour
         */
         if (thisItemType == ItemTypes.LookAtObj)
         {
-            GameEventTrigger trigger = detectedObj.GetComponent<GameEventTrigger>();
-            if (trigger)
+            GameEventTrigger lookatTrigger = detectedObj.GetComponent<GameEventTrigger>();
+            if (lookatTrigger)
             {
-                if (trigger.howEventIsTriggered == TriggerType.LookAwayFromTriggerBox)
+                if (lookatTrigger.howEventIsTriggered == TriggerType.LookAwayFromTriggerBox)
                 {
-                    trigger.lookedAt = true;
+                    lookatTrigger.lookedAt = true;
                     lookingAt = true;
-                    lookAtEventObj = trigger;
+                    lookAtEventObj = lookatTrigger;
                 }
-                else if (trigger.howEventIsTriggered == TriggerType.LookAtTriggerBox)
+                else if (lookatTrigger.howEventIsTriggered == TriggerType.LookAtTriggerBox)
                 {
-                   trigger.TriggerEvent();
+                   lookatTrigger.TriggerEvent();
 
                 }
             }
@@ -392,8 +392,11 @@ public class PlayerInteract : MonoBehaviour
             }
         }
         curser.color = noColor;
-       
-        GameEventTrigger trigger = detectedObj.GetComponent<GameEventTrigger>();
+        GameEventTrigger itemtrigger = null;
+        if (thisItemType != ItemTypes.Wall || thisItemType != ItemTypes.Surface || thisItemType != ItemTypes.Unknown || thisItemType != ItemTypes.Nothing)
+        {
+            itemtrigger = detectedObj.GetComponent<GameEventTrigger>();
+        }
         if (distanceToObject <= pickUpDistance)
         {
             switch (thisItemType)
@@ -405,9 +408,9 @@ public class PlayerInteract : MonoBehaviour
                     if (Input.GetButtonDown("Interact"))
                     {
 
-                        if (trigger)
+                        if (itemtrigger)
                         {
-                            trigger.TriggerEvent();
+                            itemtrigger.TriggerEvent();
                         }
                         reader.DisplayText(detectedObj.GetComponent<InGameTextObj>().textAsset);
                         return;
@@ -424,6 +427,10 @@ public class PlayerInteract : MonoBehaviour
                         itemPrompt.text = "Press LMB to PickUp " + detectedObj.name;
                         if (Input.GetButtonDown("Interact"))
                         {
+                            if (itemtrigger)
+                            {
+                                itemtrigger.TriggerEvent();
+                            }
                             PickUp(detectedObj);
                         }
                         
@@ -437,7 +444,10 @@ public class PlayerInteract : MonoBehaviour
                     itemPrompt.text = "Press LMB to PickUp Film";
                     if (Input.GetButtonDown("Interact"))
                     {
-
+                        if (itemtrigger)
+                        {
+                            itemtrigger.TriggerEvent();
+                        }
                         inGameCamera.filmCanisters += 1;
                         
                         Destroy(detectedObj);
@@ -452,7 +462,10 @@ public class PlayerInteract : MonoBehaviour
                     if (Input.GetButtonDown("Interact"))
                     {
 
-                        trigger.TriggerEvent();
+                        if (itemtrigger)
+                        {
+                            itemtrigger.TriggerEvent();
+                        }
                         inGameCamera.UpdateShots(12);
                         inGameCamera.playerHasCamera = true;
                         inGameCamera.cameraIsActive = true;
@@ -467,7 +480,7 @@ public class PlayerInteract : MonoBehaviour
                     itemPrompt.text = "Press LMB to Interact";
                     if (Input.GetButtonDown("Interact"))
                     {
-
+                      
                         detectedObj.GetComponent<GameEventTrigger>().TriggerEvent();
                         return;
 
@@ -481,7 +494,7 @@ public class PlayerInteract : MonoBehaviour
 
                     if (Input.GetButtonDown("Interact"))
                     {
-
+                      
 
 
 
