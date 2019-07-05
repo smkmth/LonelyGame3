@@ -1852,6 +1852,9 @@ MonoBehaviour:
   howEventIsTriggered: 2
   canTriggerAgain: 0
   hasBeenTriggered: 0
+  afterTime: 0
+  timeToWait: 0
+  timerStarted: 0
 --- !u!114 &50540961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2592,6 +2595,9 @@ MonoBehaviour:
   howEventIsTriggered: 0
   canTriggerAgain: 0
   hasBeenTriggered: 0
+  afterTime: 0
+  timeToWait: 0
+  timerStarted: 0
 --- !u!65 &101322292
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5161,6 +5167,9 @@ MonoBehaviour:
   howEventIsTriggered: 0
   canTriggerAgain: 0
   hasBeenTriggered: 0
+  afterTime: 0
+  timeToWait: 0
+  timerStarted: 0
 --- !u!65 &237488989
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5937,7 +5946,7 @@ GameObject:
   - component: {fileID: 285733664}
   - component: {fileID: 285733663}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: BaookcaseAnim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8216,6 +8225,9 @@ MonoBehaviour:
   howEventIsTriggered: 2
   canTriggerAgain: 0
   hasBeenTriggered: 0
+  afterTime: 0
+  timeToWait: 0
+  timerStarted: 0
 --- !u!1 &340127331
 GameObject:
   m_ObjectHideFlags: 0
@@ -13237,6 +13249,9 @@ MonoBehaviour:
   howEventIsTriggered: 2
   canTriggerAgain: 0
   hasBeenTriggered: 0
+  afterTime: 0
+  timeToWait: 0
+  timerStarted: 0
 --- !u!1 &540282660
 GameObject:
   m_ObjectHideFlags: 0
@@ -13984,6 +13999,9 @@ MonoBehaviour:
   howEventIsTriggered: 0
   canTriggerAgain: 0
   hasBeenTriggered: 0
+  afterTime: 0
+  timeToWait: 0
+  timerStarted: 0
 --- !u!65 &592762311
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16512,6 +16530,9 @@ MonoBehaviour:
   howEventIsTriggered: 0
   canTriggerAgain: 0
   hasBeenTriggered: 0
+  afterTime: 0
+  timeToWait: 0
+  timerStarted: 0
 --- !u!65 &716484608
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33890,7 +33911,7 @@ PrefabInstance:
     - target: {fileID: 5070230334021935471, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.172
+      value: -44.7
       objectReference: {fileID: 0}
     - target: {fileID: 5070230334021935471, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
@@ -33900,7 +33921,7 @@ PrefabInstance:
     - target: {fileID: 5070230334021935471, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.479
+      value: -28.74
       objectReference: {fileID: 0}
     - target: {fileID: 5070230334021935471, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
@@ -37253,7 +37274,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448134763}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.42, y: 0, z: -8.58}
+  m_LocalPosition: {x: 12.26, y: 0, z: -9.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2092032833}
@@ -44028,6 +44049,36 @@ Transform:
   m_Father: {fileID: 1251700366}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1748512720
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1748512721}
+  m_Layer: 0
+  m_Name: GhostTarget (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1748512721
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748512720}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.18, y: 0, z: 0.06}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1937741341}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1750359382 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 7c8d586ba845d6d49a924fb426b24fa8,
@@ -46671,6 +46722,7 @@ GameObject:
   - component: {fileID: 1937741344}
   - component: {fileID: 1937741343}
   - component: {fileID: 1937741342}
+  - component: {fileID: 1937741345}
   m_Layer: 0
   m_Name: IsobellleGhostMove
   m_TagString: Interact
@@ -46690,6 +46742,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1103875687}
+  - {fileID: 1748512721}
   m_Father: {fileID: 64886599}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46736,6 +46789,24 @@ MonoBehaviour:
   howEventIsTriggered: 0
   canTriggerAgain: 0
   hasBeenTriggered: 0
+  afterTime: 0
+  timeToWait: 0
+  timerStarted: 0
+--- !u!114 &1937741345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937741340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9545293975bc6054082356afb5734323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostToBeAffected: {fileID: 1181622599}
+  thisGhostEvent: 1
+  ghostTarget: {fileID: 1748512721}
 --- !u!1 &1940802580
 GameObject:
   m_ObjectHideFlags: 0
@@ -50332,6 +50403,7 @@ GameObject:
   - component: {fileID: 2092032833}
   - component: {fileID: 2092032835}
   - component: {fileID: 2092032834}
+  - component: {fileID: 2092032836}
   m_Layer: 0
   m_Name: GlassBottleBreak
   m_TagString: Untagged
@@ -50382,6 +50454,24 @@ MonoBehaviour:
   howEventIsTriggered: 1
   canTriggerAgain: 0
   hasBeenTriggered: 0
+  afterTime: 1
+  timeToWait: 2
+  timerStarted: 0
+--- !u!114 &2092032836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092032832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f54e38a3cda3a458ebd38fcb41d913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: a55e7ca46e690e648b98efe68bb9a96a, type: 3}
+  placeSoundComesFrom: {fileID: 1448134765}
+  volumeSetting: 1
 --- !u!1 &2092950300
 GameObject:
   m_ObjectHideFlags: 0
