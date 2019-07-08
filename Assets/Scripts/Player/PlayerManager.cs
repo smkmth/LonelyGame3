@@ -12,6 +12,7 @@ public enum PlayerState
     noCameraAndMovementCursorFree,
     fullyPaused,
     cameraAimMode,
+    menuMode,
     delay
 }
 public class PlayerManager : MonoBehaviour
@@ -23,6 +24,8 @@ public class PlayerManager : MonoBehaviour
     public InGameTextReader reader;
     public PlayerInteract interact;
     public PlayerLamp lamp;
+    public MenuManager menuManager;
+    
 
     public GameObject PlayerCameraObject;
     public Camera playerCamera;
@@ -59,6 +62,13 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        menuManager = GetComponent<MenuManager>();
+        if (!menuManager)
+        {
+
+            Debug.LogError("No inventorydisplayer, add one to player obj" );
+        }
+
         controller = GetComponent<FirstPersonCharacterController>();
         if (!controller)
         {
@@ -145,6 +155,7 @@ public class PlayerManager : MonoBehaviour
         switch (newPlayerState)
         {
             case PlayerState.freeMovement:
+                menuManager.ToggleMenu(false);
                 Time.timeScale = 1;
                 interact.interactIsActive = true;
                 controller.characterIsActive = true;
@@ -160,6 +171,7 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case PlayerState.noMovement:
+                menuManager.ToggleMenu(false);
                 interact.interactIsActive = true;
                 Time.timeScale = 1;
                 controller.characterIsActive = false;
@@ -175,6 +187,7 @@ public class PlayerManager : MonoBehaviour
 
                 break;
             case PlayerState.noCameraMovement:
+                menuManager.ToggleMenu(false);
                 interact.interactIsActive = true;
                 Time.timeScale = 1;
                 controller.characterIsActive = true;
@@ -190,6 +203,7 @@ public class PlayerManager : MonoBehaviour
 
                 break;
             case PlayerState.inspectMode:
+                menuManager.ToggleMenu(false);
                 interact.interactIsActive = true;
                 Time.timeScale = 1;
                 controller.characterIsActive = false;
@@ -205,6 +219,7 @@ public class PlayerManager : MonoBehaviour
 
                 break;
             case PlayerState.noCameraAndMovementCursorFree:
+                menuManager.ToggleMenu(false);
                 Time.timeScale = 1;
                 interact.interactIsActive = false;
                 controller.playerCanRun = false;
@@ -221,6 +236,7 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case PlayerState.fullyPaused:
+                menuManager.ToggleMenu(false);
                 interact.interactIsActive = false;
                 controller.characterIsActive = false;
                 controller.playerCanRun = false;
@@ -235,7 +251,24 @@ public class PlayerManager : MonoBehaviour
 
                 Time.timeScale = 0;
                 break;
+            case PlayerState.menuMode:
+                interact.interactIsActive = false;
+                controller.characterIsActive = false;
+                controller.playerCanRun = false;
+                mouseLook.cameraControl = false;
+                inGameCamera.cameraIsActive = false;
+                Cursor.visible = true;
+                lamp.canUseLamp = true;
+                hintText.gameObject.SetActive(false);
+
+                Cursor.lockState = CursorLockMode.None;
+                crosshair.SetActive(true);
+                menuManager.ToggleMenu(true);
+
+                Time.timeScale = 0;
+                break;
             case PlayerState.cameraAimMode:
+
                 Time.timeScale = 1;
                 interact.interactIsActive = true;
                 controller.characterIsActive = true;
@@ -283,6 +316,18 @@ public class PlayerManager : MonoBehaviour
         }
         switch (currentPlayerState)
         {
+            case PlayerState.freeMovement:
+                if (Input.GetButtonDown("ViewMenu"))
+                {
+                    ChangePlayerState(PlayerState.menuMode);
+                }
+                break;
+            case PlayerState.menuMode:
+                if (Input.GetButtonDown("ViewMenu"))
+                {
+                    ChangePlayerState(PlayerState.freeMovement);
+                }
+                break;
             case PlayerState.delay:
                 if (playerStateTimer<= 0)
                 {

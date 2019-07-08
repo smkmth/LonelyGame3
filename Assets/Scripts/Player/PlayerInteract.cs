@@ -30,9 +30,11 @@ public enum ItemTypes
 }
 public class PlayerInteract : MonoBehaviour
 {
+    public TextDisplayer textDisplayer;
     private InGameTextReader reader;
     private PlayerManager manager;
     public GameObject cameraObj;                        //players main camera tagged as main camera, got from Camera.main
+    private Inventory inv;
 
     [Header("Player View")]
     public LayerMask blockingLayer;
@@ -84,12 +86,13 @@ public class PlayerInteract : MonoBehaviour
     public void Start()
     {
         cameraObj = Camera.main.gameObject;
-        
+        textDisplayer = GetComponent<TextDisplayer>();
         manager = GetComponent<PlayerManager>();
         reader = GetComponent<InGameTextReader>();
         currentHoldState = HoldState.notHoldingItem;
         inGameCamera =Camera.main.gameObject.GetComponent<InGameCamera>();
         controller = GetComponent<FirstPersonCharacterController>();
+        inv = GetComponent<Inventory>();
     }
 
    
@@ -241,6 +244,30 @@ public class PlayerInteract : MonoBehaviour
 
     }
 
+    public void AddToInventory(GameObject gameObjectPickUp)
+    {
+        Item item = gameObjectPickUp.GetComponent<ItemHolder>().heldItem;
+        switch (item.type)
+        {
+            case ItemType.Book:
+                InGameText book = (InGameText)item;
+                textDisplayer.AddTextAsset(book);
+                reader.DisplayText(book);
+                break;
+            case ItemType.Clue:
+                inv.AddItem(item);
+                break;
+            case ItemType.Film:
+                inv.AddItem(item);
+                break;
+            case ItemType.Key:
+                inv.AddItem(item);
+                break;
+
+        }
+        Destroy(gameObjectPickUp);
+    }
+
 
     public bool IsItemBehindWall()
     {
@@ -248,11 +275,9 @@ public class PlayerInteract : MonoBehaviour
         if (Physics.Raycast(transform.position, (heldObject.position - transform.position), out hit, distanceToHeldObject, wallLayer))
         {
             return true;
-
         }
         else
         {
-
             return false;
         }
     }
@@ -414,9 +439,10 @@ public class PlayerInteract : MonoBehaviour
 
                         if (itemtrigger)
                         {
+                            
                             itemtrigger.TriggerEvent();
                         }
-                        reader.DisplayText(detectedObj.GetComponent<InGameTextObj>().textAsset);
+                        AddToInventory(detectedObj);
                         return;
                     }
 
@@ -435,7 +461,7 @@ public class PlayerInteract : MonoBehaviour
                             {
                                 itemtrigger.TriggerEvent();
                             }
-                            PickUp(detectedObj);
+                            AddToInventory(detectedObj);
                         }
                         
                        
@@ -498,8 +524,8 @@ public class PlayerInteract : MonoBehaviour
 
                     if (Input.GetButtonDown("Interact"))
                     {
-                      
 
+                        holdTimer = detectedObj.GetComponent<GameEventTrigger>().timeToWait = holdTimer;
 
 
                     }

@@ -78,8 +78,6 @@ public class InGameTextReader : MonoBehaviour
         ReaderUI.SetActive(false);
         displayText.text = "";
 
-
-
     }
 
 }

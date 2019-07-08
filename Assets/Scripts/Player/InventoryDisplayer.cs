@@ -49,7 +49,6 @@ public class InventoryDisplayer : MonoBehaviour
             text.text = emptyString;
         }
 
-        DisplayInventory();
         inventoryUI.SetActive(false);
 
     }
@@ -58,7 +57,9 @@ public class InventoryDisplayer : MonoBehaviour
     {
         for (int i = 0; i <= inventory.MaxItemSlots; i++)
         {
+
             GameObject slot = Instantiate(inventorySlot, itemGrid.transform);
+            slot.GetComponent<RectTransform>().localScale = Vector3.one;
             Button button = slot.GetComponent<Button>();
 
             string tempInt = i.ToString();
@@ -91,6 +92,7 @@ public class InventoryDisplayer : MonoBehaviour
                 case ItemType.Book:
                     InGameText bookItem = (InGameText)selectedItem;
                     reader.DisplayText(bookItem);
+                    
                     break;
 
          
@@ -113,6 +115,7 @@ public class InventoryDisplayer : MonoBehaviour
     //JUST update the visuals of the inventory- dont implement any inventory management stuff here please future danny
     public void DisplayInventory()
     {
+        
         if (inventory.itemSlots.Count > 0)
         {
             for (int i = 0; i < inventory.MaxItemSlots; i++)
