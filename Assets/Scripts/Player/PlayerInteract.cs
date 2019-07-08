@@ -479,6 +479,7 @@ public class PlayerInteract : MonoBehaviour
                             itemtrigger.TriggerEvent();
                         }
                         inGameCamera.filmCanisters += 1;
+                        AddToInventory(detectedObj);
                         
                         Destroy(detectedObj);
                     }
