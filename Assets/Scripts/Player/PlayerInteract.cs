@@ -358,6 +358,10 @@ public class PlayerInteract : MonoBehaviour
 
     private void CheckCurser(ItemTypes thisItemType)
     {
+        if (detectedObj == null)
+        {
+            return;
+        }
         /*
         if (lookingAt)
         {
