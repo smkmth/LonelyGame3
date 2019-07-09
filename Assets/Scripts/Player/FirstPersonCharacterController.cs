@@ -33,6 +33,10 @@ public class FirstPersonCharacterController : MonoBehaviour
     public Transform crouchingPos;
     public bool playerIsCrouching;
     public Transform playerCollider;
+    public LayerMask groundLayer;
+
+    public float heightdist;
+    public float fallmod;
 
     private void Start()
     {
@@ -98,6 +102,16 @@ public class FirstPersonCharacterController : MonoBehaviour
     }
     public void Update()
     {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, Vector3.down, out hit, groundLayer))
+        {
+            heightdist = transform.position.y - hit.point.y;
+            Debug.DrawRay(transform.position, Vector3.down * Vector3.Distance(transform.position, hit.point * heightdist));
+        }
+        if (heightdist > 1f)
+        {
+            rb.AddForce(Vector3.down *  fallmod, ForceMode.Acceleration);
+        }
         if (Input.GetButtonDown("VolUp"))
         {
             AudioListener.volume += 3.0f;

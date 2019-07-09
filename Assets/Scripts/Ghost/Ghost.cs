@@ -119,7 +119,7 @@ public class Ghost : MonoBehaviour
     public void OnFirstActivateGhost()
     {
         ghostActive = true;
-        ghostAudio.PlayOneShot(firstSpottedNoise, 1.0f);
+        ghostAudio.PlayOneShot(firstSpottedNoise, 2.0f);
 
     }
 
