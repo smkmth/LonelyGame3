@@ -13,14 +13,14 @@ public class InGameCamera : MonoBehaviour
     [Header("Camera Values")]
 
     public int maxShots= 12;                             //the max amount of shots that you can carry
-    [ReadOnly] public int cameraShots;                          //
+   public int cameraShots;                          //
     public float timeBetweenShots;
-    [ReadOnly] public float timerBetweenShotsTime;
+   public float timerBetweenShotsTime;
     public float shutterClosedTime;
-    [ReadOnly] public bool reloadingFilm;
+   public bool reloadingFilm;
     public int filmCanisters;
     public float reloadTime;
-    [ReadOnly] public float reloadTimer;
+   public float reloadTimer;
 
     [Header("Camera Ghost Interaction")]
     public float CameraRadius;
@@ -31,9 +31,9 @@ public class InGameCamera : MonoBehaviour
 
     public bool playerHasCamera =false;
 
-    [ReadOnly] public bool cameraIsActive =true;
-    [ReadOnly] public bool justStartedAiming;
-    [ReadOnly] public bool justStoppedAiming;
+   public bool cameraIsActive =true;
+   public bool justStartedAiming;
+   public bool justStoppedAiming;
 
     [Header("Camera Effects")]
     public GameObject cameraOverlay;
@@ -66,10 +66,10 @@ public class InGameCamera : MonoBehaviour
         manager = playerObj.GetComponent<PlayerManager>();
         ghostObj = GameObject.Find("Ghost").GetComponent<Ghost>();
         cameraIsActive = false;
-        energyBar.maxValue = timeBetweenShots;
         filmCounterStartPos = filmCounterRect.rectTransform.localPosition;
         filmCounterEndPos = filmCounterStartPos;
         filmCounterEndPos.y += cameraOffSet *maxShots;
+        cameraShots = maxShots;
     }
 
     void Update()
@@ -100,7 +100,6 @@ public class InGameCamera : MonoBehaviour
             timerBetweenShotsTime += Time.deltaTime;
         }
 
-        energyBar.value = timerBetweenShotsTime;
    
         if (!cameraIsActive)
         {
@@ -109,11 +108,15 @@ public class InGameCamera : MonoBehaviour
         
         if (Input.GetButton("ReloadCamera"))
         {
-            if ( filmCanisters > 0)
+            if ( filmCanisters > 0 )
             {
-                filmCounterCurrentPos = filmCounterRect.rectTransform.localPosition;
-                filmCanisters -= 1;
-                reloadingFilm = true;
+                if (cameraShots == 0)
+                {
+
+                    filmCounterCurrentPos = filmCounterRect.rectTransform.localPosition;
+                    filmCanisters -= 1;
+                    reloadingFilm = true;
+                }
             }
 
         }
@@ -161,7 +164,6 @@ public class InGameCamera : MonoBehaviour
             justStoppedAiming = false;
             cameraOverlay.SetActive(true);
             source.PlayOneShot(cameraReady, 1.0f);
-            energyBar.gameObject.SetActive(true);
         }
         else
         {
@@ -169,7 +171,6 @@ public class InGameCamera : MonoBehaviour
             justStoppedAiming = true;
             manager.ChangePlayerState(PlayerState.freeMovement);
             cameraOverlay.SetActive(false);
-            energyBar.gameObject.SetActive(false);
         }
 
     }

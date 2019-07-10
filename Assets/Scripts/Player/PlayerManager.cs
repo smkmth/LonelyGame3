@@ -87,7 +87,7 @@ public class PlayerManager : MonoBehaviour
             Debug.LogError("No audiosource, add one to player obj");
         }
 
-        ghostDetector = GetComponent<GhostDetector>();
+        ghostDetector = GetComponentInChildren<GhostDetector>();
         if (!ghostDetector)
         {
             Debug.LogError("No ghostdetector, add one to player obj");

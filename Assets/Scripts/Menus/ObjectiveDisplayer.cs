@@ -47,6 +47,8 @@ public class ObjectiveDisplayer : MonoBehaviour
                         if (subOjectiveObj.gameObject.activeSelf == false)
                         {
                             subOjectiveObj.gameObject.SetActive(true);
+                            subOjectiveObj.name = objectiveToAdd.objectiveName;
+
                             subOjectiveObj.text = objectiveToAdd.objectiveString;
                             return;
 
@@ -56,6 +58,49 @@ public class ObjectiveDisplayer : MonoBehaviour
 
             }
         }
+    }
+
+    public void FinishObjective(GameObjective objectiveToFinish)
+    {
+        if (objectiveToFinish.objectiveType == ObjectiveType.MainObjective)
+        {
+            foreach (GameObject objectiveObj in objectiveObjList)
+            {
+                if (objectiveObj.name == objectiveToFinish.objectiveName)
+                {
+                    objectiveObj.GetComponent<ObjectiveContainer>().mainObjective.text = "";
+                    objectiveObj.name = "None";
+                    objectiveObj.SetActive(false);
+                    return;
+                }
+            }
+
+
+        }
+        else if (objectiveToFinish.objectiveType == ObjectiveType.SubObjective)
+        {
+            foreach (GameObject objective in objectiveObjList)
+            {
+                if (objective.name == objectiveToFinish.mainObjective.objectiveName)
+                {
+                    TextMeshProUGUI[] subObjectiveObjs = objective.GetComponent<ObjectiveContainer>().subObjectives;
+                    foreach (TextMeshProUGUI subOjectiveObj in subObjectiveObjs)
+                    {
+                        if (subOjectiveObj.gameObject.name == objectiveToFinish.objectiveName)
+                        {
+                            subOjectiveObj.gameObject.SetActive(false);
+                            subOjectiveObj.text = "";
+                            subOjectiveObj.name= "";
+
+                            return;
+
+                        }
+                    }
+                }
+
+            }
+        }
+
     }
    
 }

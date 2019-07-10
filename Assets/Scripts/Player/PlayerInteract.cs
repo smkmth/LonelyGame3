@@ -43,11 +43,11 @@ public class PlayerInteract : MonoBehaviour
     public float lookRadius;
     public float lookRange;
     public float maxLookAngle;
-    [ReadOnly] public GameObject detectedObj;
+     public GameObject detectedObj;
     public TextMeshProUGUI itemPrompt;
 
 
-    [ReadOnly] public float distanceToObject;
+     public float distanceToObject;
 
     [Header("Holding Object")]
     public Image curser;
@@ -60,12 +60,12 @@ public class PlayerInteract : MonoBehaviour
     public float pickUpDistance;
 
     private Transform heldObject;
-    [ReadOnly] public HoldState currentHoldState;
+ public HoldState currentHoldState;
     public float throwForce;
 
     public float holdStateDelay;
-    [ReadOnly] public float holdTimer;
-    [ReadOnly] public float distanceToHeldObject;
+     public float holdTimer;
+     public float distanceToHeldObject;
 
     public bool isHoldingEndGameItem;
 
@@ -77,14 +77,19 @@ public class PlayerInteract : MonoBehaviour
     public bool interactIsActive =true;
 
     public Image crosshair;
-
+    public AudioSource source;
     //LookAt event stuff
     public GameEventTrigger lookAtEventObj;
     public bool lookingAt;
 
+    public AudioClip paperPickup;
+    public AudioClip objectPickup;
+    public float pickupVol;
+
 
     public void Start()
     {
+        source = GetComponent<AudioSource>();
         cameraObj = Camera.main.gameObject;
         textDisplayer = GetComponent<TextDisplayer>();
         manager = GetComponent<PlayerManager>();
@@ -250,20 +255,29 @@ public class PlayerInteract : MonoBehaviour
         switch (item.type)
         {
             case ItemType.Book:
+                source.PlayOneShot(paperPickup, pickupVol);
                 InGameText book = (InGameText)item;
                 textDisplayer.AddTextAsset(book);
                 reader.DisplayText(book);
                 break;
             case ItemType.Clue:
+                source.PlayOneShot(objectPickup, pickupVol);
+
                 inv.AddItem(item);
                 break;
             case ItemType.Film:
+                source.PlayOneShot(objectPickup, pickupVol);
                 inv.AddItem(item);
                 break;
             case ItemType.Key:
+                source.PlayOneShot(objectPickup, pickupVol);
                 inv.AddItem(item);
                 break;
-
+            case ItemType.EndGameItem:
+                source.PlayOneShot(objectPickup, pickupVol);
+                inv.AddItem(item);
+                break;
+            
         }
         Destroy(gameObjectPickUp);
     }
@@ -301,7 +315,6 @@ public class PlayerInteract : MonoBehaviour
 
         if (obj == null)
         {
-            itemPrompt.text = "";
             return ItemTypes.Nothing;
         }
         if (obj.tag == "Blocking")
@@ -325,7 +338,6 @@ public class PlayerInteract : MonoBehaviour
         }
         if (obj.tag == "Camera")
         {
-            itemPrompt.text = "Press LMB to PickUp Camera";
 
             return ItemTypes.Camera;
         }
@@ -343,7 +355,6 @@ public class PlayerInteract : MonoBehaviour
         }
         if (obj.tag == "Interact")
         {
-            itemPrompt.text = "Press LMB to Interact";
 
             return ItemTypes.Interact;
         }
@@ -360,15 +371,7 @@ public class PlayerInteract : MonoBehaviour
         }
         if (obj.tag == "HoldInteract")
         {
-            itemPrompt.text = "Hold LMB to Interact";
 
-
-            if (Input.GetButton("Interact"))
-            {
-                itemPrompt.text = "Working...";
-
-
-            }
             return ItemTypes.HoldInteract;
 
 
@@ -457,6 +460,7 @@ public class PlayerInteract : MonoBehaviour
                         itemPrompt.text = "Press LMB to PickUp " + detectedObj.name;
                         if (Input.GetButtonDown("Interact"))
                         {
+                            
                             if (itemtrigger)
                             {
                                 itemtrigger.TriggerEvent();
@@ -500,7 +504,7 @@ public class PlayerInteract : MonoBehaviour
                         inGameCamera.UpdateShots(12);
                         inGameCamera.playerHasCamera = true;
                         inGameCamera.cameraIsActive = true;
-                        inGameCamera.energyBar.gameObject.SetActive(true);
+
                         Destroy(detectedObj);
                     }
                     break;
@@ -525,10 +529,7 @@ public class PlayerInteract : MonoBehaviour
 
                     if (Input.GetButtonDown("Interact"))
                     {
-
-                        holdTimer = detectedObj.GetComponent<GameEventTrigger>().timeToWait = holdTimer;
-
-
+                        holdTimer = detectedObj.GetComponent<GameEventTrigger>().timeToHold;
                     }
                     if (Input.GetButton("Interact"))
                     {
@@ -589,6 +590,7 @@ public class PlayerInteract : MonoBehaviour
                     itemPrompt.text = "";
                     break;
 
+                
             }
             
 

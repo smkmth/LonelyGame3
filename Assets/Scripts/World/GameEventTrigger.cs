@@ -24,13 +24,16 @@ public class GameEventTrigger : MonoBehaviour
 
     public bool afterTime;
     public float timeToWait;
+    public float timeToHold;
     private float timer;
 
     public bool deactivateSelfOnFinish;
 
-    [ReadOnly] public bool timerStarted;
-    [ReadOnly] public bool timerFinished;
-    [ReadOnly] public bool lookedAt;
+public bool timerStarted;
+public bool timerFinished;
+public bool lookedAt;
+
+    public bool locked;
 
     Collider objCollider;
     Camera cam;
@@ -144,27 +147,31 @@ public class GameEventTrigger : MonoBehaviour
 
     public void TriggerEvent()
     {
-        if (!hasBeenTriggered || canTriggerAgain)
+        if (!locked)
         {
 
-            if (!afterTime || timerFinished )
+            if (!hasBeenTriggered || canTriggerAgain)
             {
 
-                foreach (GameEventReceiver receiver in eventReceivers)
+                if (!afterTime || timerFinished)
                 {
-                    receiver.DoEvent();
-                    if (deactivateSelfOnFinish)
+
+                    foreach (GameEventReceiver receiver in eventReceivers)
                     {
-                        gameObject.SetActive(false);
+                        receiver.DoEvent();
+                        if (deactivateSelfOnFinish)
+                        {
+                            gameObject.SetActive(false);
+                        }
+
                     }
+                    hasBeenTriggered = true;
+                }
+                else
+                {
+                    timerStarted = true;
 
                 }
-                hasBeenTriggered = true;
-            }
-            else
-            {
-                timerStarted = true;
-
             }
         }
     }

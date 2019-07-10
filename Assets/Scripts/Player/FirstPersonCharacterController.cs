@@ -42,6 +42,9 @@ public class FirstPersonCharacterController : MonoBehaviour
     public Image sprintVingette;
     public Vector3 sprintMax;
     public Vector3 sprintMin;
+    public bool coroutineRunning;
+    Coroutine sprintDown;
+    Coroutine sprintUp;
 
     private void Start()
     {
@@ -84,7 +87,7 @@ public class FirstPersonCharacterController : MonoBehaviour
             if (CanStand())
             {
 
-                playerCamera.transform.position = standingPos.position;
+                transform.position = new Vector3(transform.position.x, .8f, transform.position.z);
                 playerCollider.localScale = Vector3.one;
                 playerIsCrouching = false;
             }
@@ -151,11 +154,8 @@ public class FirstPersonCharacterController : MonoBehaviour
             }
             if (playerCanRun)
             {
-                if (Input.GetButtonDown("Run"))
-                {
-                    StartCoroutine(Vingette(sprintMin, sprintTime));
-
-                }
+                
+                
                 if (Input.GetButton("Run"))
                 {
                     if (enoughStamina)
@@ -166,6 +166,7 @@ public class FirstPersonCharacterController : MonoBehaviour
                 else
                 {
 
+                    
                     isRunning = false;
 
                 }
@@ -293,7 +294,7 @@ public class FirstPersonCharacterController : MonoBehaviour
 
 
     }
-
+/*
     IEnumerator Vingette(Vector3 targetScale, float duration)
     {
 
@@ -302,11 +303,15 @@ public class FirstPersonCharacterController : MonoBehaviour
 
         while (time < duration)
         {
-            time -= Time.deltaTime;
+            coroutineRunning = true;
+            time += Time.deltaTime;
             float blend = Mathf.Clamp(time, 0, duration);
             sprintVingette.transform.localScale = Vector3.Lerp(startScale, targetScale, blend);
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
 
+        Debug.Log("here");
+        coroutineRunning = false;
     }
+    */
 }
