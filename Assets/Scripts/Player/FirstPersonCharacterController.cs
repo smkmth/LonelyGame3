@@ -37,6 +37,11 @@ public class FirstPersonCharacterController : MonoBehaviour
 
     public float heightdist;
     public float fallmod;
+    bool isLerping;
+    private float timeStartedLerp;
+    public Image sprintVingette;
+    public Vector3 sprintMax;
+    public Vector3 sprintMin;
 
     private void Start()
     {
@@ -146,6 +151,11 @@ public class FirstPersonCharacterController : MonoBehaviour
             }
             if (playerCanRun)
             {
+                if (Input.GetButtonDown("Run"))
+                {
+                    StartCoroutine(Vingette(sprintMin, sprintTime));
+
+                }
                 if (Input.GetButton("Run"))
                 {
                     if (enoughStamina)
@@ -155,16 +165,18 @@ public class FirstPersonCharacterController : MonoBehaviour
                 }
                 else
                 {
+
                     isRunning = false;
 
                 }
             }
-
-
+   
             if (isRunning)
             {
                 if (sprintTimer < sprintTime)
                 {
+
+
                     sprintTimer += Time.deltaTime;
                 }
                 else
@@ -180,6 +192,7 @@ public class FirstPersonCharacterController : MonoBehaviour
             {
                 if (sprintTimer > 0)
                 {
+
                     sprintTimer -= Time.deltaTime;
                 }
                 else
@@ -226,7 +239,11 @@ public class FirstPersonCharacterController : MonoBehaviour
         }
 
     }
-
+    void StartLerpingPos()
+    {
+        isLerping = true;
+        timeStartedLerp = Time.time;
+    }
     private void FixedUpdate()
     {
   
@@ -277,5 +294,19 @@ public class FirstPersonCharacterController : MonoBehaviour
 
     }
 
+    IEnumerator Vingette(Vector3 targetScale, float duration)
+    {
 
+        Vector3 startScale = sprintVingette.transform.localScale;
+        float time = 0;
+
+        while (time < duration)
+        {
+            time -= Time.deltaTime;
+            float blend = Mathf.Clamp(time, 0, duration);
+            sprintVingette.transform.localScale = Vector3.Lerp(startScale, targetScale, blend);
+            yield return null;
+        }
+
+    }
 }
