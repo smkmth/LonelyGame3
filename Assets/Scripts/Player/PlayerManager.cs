@@ -58,7 +58,8 @@ public class PlayerManager : MonoBehaviour
     public bool viewingSeenHints;
     public TextMeshProUGUI seenHintsText;
     public GameObject seenHintsUI;
-    
+    public ObjectiveDisplayer objectiveDisplayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +69,7 @@ public class PlayerManager : MonoBehaviour
 
             Debug.LogError("No inventorydisplayer, add one to player obj" );
         }
+        objectiveDisplayer = GetComponent<ObjectiveDisplayer>();
 
         controller = GetComponent<FirstPersonCharacterController>();
         if (!controller)
