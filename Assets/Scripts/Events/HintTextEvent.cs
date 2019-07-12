@@ -18,7 +18,6 @@ public class HintTextEvent : GameEventReceiver
     public override void DoEvent()
     {
         player.DisplayHint(hintToDisplay, lengthOfTimeToDisplayHint);
-        gameObject.SetActive(false);
     }
 
 

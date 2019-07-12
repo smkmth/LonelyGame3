@@ -6,7 +6,9 @@ public enum ItemType
     Book,
     Key,
     Clue,
-    Film
+    Film,
+    EndGameItem
+  
 
 }
 public class Item : ScriptableObject {
