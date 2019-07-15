@@ -6,7 +6,7 @@ public static class HelperFunctions  {
 
 
 
-    public static void PlayRandomNoiseInArray(AudioClip[] array, AudioSource audioSource, float vol)
+    public static void PlayRandomNoiseInArray(AudioClip[] array, AudioSource audioSource, float vol, bool reportNoisePlayed = false)
     {
         if (array.Length > 0)
         {
@@ -15,6 +15,11 @@ public static class HelperFunctions  {
             {
                 int noiseIndex = Random.Range(0, array.Length);
                 AudioClip selectedNoise = array[noiseIndex];
+                if (reportNoisePlayed)
+                {
+                    Debug.Log("Noise Played = " + array[noiseIndex].name);
+
+                }
                 audioSource.PlayOneShot(selectedNoise, vol);
             }
 
