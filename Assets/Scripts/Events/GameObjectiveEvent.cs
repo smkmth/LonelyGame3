@@ -7,6 +7,7 @@ public enum ObjectiveEventType
     FinishObjective
 }
 
+[AddComponentMenu("GameEvents/Game Objective Event")]
 public class GameObjectiveEvent : GameEventReceiver
 {
 

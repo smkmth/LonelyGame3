@@ -7,6 +7,7 @@ public enum SoundEffectType
     LoopConstant,
     LoopForTime
 }
+
 [AddComponentMenu("GameEvents/Sound Event")]
 public class SoundEvent : GameEventReceiver {
 

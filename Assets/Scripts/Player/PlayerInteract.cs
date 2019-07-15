@@ -251,7 +251,7 @@ public class PlayerInteract : MonoBehaviour
 
     public void AddToInventory(GameObject gameObjectPickUp)
     {
-        Item item = gameObjectPickUp.GetComponent<ItemHolder>().heldItem;
+        Item item = gameObjectPickUp.GetComponent<ItemContainer>().heldItem;
         switch (item.type)
         {
             case ItemType.Book:
@@ -424,10 +424,10 @@ public class PlayerInteract : MonoBehaviour
             }
         }
         curser.color = noColor;
-        GameEventTrigger itemtrigger = null;
+        AbstractGameEventTrigger itemtrigger = null;
         if (thisItemType != ItemTypes.Wall || thisItemType != ItemTypes.Surface || thisItemType != ItemTypes.Unknown || thisItemType != ItemTypes.Nothing)
         {
-            itemtrigger = detectedObj.GetComponent<GameEventTrigger>();
+            itemtrigger = detectedObj.GetComponent<AbstractGameEventTrigger>();
         }
         if (distanceToObject <= pickUpDistance)
         {
@@ -516,7 +516,7 @@ public class PlayerInteract : MonoBehaviour
                     if (Input.GetButtonDown("Interact"))
                     {
                       
-                        detectedObj.GetComponent<GameEventTrigger>().TriggerEvent();
+                        detectedObj.GetComponent<AbstractGameEventTrigger>().TriggerEvent();
                         return;
 
                     }
@@ -529,7 +529,7 @@ public class PlayerInteract : MonoBehaviour
 
                     if (Input.GetButtonDown("Interact"))
                     {
-                        holdTimer = detectedObj.GetComponent<GameEventTrigger>().timeToHold;
+                        //holdTimer = detectedObj.GetComponent<AbstractGameEventTrigger>().timeToHold;
                     }
                     if (Input.GetButton("Interact"))
                     {
@@ -541,7 +541,7 @@ public class PlayerInteract : MonoBehaviour
                         {
                             itemPrompt.text = "Done";
 
-                            detectedObj.GetComponent<GameEventTrigger>().TriggerEvent();
+                            detectedObj.GetComponent<AbstractGameEventTrigger>().TriggerEvent();
 
                         }
 
