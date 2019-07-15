@@ -106,7 +106,7 @@ public class Ghost : MonoBehaviour
     public float timeBetweenHits;
 
     public TextMeshProUGUI debugText;
-
+    public int helperId = 1;
     private void Start()
     {
         GameObject playerObj = GameObject.Find("Player");
@@ -525,7 +525,7 @@ public class Ghost : MonoBehaviour
         if (breathTimer <= 0)
         {
             breathTimer = timeBetweenBreath;
-            HelperFunctions.PlayRandomNoiseInArray(breathingNoises, ghostAudio, breathingVol);
+            HelperFunctions.Helper.PlayRandomNoiseInArray(breathingNoises, ghostAudio, breathingVol, helperId);
         }
         else
         { 
@@ -536,7 +536,7 @@ public class Ghost : MonoBehaviour
 
                 if (Random.Range(0, 100) < chanceOfIdleNoise)
                 {
-                    HelperFunctions.PlayRandomNoiseInArray(idleNoises, ghostAudio, Random.Range(0.5f, 1f));
+                    HelperFunctions.Helper.PlayRandomNoiseInArray(idleNoises, ghostAudio, Random.Range(0.5f, 1f), helperId);
                 }
             }
         
