@@ -6,13 +6,15 @@ public class NearbySoundGen : MonoBehaviour
 {
     public Transform player;
     public float soundRad;
-    public AudioClip[] noises;
-    public AudioSource[] sources;
     public float chanceOfNoise;
     public float noisesPerSecond;
     private float noiseTimer;
-
+    public float minDist;
     public LayerMask selfLayer;
+    public AudioClip[] noises;
+    public AudioSource[] sources;
+    public int helperId = 1;
+
     // Update is called once per frame
     void Update()
     {
@@ -20,39 +22,45 @@ public class NearbySoundGen : MonoBehaviour
         if (noiseTimer <= 0)
         {
             noiseTimer = noisesPerSecond;
-            if (Random.Range(0, 100) < chanceOfNoise)
+           Collider[] hits = Physics.OverlapSphere(player.position, soundRad);
+
+            foreach (Collider hit in hits)
             {
-                Collider[] hits = Physics.OverlapSphere(player.position, soundRad);
-
-                foreach (Collider hit in hits)
+                if (hit.tag == "SoundSource")
                 {
-                    if (hit.tag == "SoundSource")
+
+
+                    RaycastHit potplayer;
+                    Physics.Linecast(hit.transform.position, player.position, out potplayer, selfLayer, QueryTriggerInteraction.Ignore);
+
+                    if (potplayer.collider.tag == "Player")
                     {
-
-
-                        RaycastHit potplayer;
-                        Physics.Linecast(hit.transform.position, player.position, out potplayer, selfLayer, QueryTriggerInteraction.Ignore);
-
-                        if (potplayer.collider.tag == "Player")
+                            Debug.DrawRay(hit.transform.position, (player.position - hit.transform.position), Color.black, 1.0f);
+                    }
+                    else
+                    {
+                        if (Random.Range(0, 100) < chanceOfNoise)
                         {
-                        }
-                        else
-                        {
-                            Debug.DrawRay(hit.transform.position, (player.position - hit.transform.position), Color.red, 3000.0f);
 
-                            Debug.Log("Play" + hit.transform.name);
-                            
-                            HelperFunctions.PlayRandomNoiseInArray(noises, hit.GetComponent<AudioSource>(), Random.Range(0.5f, 1f), true);
-                            return;
+                            Debug.DrawRay(hit.transform.position, (player.position - hit.transform.position), Color.red, 1.0f);
+                            if (Vector3.Distance(hit.transform.position, player.position) > minDist)
+                            {
+                                Debug.Log("Play" + hit.transform.name);
+                                Debug.DrawRay(hit.transform.position, (player.position - hit.transform.position), Color.blue, 10.0f);
+
+                                HelperFunctions.Helper.PlayRandomNoiseInArray(noises, hit.GetComponent<AudioSource>(), Random.Range(0.5f, 1f), helperId, true);
+
+                            }
                         }
+                    }
                         
 
                     
-                    }
-
                 }
-                int sourceindex = Random.Range(0, sources.Length);
+
             }
+            int sourceindex = Random.Range(0, sources.Length);
+            
         }
         else
         {

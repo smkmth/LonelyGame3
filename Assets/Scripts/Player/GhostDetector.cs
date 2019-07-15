@@ -13,6 +13,8 @@ public class GhostDetector : MonoBehaviour
     private AudioSource audioSource;
     public float startDist;
     public float dist;
+    public int helperId = 2;
+
     public void Start()
     {
         ghost = GameObject.Find("Ghost").transform;
@@ -32,7 +34,7 @@ public class GhostDetector : MonoBehaviour
         if (timer <= 0)
         {
             timer = spaceBetweenTicks;
-            HelperFunctions.PlayRandomNoiseInArray(gigerClicks, audioSource, .5f);
+            HelperFunctions.Helper.PlayRandomNoiseInArray(gigerClicks, audioSource, .5f, helperId);
         }
 
 
