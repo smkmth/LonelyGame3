@@ -45,6 +45,11 @@ public class FirstPersonCharacterController : MonoBehaviour
     public bool coroutineRunning;
     Coroutine sprintDown;
     Coroutine sprintUp;
+    public float playerHeight;
+    public float playerLowHeight;
+    public float playerCrouchedHeight;
+    public float playerCrouchedLowHeight;
+
 
     private void Start()
     {
@@ -74,12 +79,14 @@ public class FirstPersonCharacterController : MonoBehaviour
     }
     public void ToggleCrouch(bool isCrouching)
     {
+        float crouchDist = (crouchingScale.y - 1.0f);
         if (isCrouching)
         {
-            playerCamera.transform.position = crouchingPos.position;
-            playerCollider.localScale= crouchingScale;
+
             playerIsCrouching = true;
-            transform.position = new Vector3(transform.position.x, .3f, transform.position.z);
+            playerCollider.localScale= crouchingScale;
+          //  playerCamera.transform.localPosition = new Vector3(0, (playerCrouchedCameraHeight), 0);
+;
         }
         else
         {
@@ -87,9 +94,10 @@ public class FirstPersonCharacterController : MonoBehaviour
             if (CanStand())
             {
 
-                transform.position = new Vector3(transform.position.x, .8f, transform.position.z);
-                playerCollider.localScale = Vector3.one;
                 playerIsCrouching = false;
+              //  playerCamera.transform.localPosition = new Vector3(0, (playerCameraHeight),0);
+                playerCollider.localScale = Vector3.one;
+             //   playerCollider.transform.localPosition = new Vector3(0, 0, 0);
             }
 
         }
@@ -116,9 +124,31 @@ public class FirstPersonCharacterController : MonoBehaviour
             heightdist = transform.position.y - hit.point.y;
             Debug.DrawRay(transform.position, Vector3.down * Vector3.Distance(transform.position, hit.point * heightdist));
         }
-        if (heightdist > 1f)
+        if (!playerIsCrouching)
         {
-            rb.AddForce(Vector3.down *  fallmod, ForceMode.Acceleration);
+            if (heightdist > playerHeight)
+            {
+                rb.AddForce(Vector3.down * fallmod, ForceMode.Acceleration);
+            }
+            else if (heightdist < playerLowHeight)
+            {
+
+                rb.AddForce(Vector3.up * fallmod, ForceMode.Acceleration);
+            }
+        } 
+        else
+        {
+            if (heightdist > playerCrouchedHeight)
+            {
+
+                rb.AddForce(Vector3.down * fallmod, ForceMode.Acceleration);
+            }
+            else if (heightdist < playerCrouchedLowHeight)
+            {
+
+                rb.AddForce(Vector3.up * fallmod, ForceMode.Acceleration);
+            }
+
         }
         if (Input.GetButtonDown("VolUp"))
         {

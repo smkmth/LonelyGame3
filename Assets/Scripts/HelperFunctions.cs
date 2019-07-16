@@ -59,13 +59,31 @@ public class HelperFunctions : MonoBehaviour  {
     int CreateIndex(int helperId ,int arrayLength)
     {
         int noiseIndex = Random.Range(0, arrayLength);
+        
+        if (arrayLength <= 1)
+        {
+            return noiseIndex;
+        }
+        
+        int emergancyInt = 0;
         if (helperIdToIndex.ContainsKey(helperId))
         {
+          
+            
             while (helperIdToIndex[helperId] == noiseIndex)
             {
-                Debug.Log("previous index was " + noiseIndex);
+                if (emergancyInt > 200)
+                {
+                    Debug.Log( " Sound Loop iterated 200 times " );
+                    return noiseIndex;
+
+                }
+                else
+                {
+                    emergancyInt++;
+                }
                 noiseIndex = Random.Range(0, arrayLength);
-                Debug.Log("new index is " + noiseIndex);
+
             }
             helperIdToIndex[helperId] = noiseIndex;
             return noiseIndex;
