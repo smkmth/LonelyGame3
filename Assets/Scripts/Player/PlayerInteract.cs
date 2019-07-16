@@ -137,6 +137,7 @@ public class PlayerInteract : MonoBehaviour
                     }
                     heldObject.Rotate(Vector3.up, Input.GetAxis("Mouse X") * inspectRotSpeed * Time.deltaTime);
                     break;
+                    
 
             }
         }
