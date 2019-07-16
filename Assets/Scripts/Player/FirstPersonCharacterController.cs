@@ -49,8 +49,7 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float playerLowHeight;
     public float playerCrouchedHeight;
     public float playerCrouchedLowHeight;
-    public float playerCameraHeight;
-    public float playerCrouchedCameraHeight;
+
 
     private void Start()
     {
