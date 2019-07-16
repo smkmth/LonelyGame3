@@ -82,9 +82,8 @@ public class HelperFunctions : MonoBehaviour  {
                 {
                     emergancyInt++;
                 }
-                Debug.Log("previous index was " + noiseIndex);
                 noiseIndex = Random.Range(0, arrayLength);
-                Debug.Log("new index is " + noiseIndex);
+
             }
             helperIdToIndex[helperId] = noiseIndex;
             return noiseIndex;

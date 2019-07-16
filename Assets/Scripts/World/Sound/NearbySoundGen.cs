@@ -45,10 +45,10 @@ public class NearbySoundGen : MonoBehaviour
                             Debug.DrawRay(hit.transform.position, (player.position - hit.transform.position), Color.red, 1.0f);
                             if (Vector3.Distance(hit.transform.position, player.position) > minDist)
                             {
-                                Debug.Log("Play" + hit.transform.name);
+                                //Debug.Log("Play" + hit.transform.name);
                                 Debug.DrawRay(hit.transform.position, (player.position - hit.transform.position), Color.blue, 10.0f);
 
-                                HelperFunctions.Helper.PlayRandomNoiseInArray(noises, hit.GetComponent<AudioSource>(), Random.Range(0.5f, 1f), helperId, true);
+                                HelperFunctions.Helper.PlayRandomNoiseInArray(noises, hit.GetComponent<AudioSource>(), Random.Range(0.5f, 1f), helperId, false);
 
                             }
                         }
