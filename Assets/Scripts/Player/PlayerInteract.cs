@@ -280,7 +280,7 @@ public class PlayerInteract : MonoBehaviour
                 break;
             
         }
-        Destroy(gameObjectPickUp);
+        gameObjectPickUp.SetActive(false);
     }
 
 
