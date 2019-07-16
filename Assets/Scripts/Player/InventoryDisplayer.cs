@@ -131,7 +131,7 @@ public class InventoryDisplayer : MonoBehaviour
                         colors.normalColor = Color.red;
                         colors.highlightedColor = Color.red;
                         itemImages[i].gameObject.GetComponent<Button>().colors = colors;
-                        itemText[i].text = inventory.itemSlots[i].item.title + "(" + inventory.itemSlots[i].quantity + ")" + " Equipped ";
+                        itemText[i].text = inventory.itemSlots[i].item.title;
                         itemImages[i].gameObject.GetComponent<Button>().enabled = false;
                         itemImages[i].gameObject.GetComponent<Button>().enabled = true;
 
@@ -145,7 +145,7 @@ public class InventoryDisplayer : MonoBehaviour
 
                         itemImages[i].gameObject.GetComponent<Button>().enabled = false;
                         itemImages[i].gameObject.GetComponent<Button>().enabled = true;
-                        itemText[i].text = inventory.itemSlots[i].item.title + "(" + inventory.itemSlots[i].quantity + ")";
+                        itemText[i].text = inventory.itemSlots[i].item.title;
                     }
 
 

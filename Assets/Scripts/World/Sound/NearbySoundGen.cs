@@ -31,8 +31,11 @@ public class NearbySoundGen : MonoBehaviour
 
 
                     RaycastHit potplayer;
-                    Physics.Linecast(hit.transform.position, player.position, out potplayer, selfLayer, QueryTriggerInteraction.Ignore);
-
+                    if (!Physics.Linecast(hit.transform.position, player.position, out potplayer, selfLayer, QueryTriggerInteraction.Ignore))
+                    {
+                        return;
+                    }
+                    
                     if (potplayer.collider.tag == "Player")
                     {
                             Debug.DrawRay(hit.transform.position, (player.position - hit.transform.position), Color.black, 1.0f);
