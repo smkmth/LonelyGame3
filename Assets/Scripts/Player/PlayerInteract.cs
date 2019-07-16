@@ -280,7 +280,8 @@ public class PlayerInteract : MonoBehaviour
                 break;
             
         }
-        gameObjectPickUp.SetActive(false);
+        gameObjectPickUp.GetComponent<BoxCollider>().enabled = false;
+        gameObjectPickUp.GetComponent<MeshRenderer>().enabled = false;
     }
 
 
