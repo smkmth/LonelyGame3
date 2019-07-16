@@ -7156,7 +7156,6 @@ GameObject:
   - component: {fileID: 1081647374}
   - component: {fileID: 1081647373}
   - component: {fileID: 1081647372}
-  - component: {fileID: 1081647371}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Camera
@@ -7178,19 +7177,6 @@ Transform:
   m_Father: {fileID: 1750287830}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1081647371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1081647369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58659d4f2ab41eb49b2135e6e3975000, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heldItem: {fileID: 0}
 --- !u!114 &1081647372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7222,7 +7208,7 @@ MonoBehaviour:
   hasBeenTriggered: 0
   afterTime: 1
   timeToWait: 3
-  timeToHold: 3
+  timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
@@ -8704,17 +8690,17 @@ PrefabInstance:
     - target: {fileID: 5070230334021935466, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
       propertyPath: fallmod
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5070230334021935466, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
       propertyPath: playerHeight
-      value: 1.6
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 5070230334021935466, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
       propertyPath: playerLowHeight
-      value: 1.4
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 5070230334021935466, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
