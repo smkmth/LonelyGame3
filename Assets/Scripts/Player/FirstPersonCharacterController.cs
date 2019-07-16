@@ -132,6 +132,7 @@ public class FirstPersonCharacterController : MonoBehaviour
             }
             else if (heightdist < playerLowHeight)
             {
+
                 rb.AddForce(Vector3.up * fallmod, ForceMode.Acceleration);
             }
         } 
@@ -139,10 +140,12 @@ public class FirstPersonCharacterController : MonoBehaviour
         {
             if (heightdist > playerCrouchedHeight)
             {
+
                 rb.AddForce(Vector3.down * fallmod, ForceMode.Acceleration);
             }
             else if (heightdist < playerCrouchedLowHeight)
             {
+
                 rb.AddForce(Vector3.up * fallmod, ForceMode.Acceleration);
             }
 
