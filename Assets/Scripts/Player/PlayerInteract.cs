@@ -137,6 +137,7 @@ public class PlayerInteract : MonoBehaviour
                     }
                     heldObject.Rotate(Vector3.up, Input.GetAxis("Mouse X") * inspectRotSpeed * Time.deltaTime);
                     break;
+                    
 
             }
         }
@@ -279,7 +280,8 @@ public class PlayerInteract : MonoBehaviour
                 break;
             
         }
-        Destroy(gameObjectPickUp);
+        gameObjectPickUp.GetComponent<BoxCollider>().enabled = false;
+        gameObjectPickUp.GetComponent<MeshRenderer>().enabled = false;
     }
 
 
