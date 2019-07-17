@@ -28,7 +28,7 @@ public class InventoryDisplayer : MonoBehaviour
     public Sprite emptySprite;
     public string emptyString;
 
-    public Transform ObjView;
+    public GameObject inspectItemView;
 
 
     public void Start()
@@ -75,6 +75,10 @@ public class InventoryDisplayer : MonoBehaviour
     {
         inventoryUI.SetActive(isInventory);
         DisplayInventory();
+        
+        inspectItemView.SetActive(isInventory);
+
+        
 
     }
 

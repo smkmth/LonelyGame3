@@ -170,11 +170,7 @@ public class PlayerInteract : MonoBehaviour
                 manager.ChangePlayerState(PlayerState.freeMovement);
 
                 break;
-            case HoldState.inspectingItem:
-                heldObject.transform.position = inspectItemTarget.position;
-                manager.ChangePlayerState(PlayerState.inspectMode);
-
-                break;
+       
             case HoldState.notHoldingItem:
                 controller.characterIsActive = true;
                 manager.ChangePlayerState(PlayerState.freeMovement);

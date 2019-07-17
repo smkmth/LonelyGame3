@@ -6,10 +6,6 @@ using TMPro;
 public enum PlayerState
 {
     freeMovement,
-    noMovement,
-    noCameraMovement,
-    inspectMode,
-    noCameraAndMovementCursorFree,
     fullyPaused,
     cameraAimMode,
     menuMode,
@@ -175,75 +171,7 @@ public class PlayerManager : MonoBehaviour
 
                 break;
 
-            case PlayerState.noMovement:
-                menuManager.ToggleMenu(false);
-                interact.interactIsActive = true;
-                Time.timeScale = 1;
-                controller.characterIsActive = false;
-                mouseLook.cameraControl = true;
-                lamp.canUseLamp = true;
-
-                inGameCamera.cameraIsActive = false;
-                controller.playerCanRun = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                crosshair.SetActive(true);
-                hintText.gameObject.SetActive(true);
-                lampObject.SetActive(true);
-                lamp.ToggleLamp(true);
-                break;
-            case PlayerState.noCameraMovement:
-                menuManager.ToggleMenu(false);
-                interact.interactIsActive = true;
-                Time.timeScale = 1;
-                controller.characterIsActive = true;
-                mouseLook.cameraControl = false;
-                inGameCamera.cameraIsActive = false;
-                controller.playerCanRun = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                crosshair.SetActive(true);
-                lamp.canUseLamp = true;
-                hintText.gameObject.SetActive(true);
-                lampObject.SetActive(true);
-                lamp.ToggleLamp(true);
-
-
-                break;
-            case PlayerState.inspectMode:
-                menuManager.ToggleMenu(false);
-                interact.interactIsActive = true;
-                Time.timeScale = 1;
-                controller.characterIsActive = false;
-                controller.playerCanRun = false;
-                mouseLook.cameraControl = false;
-                inGameCamera.cameraIsActive = false;
-                lamp.canUseLamp = true;
-                hintText.gameObject.SetActive(true);
-
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                crosshair.SetActive(false);
-                lampObject.SetActive(true);
-                lamp.ToggleLamp(true);
-                break;
-            case PlayerState.noCameraAndMovementCursorFree:
-                menuManager.ToggleMenu(false);
-                Time.timeScale = 1;
-                interact.interactIsActive = false;
-                controller.playerCanRun = false;
-                controller.characterIsActive = false;
-                mouseLook.cameraControl = false;
-                inGameCamera.cameraIsActive = false;
-                Cursor.visible = true;
-                lamp.canUseLamp = true;
-                hintText.gameObject.SetActive(true);
-
-                Cursor.lockState = CursorLockMode.None;
-                crosshair.SetActive(true);
-                lampObject.SetActive(true);
-                lamp.ToggleLamp(true);
-                break;
+           
 
             case PlayerState.fullyPaused:
                 menuManager.ToggleMenu(false);

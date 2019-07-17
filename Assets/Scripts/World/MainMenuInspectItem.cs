@@ -12,15 +12,6 @@ public class MainMenuInspectItem : MonoBehaviour
     public Transform objectToRot;
     
 
-    void Awake()
-    {
-    }
-
-    void Update()
-    {
-
-    }
-
     public void OnPointerClick(PointerEventData eventData) // 3
     {
         print("I was clicked");
