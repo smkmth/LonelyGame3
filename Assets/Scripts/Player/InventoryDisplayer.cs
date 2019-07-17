@@ -28,6 +28,8 @@ public class InventoryDisplayer : MonoBehaviour
     public Sprite emptySprite;
     public string emptyString;
 
+    public Transform ObjView;
+
 
     public void Start()
     {

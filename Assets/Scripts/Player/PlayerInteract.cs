@@ -252,6 +252,9 @@ public class PlayerInteract : MonoBehaviour
 
     public void AddToInventory(GameObject gameObjectPickUp)
     {
+        itemPrompt.text = "";
+        curser.color = noColor;
+
         Item item = gameObjectPickUp.GetComponent<ItemContainer>().heldItem;
         switch (item.type)
         {
@@ -388,21 +391,15 @@ public class PlayerInteract : MonoBehaviour
 
     private void CheckCurser(ItemTypes thisItemType)
     {
+        curser.color = noColor;
+        itemPrompt.text = "";
+
         if (detectedObj == null)
         {
+
             return;
         }
-        /*
-        if (lookingAt)
-        {
-            if (detectedObj.name != lookAtEventObj.name)
-            {
-                lookingAt = false;
-                lookAtEventObj.TriggerEvent();
-                lookAtEventObj = null;
-            }
-        }
-        */
+  
         if (thisItemType == ItemTypes.LookAtObj)
         {
             GameEventTrigger lookatTrigger = detectedObj.GetComponent<GameEventTrigger>();
@@ -425,6 +422,7 @@ public class PlayerInteract : MonoBehaviour
                 Debug.LogError("No GameEventTrigger on LookAtObj");
             }
         }
+
         curser.color = noColor;
         AbstractGameEventTrigger itemtrigger = null;
         if (thisItemType != ItemTypes.Wall || thisItemType != ItemTypes.Surface || thisItemType != ItemTypes.Unknown || thisItemType != ItemTypes.Nothing)
