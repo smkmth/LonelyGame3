@@ -15,6 +15,8 @@ public enum MenuType
 public class MenuManager : MonoBehaviour
 {
 
+
+
     private InventoryDisplayer invDisplay;
     private TextDisplayer textDisplay;
     private PlayerMapDisplayer mapDisplay;
