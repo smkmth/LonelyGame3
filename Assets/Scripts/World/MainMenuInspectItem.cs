@@ -10,7 +10,7 @@ public class MainMenuInspectItem : MonoBehaviour
 {
 
     public Transform objectToRot;
-    
+    public float scrollMult;
 
     public void OnPointerClick(PointerEventData eventData) // 3
     {
@@ -22,6 +22,11 @@ public class MainMenuInspectItem : MonoBehaviour
         print("I'm being dragged!");
         Debug.Log(eventData.delta);
         objectToRot.Rotate(objectToRot.transform.up, eventData.delta.x);
+        float scroll = Input.mouseScrollDelta.y;
+        objectToRot.position += new Vector3(0, 0, scroll * scrollMult * Time.deltaTime);
+
+
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)

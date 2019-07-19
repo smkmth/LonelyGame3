@@ -214,37 +214,7 @@ public class PlayerInteract : MonoBehaviour
         
 
     }
-    public void PutDown()
-    {
-        if (heldObject.name == "EndGameObject")
-        {
-            isHoldingEndGameItem = false; 
-        }
-        heldObject.gameObject.layer = LayerMask.NameToLayer("Item");
-        heldObject.GetComponent<Collider>().isTrigger = false;
-        heldObject = null;
-
-        ChangeHoldState(HoldState.notHoldingItem, false);
-
-    }
-
-    public void Drop()
-    {
-        if (IsItemBehindWall())
-        {
-            return;
-        }
-        heldObject.GetComponent<Collider>().isTrigger = false;
-        heldObject.GetComponent<Rigidbody>().isKinematic = false;
-        heldObject.GetComponent<Rigidbody>().AddForce(cameraObj.transform.forward * throwForce, ForceMode.Impulse);
-        heldObject.gameObject.layer = LayerMask.NameToLayer("Item");
-
-        heldObject.parent = null;
-        heldObject = null;
-        ChangeHoldState(HoldState.notHoldingItem, false);
-
-
-    }
+  
 
     public void AddToInventory(GameObject gameObjectPickUp)
     {
@@ -260,24 +230,10 @@ public class PlayerInteract : MonoBehaviour
                 textDisplayer.AddTextAsset(book);
                 reader.DisplayText(book);
                 break;
-            case ItemType.Clue:
-                source.PlayOneShot(objectPickup, pickupVol);
-
+            default:
+                source.PlayOneShot(objectPickup, 1.0f);
                 inv.AddItem(item);
                 break;
-            case ItemType.Film:
-                source.PlayOneShot(objectPickup, pickupVol);
-                inv.AddItem(item);
-                break;
-            case ItemType.Key:
-                source.PlayOneShot(objectPickup, pickupVol);
-                inv.AddItem(item);
-                break;
-            case ItemType.EndGameItem:
-                source.PlayOneShot(objectPickup, pickupVol);
-                inv.AddItem(item);
-                break;
-            
         }
         gameObjectPickUp.GetComponent<BoxCollider>().enabled = false;
         gameObjectPickUp.GetComponent<MeshRenderer>().enabled = false;
@@ -543,37 +499,7 @@ public class PlayerInteract : MonoBehaviour
 
                     }
                     break;
-                case ItemTypes.Surface:
-                    if (currentHoldState == HoldState.holdingItem)
-                    {
-
-                        curser.color = interactColor;
-                        itemPrompt.text = "Put Down?";
-                        if (Input.GetButtonDown("Interact"))
-                        {
-
-                            for (int i = 0; i < detectedObj.transform.childCount; i++)
-                            {
-                                Transform child = detectedObj.transform.GetChild(i);
-                                if (child.tag == "ItemSlot")
-                                {
-                                    if (child.transform.childCount == 0)
-                                    {
-                                        heldObject.parent = child;
-                                        heldObject.transform.position = child.transform.position;
-                                        heldObject.transform.rotation = Quaternion.identity;
-                                        PutDown();
-                                        itemPrompt.text = "";
-                                        break;
-
-                                    }
-                                }
-                            }
-                        }
-
-
-                    }
-                    break;
+        
                 case ItemTypes.Wall:
                     curser.color = noColor;
 
@@ -596,12 +522,6 @@ public class PlayerInteract : MonoBehaviour
             itemPrompt.text = "";
         }
 
-        if (currentHoldState == HoldState.holdingItem)
-        {
-            if (Input.GetButtonDown("Interact"))
-            { 
-                Drop();
-            }
-        }
+   
     }
 }
