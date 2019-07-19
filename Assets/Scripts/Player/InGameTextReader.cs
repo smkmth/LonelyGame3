@@ -60,6 +60,14 @@ public class InGameTextReader : MonoBehaviour
       
     }
 
+    public void ReturnToMenu()
+    {
+
+        playerIsReading = false;
+        ReaderUI.SetActive(false);
+        displayText.text = "";
+
+    }
     public void DisplayText(InGameText text)
     {
         playerIsReading = true;
