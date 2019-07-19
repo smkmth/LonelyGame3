@@ -51,12 +51,18 @@ public class MenuManager : MonoBehaviour
         if (menuOn)
         {
             menu.SetActive(true);
-            
+            objectiveDisplayer.ToggleObjectivesMenu(false);
+            invDisplay.ToggleInventoryMenu(false);
+            textDisplay.ToggleTextDisplay(false);
+            mapDisplay.ToggleMap(false);
         }
         else
         {
+            objectiveDisplayer.ToggleObjectivesMenu(false);
+            invDisplay.ToggleInventoryMenu(false);
+            textDisplay.ToggleTextDisplay(false);
+            mapDisplay.ToggleMap(false);
             menu.SetActive(false);
-
         }
 
     }

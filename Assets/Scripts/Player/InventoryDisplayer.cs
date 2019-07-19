@@ -28,8 +28,11 @@ public class InventoryDisplayer : MonoBehaviour
     public Sprite emptySprite;
     public string emptyString;
 
-    public GameObject inspectItemView;
-
+    public Item currentlySelectedItem;
+    public GameObject inspectObject;
+    public Transform inspectItemView;
+    public TextMeshProUGUI selectedItemName;
+    public TextMeshProUGUI selectedItemDescription;
 
     public void Start()
     {
@@ -73,13 +76,11 @@ public class InventoryDisplayer : MonoBehaviour
     //turn on and off inventory menu
     public void ToggleInventoryMenu(bool isInventory)
     {
-        inventoryUI.SetActive(isInventory);
         DisplayInventory();
+        currentlySelectedItem = null;
+        inspectItemView.gameObject.SetActive(false);
+        inventoryUI.SetActive(isInventory);
         
-        inspectItemView.SetActive(isInventory);
-
-        
-
     }
 
     //gets called by the ui button on click method - setup in create inventory ui
@@ -93,6 +94,7 @@ public class InventoryDisplayer : MonoBehaviour
 
             Item selectedItem = inventory.itemSlots[selectedIndex].item;
 
+            currentlySelectedItem = selectedItem;
             switch (selectedItem.type)
             {
                 case ItemType.Book:
@@ -102,16 +104,7 @@ public class InventoryDisplayer : MonoBehaviour
                     break;
 
          
-                case ItemType.Key:
-                    Key keyItem = (Key)selectedItem;
-               
-                    break;
-          
-                case ItemType.Film:
-                    Film filmItem = (Film)selectedItem;
-                    break;
-
-
+              
             }
 
         }
@@ -121,7 +114,24 @@ public class InventoryDisplayer : MonoBehaviour
     //JUST update the visuals of the inventory- dont implement any inventory management stuff here please future danny
     public void DisplayInventory()
     {
-        
+        if(currentlySelectedItem != null)
+        {
+            Destroy(inspectObject);
+            inspectItemView.gameObject.SetActive(true);
+            inspectObject = Instantiate(currentlySelectedItem.itemMesh, inspectItemView);
+            inspectObject.transform.localPosition = Vector3.zero;
+            inspectObject.SetActive(true);
+            selectedItemName.text = currentlySelectedItem.title;
+            selectedItemDescription.text = currentlySelectedItem.description;
+
+        }
+        else
+        {
+            selectedItemName.text = "";
+            selectedItemDescription.text = "";
+
+        }
+
         if (inventory.itemSlots.Count > 0)
         {
             for (int i = 0; i < inventory.MaxItemSlots; i++)

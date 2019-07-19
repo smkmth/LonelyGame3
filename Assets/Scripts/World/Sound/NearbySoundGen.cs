@@ -15,6 +15,11 @@ public class NearbySoundGen : MonoBehaviour
     public AudioSource[] sources;
     public int helperId = 1;
 
+    private void Start()
+    {
+        player = GameObject.Find("Player").transform;
+    }
+
     // Update is called once per frame
     void Update()
     {
