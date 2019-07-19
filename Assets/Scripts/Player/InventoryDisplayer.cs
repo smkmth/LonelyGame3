@@ -29,7 +29,8 @@ public class InventoryDisplayer : MonoBehaviour
     public string emptyString;
 
     public Item currentlySelectedItem;
-    public GameObject inspectItemView;
+    public GameObject inspectObject;
+    public Transform inspectItemView;
     public TextMeshProUGUI selectedItemName;
     public TextMeshProUGUI selectedItemDescription;
 
@@ -77,7 +78,7 @@ public class InventoryDisplayer : MonoBehaviour
     {
         DisplayInventory();
         currentlySelectedItem = null;
-        inspectItemView.SetActive(false);
+        inspectItemView.gameObject.SetActive(false);
         inventoryUI.SetActive(isInventory);
         
     }
@@ -92,6 +93,7 @@ public class InventoryDisplayer : MonoBehaviour
                 " You have " + inventory.itemSlots[selectedIndex].quantity + " of this item ");
 
             Item selectedItem = inventory.itemSlots[selectedIndex].item;
+
             currentlySelectedItem = selectedItem;
             switch (selectedItem.type)
             {
@@ -114,8 +116,11 @@ public class InventoryDisplayer : MonoBehaviour
     {
         if(currentlySelectedItem != null)
         {
-            inspectItemView.SetActive(true);
-            inspectItemView.GetComponent<MeshFilter>().sharedMesh = currentlySelectedItem.itemMesh;
+            Destroy(inspectObject);
+            inspectItemView.gameObject.SetActive(true);
+            inspectObject = Instantiate(currentlySelectedItem.itemMesh, inspectItemView);
+            inspectObject.transform.localPosition = Vector3.zero;
+            inspectObject.SetActive(true);
             selectedItemName.text = currentlySelectedItem.title;
             selectedItemDescription.text = currentlySelectedItem.description;
 

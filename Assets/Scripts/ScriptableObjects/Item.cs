@@ -10,7 +10,7 @@ public enum ItemType
 }
 public class Item : ScriptableObject {
 
-    public Mesh itemMesh;
+    public GameObject itemMesh;
     public string title;
     public string description;
     public Sprite icon;
