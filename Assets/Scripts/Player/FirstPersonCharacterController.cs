@@ -23,7 +23,6 @@ public class FirstPersonCharacterController : MonoBehaviour
 
     public float sprintTimer;
     public bool enoughStamina;
-    public Slider energyBar;
 
     public bool playerCanRun;
     public Transform standingPos;
@@ -55,7 +54,6 @@ public class FirstPersonCharacterController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         audioSource = GetComponent<AudioSource>();
-        energyBar.maxValue = sprintTime;
 
     }
 
@@ -118,7 +116,7 @@ public class FirstPersonCharacterController : MonoBehaviour
         }
 
      
-        energyBar.value = sprintTimer;
+
         if (characterIsActive)
         {
             if (Input.GetButton("Crouch"))

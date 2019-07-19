@@ -14,22 +14,19 @@ public class TextDisplayer: MonoBehaviour
 
     public List<InGameText> collectedTextAssets;
     public int numberOfTextAssets;
-
-    // Start is called before the first frame update
     public void Start()
     {
-
         reader = GetComponent<InGameTextReader>();
-
     }
+
     public void ToggleTextDisplay(bool isTextDisplay)
     {
         textDisplayMenu.SetActive(isTextDisplay);
     }
 
-    public void SelectTextItem(int textItemIndex)
+    public void SelectTextItem(InGameText textItem)
     {
-        reader.DisplayText(collectedTextAssets[(textItemIndex -1)]);
+        reader.DisplayText(textItem);
 
     }
 
@@ -39,9 +36,9 @@ public class TextDisplayer: MonoBehaviour
         numberOfTextAssets++;
         GameObject slot = Instantiate(textDisplayItem, textDisplayGrid.transform);
         Button button = slot.GetComponent<Button>();
-        TextMeshProUGUI buttontext = slot.GetComponentInChildren<TextMeshProUGUI>();
+        Text buttontext = slot.GetComponentInChildren<Text>();
         buttontext.text = textAsset.title;
-        button.onClick.AddListener(() => SelectTextItem(numberOfTextAssets));
+        button.onClick.AddListener(() => SelectTextItem(textAsset));
 
     }
 }
