@@ -12,11 +12,18 @@ public class TextDisplayer: MonoBehaviour
     public GameObject textDisplayGrid;
     public InGameTextReader reader;
 
+    public List<InGameText> startingText;
+
     public List<InGameText> collectedTextAssets;
     public int numberOfTextAssets;
     public void Start()
     {
         reader = GetComponent<InGameTextReader>();
+
+        foreach(InGameText text in startingText)
+        {
+            AddTextAsset(text);
+        }
     }
 
     public void ToggleTextDisplay(bool isTextDisplay)
