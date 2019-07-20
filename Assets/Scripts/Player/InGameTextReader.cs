@@ -13,6 +13,7 @@ public class InGameTextReader : MonoBehaviour
     public SmoothMouseLook mouseLook;
     public Button returnButton;
     public InGameCamera gameCamera;
+    public TextDisplayer textDisplayer;
 
     public PlayerManager playerManager;
 
@@ -26,6 +27,7 @@ public class InGameTextReader : MonoBehaviour
     public void Start()
     {
         playerManager = GetComponent<PlayerManager>();
+        textDisplayer = GetComponent<TextDisplayer>();
         returnButton.onClick.AddListener(() => ResumeGame());
         ReaderUI.SetActive(false);
     }
@@ -72,6 +74,7 @@ public class InGameTextReader : MonoBehaviour
         playerIsReading = false;
         ReaderUI.SetActive(false);
         displayText.text = "";
+        textDisplayer.ToggleTextDisplay(true);
 
     }
     public void DisplayText(InGameText text)
@@ -81,7 +84,7 @@ public class InGameTextReader : MonoBehaviour
         timer = inputInactive;
         ReaderUI.SetActive(true);
         displayText.text = text.TextToDisplay;
-        playerManager.ChangePlayerState(PlayerState.fullyPaused);
+        //playerManager.ChangePlayerState(PlayerState.fullyPaused);
 
     }
 
