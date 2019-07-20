@@ -45,7 +45,7 @@ public class InGameTextReader : MonoBehaviour
         {
             timer -= Time.unscaledDeltaTime;
         }
-
+        /*
 
 
         if (canClick)
@@ -57,7 +57,13 @@ public class InGameTextReader : MonoBehaviour
                 ResumeGame();
             }
         }
+        */
       
+    }
+
+    public void ScrollDebug(Vector2 scroll)
+    {
+        Debug.Log(scroll);
     }
 
     public void ReturnToMenu()

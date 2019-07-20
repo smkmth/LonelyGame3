@@ -10,7 +10,7 @@ public enum MenuType
     Objectives,
     Reading,
     Options,
-    SaveLoad
+    MainMenu
 }
 public class MenuManager : MonoBehaviour
 {
@@ -21,14 +21,15 @@ public class MenuManager : MonoBehaviour
     private TextDisplayer textDisplay;
     private PlayerMapDisplayer mapDisplay;
     private ObjectiveDisplayer objectiveDisplayer;
-
+    private SettingsDisplayer settingsDisplayer;
+    private MainMenuDisplayer mainMenuDispalyer;
     public GameObject menu;
     public Button inventoryButton;
     public Button mapButton;
     public Button readingButton;
     public Button objectiveButton;
     public Button optionsButton;
-    public Button saveLoadButton;
+    public Button mainMenuButton;
 
     private void Start()
     {
@@ -36,13 +37,15 @@ public class MenuManager : MonoBehaviour
         textDisplay = GetComponent<TextDisplayer>();
         mapDisplay = GetComponent<PlayerMapDisplayer>();
         objectiveDisplayer = GetComponent<ObjectiveDisplayer>();
+        settingsDisplayer = GetComponent<SettingsDisplayer>();
+        mainMenuDispalyer = GetComponent<MainMenuDisplayer>();
         inventoryButton.onClick.AddListener(() => ToggleMenu(MenuType.Inventory));
         mapButton.onClick.AddListener(() => ToggleMenu(MenuType.Map));
         readingButton.onClick.AddListener(() => ToggleMenu(MenuType.Reading));
         objectiveButton.onClick.AddListener(() => ToggleMenu(MenuType.Objectives));
         optionsButton.onClick.AddListener(() => ToggleMenu(MenuType.Options));
-        saveLoadButton.onClick.AddListener(() => ToggleMenu(MenuType.SaveLoad));
-
+        mainMenuButton.onClick.AddListener(() => ToggleMenu(MenuType.MainMenu));
+        
 
     }
 
@@ -77,6 +80,8 @@ public class MenuManager : MonoBehaviour
                 invDisplay.ToggleInventoryMenu(true);
                 textDisplay.ToggleTextDisplay(false);
                 mapDisplay.ToggleMap(false);
+                settingsDisplayer.ToggleSettingsDisplay(false);
+                mainMenuDispalyer.ToggleMainMenuDisplay(false);
                 Debug.Log("Inventory");
                 break;
             case MenuType.Map:
@@ -84,6 +89,9 @@ public class MenuManager : MonoBehaviour
                 objectiveDisplayer.ToggleObjectivesMenu(false);
                 invDisplay.ToggleInventoryMenu(false);
                 textDisplay.ToggleTextDisplay(false);
+                settingsDisplayer.ToggleSettingsDisplay(false);
+                mainMenuDispalyer.ToggleMainMenuDisplay(false);
+
                 Debug.Log("map");
                 break;
             case MenuType.Objectives:
@@ -91,6 +99,9 @@ public class MenuManager : MonoBehaviour
                 objectiveDisplayer.ToggleObjectivesMenu(true);
                 invDisplay.ToggleInventoryMenu(false);
                 textDisplay.ToggleTextDisplay(false);
+                settingsDisplayer.ToggleSettingsDisplay(false);
+                mainMenuDispalyer.ToggleMainMenuDisplay(false);
+
                 Debug.Log("objectives");
                 break;
             case MenuType.Options:
@@ -98,6 +109,9 @@ public class MenuManager : MonoBehaviour
                 objectiveDisplayer.ToggleObjectivesMenu(false);
                 invDisplay.ToggleInventoryMenu(false);
                 textDisplay.ToggleTextDisplay(false);
+                settingsDisplayer.ToggleSettingsDisplay(true);
+                mainMenuDispalyer.ToggleMainMenuDisplay(false);
+
                 Debug.Log("options");
                 break;
             case MenuType.Reading:
@@ -105,12 +119,18 @@ public class MenuManager : MonoBehaviour
                 objectiveDisplayer.ToggleObjectivesMenu(false);
                 invDisplay.ToggleInventoryMenu(false);
                 textDisplay.ToggleTextDisplay(true);
+                settingsDisplayer.ToggleSettingsDisplay(false);
+                mainMenuDispalyer.ToggleMainMenuDisplay(false);
+
+
                 Debug.Log("reading");
                 break;
-            case MenuType.SaveLoad:
+            case MenuType.MainMenu:
                 mapDisplay.ToggleMap(false);
                 invDisplay.ToggleInventoryMenu(false);
                 objectiveDisplayer.ToggleObjectivesMenu(false);
+                settingsDisplayer.ToggleSettingsDisplay(false);
+                mainMenuDispalyer.ToggleMainMenuDisplay(true);
                 Debug.Log("saveload");
                 break;
         }
