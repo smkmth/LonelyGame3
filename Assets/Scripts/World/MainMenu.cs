@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
     public GameObject menuObject;
     public GameObject mainMenuObject;
     public GameObject settingsMenuObject;
+    public SettingsDisplayer settingsMenu;
 
     public Button newGameButton;
     public Button loadGameButton;
@@ -26,6 +27,8 @@ public class MainMenu : MonoBehaviour
     public string playerScene;
     public string firstScene;
     public string secondScene;
+
+    public GameObject logo;
 
     public TextMeshProUGUI explainationText;
 
@@ -86,7 +89,8 @@ public class MainMenu : MonoBehaviour
                 break;
             case MainMenuButtonType.SettingsButton:
                 mainMenuObject.SetActive(false);
-                settingsMenuObject.SetActive(true);
+                settingsMenu.ToggleSettingsDisplay(true);
+                logo.SetActive(false);
                 break;
             case MainMenuButtonType.QuitGameButton:
                 Application.Quit();
@@ -107,6 +111,13 @@ public class MainMenu : MonoBehaviour
             case MainMenuButtonType.QuitGameButton:
                 break;
         }
+    }
+
+    public void ReturnToMainMenu()
+    {
+        logo.SetActive(true);
+        mainMenuObject.SetActive(true);
+
     }
 
     // Update is called once per frame

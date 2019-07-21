@@ -46,7 +46,6 @@ public class SettingsDisplayer : MonoBehaviour
     public void ConfirmSettings()
     {
         settings.ChangeResolution(settings.resolutionDatas[currentResolutionIndex]);
-
         settings.SaveSettingData();
     }
 }
