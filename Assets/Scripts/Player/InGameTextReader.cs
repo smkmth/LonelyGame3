@@ -84,7 +84,7 @@ public class InGameTextReader : MonoBehaviour
     }
     public void DisplayText(InGameText text)
     {
-        textRect.normalizedPosition = new Vector2(0, 1);
+        //textRect.normalizedPosition = new Vector2(textRect.normalizedPosition.x, 1);
         playerIsReading = true;
         canClick = false;
         timer = inputInactive;
