@@ -9,12 +9,18 @@ public enum MainMenuButtonType
     NewGameButton,
     LoadGameButton,
     SettingsButton,
-    QuitGameButton
+    QuitGameButton,
+    AboutGameButton
 }
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject pressAnyKey;
+    public TextMeshProUGUI pressAnyKeyText;
+    public float anyKeyPulseSpeed;
+
+    public GameObject aboutGameObject;
+
     public GameObject loadingScreen;
     public GameObject menuObject;
     public GameObject mainMenuObject;
@@ -24,6 +30,7 @@ public class MainMenu : MonoBehaviour
     public Button newGameButton;
     public Button loadGameButton;
     public Button settingsButton;
+    public Button aboutGameButton;
     public Button quitGameButton;
 
     public string playerScene;
@@ -42,6 +49,8 @@ public class MainMenu : MonoBehaviour
     public string settingsText;
     [TextArea]
     public string quitGameText;
+    [TextArea]
+    public string aboutGameText;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +58,7 @@ public class MainMenu : MonoBehaviour
         newGameButton.onClick.AddListener(() => ToggleMenu(MainMenuButtonType.NewGameButton));
         loadGameButton.onClick.AddListener(() => ToggleMenu(MainMenuButtonType.LoadGameButton));
         settingsButton.onClick.AddListener(() => ToggleMenu(MainMenuButtonType.SettingsButton));
+        aboutGameButton.onClick.AddListener(() => ToggleMenu(MainMenuButtonType.AboutGameButton));
         quitGameButton.onClick.AddListener(() => ToggleMenu(MainMenuButtonType.QuitGameButton));
 
     }
@@ -75,6 +85,11 @@ public class MainMenu : MonoBehaviour
             explainationText.text = quitGameText;
 
         }
+        else if (hover == "About")
+        {
+            explainationText.text = aboutGameText;
+
+        }
     }
     public void ToggleMenu(MainMenuButtonType menuTypeClicked)
     {
@@ -90,6 +105,11 @@ public class MainMenu : MonoBehaviour
                 logo.SetActive(false);
                 mainMenuObject.SetActive(false);
                 settingsMenu.ToggleSettingsDisplay(true);
+                break;
+            case MainMenuButtonType.AboutGameButton:
+                logo.SetActive(false);
+                mainMenuObject.SetActive(false);
+                aboutGameObject.SetActive(true);
                 break;
             case MainMenuButtonType.QuitGameButton:
                 Application.Quit();
@@ -114,6 +134,7 @@ public class MainMenu : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        aboutGameObject.SetActive(false);
         logo.SetActive(true);
         mainMenuObject.SetActive(true);
 
@@ -122,6 +143,12 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (pressAnyKey.activeSelf)
+        {
+            pressAnyKeyText.color = new Color(pressAnyKeyText.color.r, pressAnyKeyText.color.g, pressAnyKeyText.color.b, Mathf.PingPong(Time.time * anyKeyPulseSpeed, 1));
+
+        }
+
         if (Input.anyKey)
         {
             pressAnyKey.SetActive(false);
@@ -135,15 +162,14 @@ public class MainMenu : MonoBehaviour
         AsyncOperation async = SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
         async = SceneManager.LoadSceneAsync(secondScene, LoadSceneMode.Additive);
         async = SceneManager.LoadSceneAsync(playerScene, LoadSceneMode.Additive);
-      //  Debug.Log("Started Load");
 
         while (!async.isDone)
         {
-       //     Debug.Log("Loading...");
             yield return null;
         }
-     //   Debug.Log("DONE");
 
+        //after scene is loaded - wait for 2 seconds for the player to fall a bit - and everything to kind of shuffle in 
+        yield return new WaitForSeconds(2.0f);
         menuObject.SetActive(false);
 
     }
