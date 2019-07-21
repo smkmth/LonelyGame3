@@ -15,7 +15,7 @@ public enum MainMenuButtonType
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject pressAnyKey;
+    public GameObject pressAnyKeyObject;
     public TextMeshProUGUI pressAnyKeyText;
     public float anyKeyPulseSpeed;
 
@@ -55,6 +55,12 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        logo.SetActive(true);
+        mainMenuObject.SetActive(true);
+        settingsMenuObject.SetActive(false);
+        aboutGameObject.SetActive(false);
+        pressAnyKeyObject.SetActive(true);
+
         newGameButton.onClick.AddListener(() => ToggleMenu(MainMenuButtonType.NewGameButton));
         loadGameButton.onClick.AddListener(() => ToggleMenu(MainMenuButtonType.LoadGameButton));
         settingsButton.onClick.AddListener(() => ToggleMenu(MainMenuButtonType.SettingsButton));
@@ -143,7 +149,7 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (pressAnyKey.activeSelf)
+        if (pressAnyKeyObject.activeSelf)
         {
             pressAnyKeyText.color = new Color(pressAnyKeyText.color.r, pressAnyKeyText.color.g, pressAnyKeyText.color.b, Mathf.PingPong(Time.time * anyKeyPulseSpeed, 1));
 
@@ -151,7 +157,7 @@ public class MainMenu : MonoBehaviour
 
         if (Input.anyKey)
         {
-            pressAnyKey.SetActive(false);
+            pressAnyKeyObject.SetActive(false);
         }
     }
 

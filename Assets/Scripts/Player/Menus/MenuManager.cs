@@ -39,13 +39,15 @@ public class MenuManager : MonoBehaviour
         objectiveDisplayer = GetComponent<ObjectiveDisplayer>();
         settingsDisplayer = GetComponent<SettingsDisplayer>();
         mainMenuDispalyer = GetComponent<MainMenuDisplayer>();
+
         inventoryButton.onClick.AddListener(() => ToggleMenu(MenuType.Inventory));
         mapButton.onClick.AddListener(() => ToggleMenu(MenuType.Map));
         readingButton.onClick.AddListener(() => ToggleMenu(MenuType.Reading));
         objectiveButton.onClick.AddListener(() => ToggleMenu(MenuType.Objectives));
         optionsButton.onClick.AddListener(() => ToggleMenu(MenuType.Options));
         mainMenuButton.onClick.AddListener(() => ToggleMenu(MenuType.MainMenu));
-        
+        ToggleMenu(false);
+
 
     }
 
@@ -58,6 +60,8 @@ public class MenuManager : MonoBehaviour
             invDisplay.ToggleInventoryMenu(false);
             textDisplay.ToggleTextDisplay(false);
             mapDisplay.ToggleMap(false);
+            settingsDisplayer.ToggleSettingsDisplay(false);
+            mainMenuDispalyer.ToggleMainMenuDisplay(false);
         }
         else
         {
@@ -65,6 +69,8 @@ public class MenuManager : MonoBehaviour
             invDisplay.ToggleInventoryMenu(false);
             textDisplay.ToggleTextDisplay(false);
             mapDisplay.ToggleMap(false);
+            settingsDisplayer.ToggleSettingsDisplay(false);
+            mainMenuDispalyer.ToggleMainMenuDisplay(false);
             menu.SetActive(false);
         }
 
