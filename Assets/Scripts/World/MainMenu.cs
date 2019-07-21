@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,7 +14,8 @@ public enum MainMenuButtonType
 
 public class MainMenu : MonoBehaviour
 {
-
+    public GameObject pressAnyKey;
+    public GameObject loadingScreen;
     public GameObject menuObject;
     public GameObject mainMenuObject;
     public GameObject settingsMenuObject;
@@ -48,7 +50,7 @@ public class MainMenu : MonoBehaviour
         loadGameButton.onClick.AddListener(() => ToggleMenu(MainMenuButtonType.LoadGameButton));
         settingsButton.onClick.AddListener(() => ToggleMenu(MainMenuButtonType.SettingsButton));
         quitGameButton.onClick.AddListener(() => ToggleMenu(MainMenuButtonType.QuitGameButton));
-  
+
     }
     public void GetHover(string hover)
     {
@@ -79,18 +81,15 @@ public class MainMenu : MonoBehaviour
         switch (menuTypeClicked)
         {
             case MainMenuButtonType.NewGameButton:
-                SceneManager.LoadScene(firstScene, LoadSceneMode.Additive);
-                SceneManager.LoadScene(secondScene, LoadSceneMode.Additive);
-                SceneManager.LoadScene(playerScene, LoadSceneMode.Additive);
-                menuObject.SetActive(false); 
-
+                
+                StartCoroutine(LoadNewScene());
                 break;
             case MainMenuButtonType.LoadGameButton:
                 break;
             case MainMenuButtonType.SettingsButton:
+                logo.SetActive(false);
                 mainMenuObject.SetActive(false);
                 settingsMenu.ToggleSettingsDisplay(true);
-                logo.SetActive(false);
                 break;
             case MainMenuButtonType.QuitGameButton:
                 Application.Quit();
@@ -123,6 +122,29 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.anyKey)
+        {
+            pressAnyKey.SetActive(false);
+        }
+    }
+
+    IEnumerator LoadNewScene()
+    {
+        loadingScreen.SetActive(true);
+        yield return new WaitForEndOfFrame();
+        AsyncOperation async = SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
+        async = SceneManager.LoadSceneAsync(secondScene, LoadSceneMode.Additive);
+        async = SceneManager.LoadSceneAsync(playerScene, LoadSceneMode.Additive);
+      //  Debug.Log("Started Load");
+
+        while (!async.isDone)
+        {
+       //     Debug.Log("Loading...");
+            yield return null;
+        }
+     //   Debug.Log("DONE");
+
+        menuObject.SetActive(false);
+
     }
 }

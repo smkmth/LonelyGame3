@@ -31,7 +31,6 @@ public class SaveLoad : MonoBehaviour
     }
     public void SaveGame()
     {
-        Debug.Log("Saving...");
         SaveData save = CreateSaveGameObject();
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/gamesave.save");
@@ -44,7 +43,7 @@ public class SaveLoad : MonoBehaviour
     {
         if (File.Exists(Application.persistentDataPath + "/gamesave.save"))
         {
-            Debug.Log("Loading...");
+
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
             SaveData save = (SaveData)bf.Deserialize(file);
