@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Settings : MonoBehaviour
+public class Butts : MonoBehaviour
 {
     public GameObject mainMenuObject;
     public GameObject settingsMenuObject;
