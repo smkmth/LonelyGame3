@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class InGameTextReader : MonoBehaviour
 {
-
     public GameObject ReaderUI;
     public TextMeshProUGUI displayText;
+    public TextMeshProUGUI titleText;
+    public ScrollRect textRect;
     public FirstPersonCharacterController controller;
     public SmoothMouseLook mouseLook;
     public Button returnButton;
@@ -16,6 +17,7 @@ public class InGameTextReader : MonoBehaviour
     public TextDisplayer textDisplayer;
 
     public PlayerManager playerManager;
+    public MenuManager menuManager;
 
     private float timer;
 
@@ -26,6 +28,7 @@ public class InGameTextReader : MonoBehaviour
 
     public void Start()
     {
+        menuManager = GetComponent<MenuManager>();
         playerManager = GetComponent<PlayerManager>();
         textDisplayer = GetComponent<TextDisplayer>();
         returnButton.onClick.AddListener(() => ResumeGame());
@@ -74,17 +77,21 @@ public class InGameTextReader : MonoBehaviour
         playerIsReading = false;
         ReaderUI.SetActive(false);
         displayText.text = "";
-        textDisplayer.ToggleTextDisplay(true);
+        titleText.text = "";
+        playerManager.ChangePlayerState(PlayerState.menuMode);
+
 
     }
     public void DisplayText(InGameText text)
     {
+        textRect.normalizedPosition = new Vector2(0, 1);
         playerIsReading = true;
         canClick = false;
         timer = inputInactive;
         ReaderUI.SetActive(true);
         displayText.text = text.TextToDisplay;
-        //playerManager.ChangePlayerState(PlayerState.fullyPaused);
+        titleText.text = text.title;
+        playerManager.ChangePlayerState(PlayerState.fullyPaused);
 
     }
 

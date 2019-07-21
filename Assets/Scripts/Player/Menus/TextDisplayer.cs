@@ -43,6 +43,8 @@ public class TextDisplayer: MonoBehaviour
         numberOfTextAssets++;
         GameObject slot = Instantiate(textDisplayItem, textDisplayGrid.transform);
         Button button = slot.GetComponent<Button>();
+        slot.transform.GetChild(0).GetComponent<Text>().text = textAsset.title;
+        slot.transform.GetChild(1).GetComponent<Text>().text = "";
         Text buttontext = slot.GetComponentInChildren<Text>();
         buttontext.text = textAsset.title;
         button.onClick.AddListener(() => SelectTextItem(textAsset));
