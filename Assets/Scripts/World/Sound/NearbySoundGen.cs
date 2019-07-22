@@ -86,7 +86,6 @@ public class NearbySoundGen : MonoBehaviour
                 }
 
             }
-            int sourceindex = Random.Range(0, sources.Length);
             
         }
         else
