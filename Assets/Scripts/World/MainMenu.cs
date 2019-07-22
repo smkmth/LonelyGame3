@@ -177,7 +177,7 @@ public class MainMenu : MonoBehaviour
         }
 
         //after scene is loaded - wait for 2 seconds for the player to fall a bit - and everything to kind of shuffle in 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         menuObject.SetActive(false);
 
     }

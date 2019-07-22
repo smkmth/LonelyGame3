@@ -13,11 +13,11 @@ public class SettingsDisplayer : MonoBehaviour
 
     private void Start()
     {
-        settings = GameObject.Find("GameReset").GetComponent<InGameSettings>();
     }
 
     public void ToggleSettingsDisplay(bool isSettingsMenu)
     {
+        settings = GameObject.Find("GameReset").GetComponent<InGameSettings>();
         settingsMenu.SetActive(isSettingsMenu);
         currentResolutionIndex = settings.GetCurrentResolutionIndex();
         resolutionText.text = settings.resolutionDatas[currentResolutionIndex].screenHeight.ToString() + " X " + settings.resolutionDatas[currentResolutionIndex].screenWidth.ToString();
