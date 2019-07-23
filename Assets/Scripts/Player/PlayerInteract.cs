@@ -228,7 +228,7 @@ public class PlayerInteract : MonoBehaviour
                 source.PlayOneShot(paperPickup, pickupVol);
                 InGameText book = (InGameText)item;
                 textDisplayer.AddTextAsset(book);
-                reader.DisplayText(book);
+                reader.DisplayText(book, false);
                 break;
             default:
                 source.PlayOneShot(objectPickup, 1.0f);
@@ -481,7 +481,7 @@ public class PlayerInteract : MonoBehaviour
 
                     if (Input.GetButtonDown("Interact"))
                     {
-                        //holdTimer = detectedObj.GetComponent<AbstractGameEventTrigger>().timeToHold;
+                        holdTimer = detectedObj.GetComponent<AbstractGameEventTrigger>().timeToHold;
                     }
                     if (Input.GetButton("Interact"))
                     {

@@ -16,6 +16,9 @@ public class TextDisplayer: MonoBehaviour
 
     public List<InGameText> collectedTextAssets;
     public int numberOfTextAssets;
+    public GameObject returnToMenuButton;
+    public GameObject returnToGameButton;
+
     public void Start()
     {
         reader = GetComponent<InGameTextReader>();
@@ -29,11 +32,12 @@ public class TextDisplayer: MonoBehaviour
     public void ToggleTextDisplay(bool isTextDisplay)
     {
         textDisplayMenu.SetActive(isTextDisplay);
+       
     }
 
     public void SelectTextItem(InGameText textItem)
     {
-        reader.DisplayText(textItem);
+        reader.DisplayText(textItem, true);
 
     }
 

@@ -18,7 +18,8 @@ public class InGameTextReader : MonoBehaviour
 
     public PlayerManager playerManager;
     public MenuManager menuManager;
-
+    public GameObject returnToMenuButton;
+    public GameObject returnToGameButton;
     private float timer;
 
     public float inputInactive =.3f;
@@ -76,14 +77,25 @@ public class InGameTextReader : MonoBehaviour
 
         playerIsReading = false;
         ReaderUI.SetActive(false);
+        playerManager.ChangePlayerState(PlayerState.menuMode);
+        menuManager.ToggleMenu(MenuType.Reading);
         displayText.text = "";
         titleText.text = "";
-        playerManager.ChangePlayerState(PlayerState.menuMode);
 
 
     }
-    public void DisplayText(InGameText text)
+    public void DisplayText(InGameText text, bool returnToMenu)
     {
+        if (returnToMenu)
+        {
+            returnToGameButton.SetActive(false);
+            returnToMenuButton.SetActive(true);
+        }
+        else
+        {
+            returnToGameButton.SetActive(true);
+            returnToMenuButton.SetActive(false);
+        }
         //textRect.normalizedPosition = new Vector2(textRect.normalizedPosition.x, 1);
         playerIsReading = true;
         canClick = false;

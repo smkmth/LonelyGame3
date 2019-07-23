@@ -7,8 +7,8 @@ public class ConditionalGameEventTrigger : AbstractGameEventTrigger
 {
 
 
-    public GameEventTrigger trueEventTrigger;
-    public GameEventTrigger falseEventTrigger;
+    public AbstractGameEventTrigger trueEventTrigger;
+    public AbstractGameEventTrigger falseEventTrigger;
 
     private Condition conditionToTrigger;
     public bool conditionIsTrue =false;

@@ -79,6 +79,8 @@ public class MenuManager : MonoBehaviour
 
     public void ToggleMenu(MenuType chosenMenu)
     {
+        menu.SetActive(true);
+
         switch (chosenMenu)
         {
             case MenuType.Inventory:
@@ -134,6 +136,7 @@ public class MenuManager : MonoBehaviour
             case MenuType.MainMenu:
                 mapDisplay.ToggleMap(false);
                 invDisplay.ToggleInventoryMenu(false);
+                textDisplay.ToggleTextDisplay(false);
                 objectiveDisplayer.ToggleObjectivesMenu(false);
                 settingsDisplayer.ToggleSettingsDisplay(false);
                 mainMenuDispalyer.ToggleMainMenuDisplay(true);

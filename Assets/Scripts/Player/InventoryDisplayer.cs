@@ -99,7 +99,7 @@ public class InventoryDisplayer : MonoBehaviour
             {
                 case ItemType.Book:
                     InGameText bookItem = (InGameText)selectedItem;
-                    reader.DisplayText(bookItem);
+                    reader.DisplayText(bookItem, true);
                     
                     break;
 
