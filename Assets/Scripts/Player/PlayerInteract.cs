@@ -387,7 +387,7 @@ public class PlayerInteract : MonoBehaviour
             {
                 
                 case ItemTypes.Book:
-                    itemPrompt.text = "Press LMB to Read";
+                    itemPrompt.text = "Press <sprite=0> to Read";
                     curser.color = interactColor;
                     if (Input.GetButtonDown("Interact"))
                     {
@@ -404,12 +404,9 @@ public class PlayerInteract : MonoBehaviour
                     break;
                 case ItemTypes.Pickup:
                    
-
-                    if (currentHoldState == HoldState.notHoldingItem)
-                    {
                         curser.color = interactColor;
 
-                        itemPrompt.text = "Press LMB to PickUp " + detectedObj.name;
+                        itemPrompt.text = "Press <sprite=0> to pick up " + detectedObj.name;
                         if (Input.GetButtonDown("Interact"))
                         {
                             
@@ -421,13 +418,13 @@ public class PlayerInteract : MonoBehaviour
                         }
                         
                        
-                    }
+                    
                     break;
                 case ItemTypes.Film:
 
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Press LMB to PickUp Film";
+                    itemPrompt.text = "Press <sprite=0> to pick up Film";
                     if (Input.GetButtonDown("Interact"))
                     {
                         if (itemtrigger)
@@ -445,7 +442,7 @@ public class PlayerInteract : MonoBehaviour
 
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Press LMB to PickUp Camera";
+                    itemPrompt.text = "Press <sprite=0> to pick up Camera";
                     if (Input.GetButtonDown("Interact"))
                     {
 
@@ -464,7 +461,7 @@ public class PlayerInteract : MonoBehaviour
 
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Press LMB to Interact";
+                    itemPrompt.text = "Press <sprite=0> to Interact";
                     if (Input.GetButtonDown("Interact"))
                     {
                       
@@ -477,7 +474,7 @@ public class PlayerInteract : MonoBehaviour
 
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Hold LMB to Interact";
+                    itemPrompt.text = "Hold <sprite=0> to Interact";
 
                     if (Input.GetButtonDown("Interact"))
                     {

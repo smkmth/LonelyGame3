@@ -119,7 +119,7 @@ public class InventoryDisplayer : MonoBehaviour
             Destroy(inspectObject);
             inspectItemView.gameObject.SetActive(true);
             inspectObject = Instantiate(currentlySelectedItem.itemMesh, inspectItemView);
-            inspectObject.transform.localPosition = Vector3.zero;
+            inspectObject.transform.localPosition = currentlySelectedItem.yposMenu;
             inspectObject.SetActive(true);
             selectedItemName.text = currentlySelectedItem.title;
             selectedItemDescription.text = currentlySelectedItem.description;

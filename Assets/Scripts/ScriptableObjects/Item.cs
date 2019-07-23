@@ -10,6 +10,7 @@ public enum ItemType
 }
 public class Item : ScriptableObject {
 
+    public Vector3 yposMenu;
     public GameObject itemMesh;
     public string title;
     public string description;

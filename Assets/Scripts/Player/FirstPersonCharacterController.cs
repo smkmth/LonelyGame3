@@ -100,7 +100,7 @@ public class FirstPersonCharacterController : MonoBehaviour
     public void Update()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, Vector3.down, out hit, groundLayer))
+        if(Physics.Raycast(transform.position, Vector3.down, out hit,groundLayer))
         {
             heightdist = transform.position.y - hit.point.y;
             Debug.DrawRay(transform.position, Vector3.down * Vector3.Distance(transform.position, hit.point * heightdist));
