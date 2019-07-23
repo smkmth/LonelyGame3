@@ -23,10 +23,7 @@ public class FirstPersonCharacterController : MonoBehaviour
 
     public float sprintTimer;
     public bool enoughStamina;
-    public Slider energyBar;
 
-    public GameObject tutorial;
-    public bool tutorialOn;
     public bool playerCanRun;
     public Transform standingPos;
     public Vector3 crouchingScale;
@@ -57,26 +54,10 @@ public class FirstPersonCharacterController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         audioSource = GetComponent<AudioSource>();
-        energyBar.maxValue = sprintTime;
 
     }
 
-    public void ToggleHelp()
-    {
-        if (!tutorialOn)
-        {
-            tutorialOn = true;
-            Time.timeScale = 0.0f;
-            tutorial.SetActive(true);
-        }
-        else
-        {
-            tutorialOn = false;
-            Time.timeScale = 1.0f;
-            tutorial.SetActive(false);
-        }
 
-    }
     public void ToggleCrouch(bool isCrouching)
     {
         float crouchDist = (crouchingScale.y - 1.0f);
@@ -119,37 +100,12 @@ public class FirstPersonCharacterController : MonoBehaviour
     public void Update()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, Vector3.down, out hit, groundLayer))
+        if(Physics.Raycast(transform.position, Vector3.down, out hit,groundLayer))
         {
             heightdist = transform.position.y - hit.point.y;
             Debug.DrawRay(transform.position, Vector3.down * Vector3.Distance(transform.position, hit.point * heightdist));
         }
-        if (!playerIsCrouching)
-        {
-            if (heightdist > playerHeight)
-            {
-                rb.AddForce(Vector3.down * fallmod, ForceMode.Acceleration);
-            }
-            else if (heightdist < playerLowHeight)
-            {
-
-                rb.AddForce(Vector3.up * fallmod, ForceMode.Acceleration);
-            }
-        } 
-        else
-        {
-            if (heightdist > playerCrouchedHeight)
-            {
-
-                rb.AddForce(Vector3.down * fallmod, ForceMode.Acceleration);
-            }
-            else if (heightdist < playerCrouchedLowHeight)
-            {
-
-                rb.AddForce(Vector3.up * fallmod, ForceMode.Acceleration);
-            }
-
-        }
+     
         if (Input.GetButtonDown("VolUp"))
         {
             AudioListener.volume += 3.0f;
@@ -159,12 +115,8 @@ public class FirstPersonCharacterController : MonoBehaviour
             AudioListener.volume -= 3.0f;
         }
 
-        if (Input.GetButtonDown("Help"))
-        {
-            ToggleHelp();
-        }
+     
 
-        energyBar.value = sprintTimer;
         if (characterIsActive)
         {
             if (Input.GetButton("Crouch"))
@@ -270,16 +222,38 @@ public class FirstPersonCharacterController : MonoBehaviour
         }
 
     }
-    void StartLerpingPos()
-    {
-        isLerping = true;
-        timeStartedLerp = Time.time;
-    }
+
     private void FixedUpdate()
     {
-  
+        if (!playerIsCrouching)
+        {
+            if (heightdist > playerHeight)
+            {
+                rb.AddForce(Vector3.down * fallmod, ForceMode.Acceleration);
+            }
+            else if (heightdist < playerLowHeight)
+            {
+
+                rb.AddForce(Vector3.up * fallmod, ForceMode.Acceleration);
+            }
+        }
+        else
+        {
+            if (heightdist > playerCrouchedHeight)
+            {
+
+                rb.AddForce(Vector3.down * fallmod, ForceMode.Acceleration);
+            }
+            else if (heightdist < playerCrouchedLowHeight)
+            {
+
+                rb.AddForce(Vector3.up * fallmod, ForceMode.Acceleration);
+            }
+
+        }
         if (characterIsActive)
         {
+
 
 
             float inputX = Input.GetAxis("Horizontal");
@@ -324,24 +298,5 @@ public class FirstPersonCharacterController : MonoBehaviour
 
 
     }
-/*
-    IEnumerator Vingette(Vector3 targetScale, float duration)
-    {
 
-        Vector3 startScale = sprintVingette.transform.localScale;
-        float time = 0;
-
-        while (time < duration)
-        {
-            coroutineRunning = true;
-            time += Time.deltaTime;
-            float blend = Mathf.Clamp(time, 0, duration);
-            sprintVingette.transform.localScale = Vector3.Lerp(startScale, targetScale, blend);
-            yield return new WaitForEndOfFrame();
-        }
-
-        Debug.Log("here");
-        coroutineRunning = false;
-    }
-    */
 }

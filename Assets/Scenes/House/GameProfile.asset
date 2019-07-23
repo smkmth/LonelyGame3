@@ -148,28 +148,6 @@ MonoBehaviour:
   anamorphic:
     m_OverrideState: 0
     m_Value: 1
---- !u!114 &-5823515740794869371
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32b6af8f7ad32324cb6941c3290e5895, type: 3}
-  m_Name: MicroShadowing
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  enable:
-    m_OverrideState: 1
-    m_Value: 1
-  opacity:
-    m_OverrideState: 1
-    m_Value: 1
-    min: 0
-    max: 1
 --- !u!114 &-5369125926817014171
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -292,7 +270,6 @@ MonoBehaviour:
   - {fileID: 4576086538581379334}
   - {fileID: -9123960100987027171}
   - {fileID: 2529156197193680621}
-  - {fileID: -5823515740794869371}
   - {fileID: -7892551614775827213}
   - {fileID: 145866789303805744}
   - {fileID: 6487985369971140919}
@@ -427,7 +404,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 1
     min: 0
     max: 4
   thicknessModifier:
@@ -437,7 +414,7 @@ MonoBehaviour:
     max: 10
   directLightingStrength:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.7
     min: 0
     max: 1
   noiseFilterTolerance:
@@ -467,7 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1be1b6c95cd2e41b27903b9270817f, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
@@ -523,7 +500,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   indirectSpecularIntensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
     min: 0
   indirectDiffuseIntensity:
     m_OverrideState: 1
@@ -584,7 +561,7 @@ MonoBehaviour:
     m_Value: 1
   fixedExposure:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 0
   compensation:
     m_OverrideState: 0
     m_Value: 0

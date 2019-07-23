@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class Inventory : MonoBehaviour
 {
-
+    public List<Item> startItems;
     public List<ItemSlot> itemSlots;
 
     //26 item slots
@@ -26,6 +26,10 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i <= MaxItemSlots; i++)
         {
             itemSlots.Add(new ItemSlot(null, 0, false));
+        }
+        foreach(Item item in startItems)
+        {
+            AddItem(item);
         }
 
 

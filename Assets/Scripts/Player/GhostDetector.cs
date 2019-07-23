@@ -26,6 +26,10 @@ public class GhostDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ghost.gameObject.activeSelf != true)
+        {
+            return;
+        }
         dist = Mathf.Abs(Vector3.Distance(transform.position, ghost.position));
 
 

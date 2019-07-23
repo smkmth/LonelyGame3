@@ -18,7 +18,7 @@ public class Location : MonoBehaviour
     {
         if (other.name == "PlayerColliderObj")
         {
-            map.SetMapPos(this);
+
             isPlayerHere = true;
             Debug.Log("Player is at " + location);
         }

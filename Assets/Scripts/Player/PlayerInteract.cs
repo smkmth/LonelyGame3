@@ -170,11 +170,7 @@ public class PlayerInteract : MonoBehaviour
                 manager.ChangePlayerState(PlayerState.freeMovement);
 
                 break;
-            case HoldState.inspectingItem:
-                heldObject.transform.position = inspectItemTarget.position;
-                manager.ChangePlayerState(PlayerState.inspectMode);
-
-                break;
+       
             case HoldState.notHoldingItem:
                 controller.characterIsActive = true;
                 manager.ChangePlayerState(PlayerState.freeMovement);
@@ -218,40 +214,13 @@ public class PlayerInteract : MonoBehaviour
         
 
     }
-    public void PutDown()
-    {
-        if (heldObject.name == "EndGameObject")
-        {
-            isHoldingEndGameItem = false; 
-        }
-        heldObject.gameObject.layer = LayerMask.NameToLayer("Item");
-        heldObject.GetComponent<Collider>().isTrigger = false;
-        heldObject = null;
-
-        ChangeHoldState(HoldState.notHoldingItem, false);
-
-    }
-
-    public void Drop()
-    {
-        if (IsItemBehindWall())
-        {
-            return;
-        }
-        heldObject.GetComponent<Collider>().isTrigger = false;
-        heldObject.GetComponent<Rigidbody>().isKinematic = false;
-        heldObject.GetComponent<Rigidbody>().AddForce(cameraObj.transform.forward * throwForce, ForceMode.Impulse);
-        heldObject.gameObject.layer = LayerMask.NameToLayer("Item");
-
-        heldObject.parent = null;
-        heldObject = null;
-        ChangeHoldState(HoldState.notHoldingItem, false);
-
-
-    }
+  
 
     public void AddToInventory(GameObject gameObjectPickUp)
     {
+        itemPrompt.text = "";
+        curser.color = noColor;
+
         Item item = gameObjectPickUp.GetComponent<ItemContainer>().heldItem;
         switch (item.type)
         {
@@ -259,26 +228,12 @@ public class PlayerInteract : MonoBehaviour
                 source.PlayOneShot(paperPickup, pickupVol);
                 InGameText book = (InGameText)item;
                 textDisplayer.AddTextAsset(book);
-                reader.DisplayText(book);
+                reader.DisplayText(book, false);
                 break;
-            case ItemType.Clue:
-                source.PlayOneShot(objectPickup, pickupVol);
-
+            default:
+                source.PlayOneShot(objectPickup, 1.0f);
                 inv.AddItem(item);
                 break;
-            case ItemType.Film:
-                source.PlayOneShot(objectPickup, pickupVol);
-                inv.AddItem(item);
-                break;
-            case ItemType.Key:
-                source.PlayOneShot(objectPickup, pickupVol);
-                inv.AddItem(item);
-                break;
-            case ItemType.EndGameItem:
-                source.PlayOneShot(objectPickup, pickupVol);
-                inv.AddItem(item);
-                break;
-            
         }
         gameObjectPickUp.GetComponent<BoxCollider>().enabled = false;
         gameObjectPickUp.GetComponent<MeshRenderer>().enabled = false;
@@ -388,21 +343,15 @@ public class PlayerInteract : MonoBehaviour
 
     private void CheckCurser(ItemTypes thisItemType)
     {
+        curser.color = noColor;
+        itemPrompt.text = "";
+
         if (detectedObj == null)
         {
+
             return;
         }
-        /*
-        if (lookingAt)
-        {
-            if (detectedObj.name != lookAtEventObj.name)
-            {
-                lookingAt = false;
-                lookAtEventObj.TriggerEvent();
-                lookAtEventObj = null;
-            }
-        }
-        */
+  
         if (thisItemType == ItemTypes.LookAtObj)
         {
             GameEventTrigger lookatTrigger = detectedObj.GetComponent<GameEventTrigger>();
@@ -425,6 +374,7 @@ public class PlayerInteract : MonoBehaviour
                 Debug.LogError("No GameEventTrigger on LookAtObj");
             }
         }
+
         curser.color = noColor;
         AbstractGameEventTrigger itemtrigger = null;
         if (thisItemType != ItemTypes.Wall || thisItemType != ItemTypes.Surface || thisItemType != ItemTypes.Unknown || thisItemType != ItemTypes.Nothing)
@@ -437,7 +387,7 @@ public class PlayerInteract : MonoBehaviour
             {
                 
                 case ItemTypes.Book:
-                    itemPrompt.text = "Press LMB to Read";
+                    itemPrompt.text = "Press <sprite=0> to Read";
                     curser.color = interactColor;
                     if (Input.GetButtonDown("Interact"))
                     {
@@ -454,12 +404,9 @@ public class PlayerInteract : MonoBehaviour
                     break;
                 case ItemTypes.Pickup:
                    
-
-                    if (currentHoldState == HoldState.notHoldingItem)
-                    {
                         curser.color = interactColor;
 
-                        itemPrompt.text = "Press LMB to PickUp " + detectedObj.name;
+                        itemPrompt.text = "Press <sprite=0> to pick up " + detectedObj.name;
                         if (Input.GetButtonDown("Interact"))
                         {
                             
@@ -471,13 +418,13 @@ public class PlayerInteract : MonoBehaviour
                         }
                         
                        
-                    }
+                    
                     break;
                 case ItemTypes.Film:
 
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Press LMB to PickUp Film";
+                    itemPrompt.text = "Press <sprite=0> to pick up Film";
                     if (Input.GetButtonDown("Interact"))
                     {
                         if (itemtrigger)
@@ -495,7 +442,7 @@ public class PlayerInteract : MonoBehaviour
 
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Press LMB to PickUp Camera";
+                    itemPrompt.text = "Press <sprite=0> to pick up Camera";
                     if (Input.GetButtonDown("Interact"))
                     {
 
@@ -514,7 +461,7 @@ public class PlayerInteract : MonoBehaviour
 
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Press LMB to Interact";
+                    itemPrompt.text = "Press <sprite=0> to Interact";
                     if (Input.GetButtonDown("Interact"))
                     {
                       
@@ -527,11 +474,11 @@ public class PlayerInteract : MonoBehaviour
 
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Hold LMB to Interact";
+                    itemPrompt.text = "Hold <sprite=0> to Interact";
 
                     if (Input.GetButtonDown("Interact"))
                     {
-                        //holdTimer = detectedObj.GetComponent<AbstractGameEventTrigger>().timeToHold;
+                        holdTimer = detectedObj.GetComponent<AbstractGameEventTrigger>().timeToHold;
                     }
                     if (Input.GetButton("Interact"))
                     {
@@ -549,37 +496,7 @@ public class PlayerInteract : MonoBehaviour
 
                     }
                     break;
-                case ItemTypes.Surface:
-                    if (currentHoldState == HoldState.holdingItem)
-                    {
-
-                        curser.color = interactColor;
-                        itemPrompt.text = "Put Down?";
-                        if (Input.GetButtonDown("Interact"))
-                        {
-
-                            for (int i = 0; i < detectedObj.transform.childCount; i++)
-                            {
-                                Transform child = detectedObj.transform.GetChild(i);
-                                if (child.tag == "ItemSlot")
-                                {
-                                    if (child.transform.childCount == 0)
-                                    {
-                                        heldObject.parent = child;
-                                        heldObject.transform.position = child.transform.position;
-                                        heldObject.transform.rotation = Quaternion.identity;
-                                        PutDown();
-                                        itemPrompt.text = "";
-                                        break;
-
-                                    }
-                                }
-                            }
-                        }
-
-
-                    }
-                    break;
+        
                 case ItemTypes.Wall:
                     curser.color = noColor;
 
@@ -602,12 +519,6 @@ public class PlayerInteract : MonoBehaviour
             itemPrompt.text = "";
         }
 
-        if (currentHoldState == HoldState.holdingItem)
-        {
-            if (Input.GetButtonDown("Interact"))
-            { 
-                Drop();
-            }
-        }
+   
     }
 }

@@ -51,12 +51,12 @@ public class InGameCamera : MonoBehaviour
     public AudioClip cameraShot;
 
     [Header("Film Counter")]
-    public TextMeshProUGUI filmCounterRect;
-    public Vector3 filmCounterStartPos =new Vector3(0, -254,0);
-    public Vector3 filmCounterEndPos =new Vector3(0,58,0);
+    public Image filmCounterRect;
+    public Vector3 filmCounterStartPos;
+    public Vector3 filmCounterEndPos;
     public Vector3 filmCounterCurrentPos;
     public float cameraOffSet;           //offset is how far down the camera reel should move after a shot,
-                                                        //start pos of camera is -254, end is 483, 737 discrete measurements to move through
+    public TextMeshProUGUI shotCountText;                                                  //start pos of camera is -254, end is 483, 737 discrete measurements to move through
                                                         // 737/32 = 23 units to move down each time.
 
 
@@ -68,8 +68,9 @@ public class InGameCamera : MonoBehaviour
         cameraIsActive = false;
         filmCounterStartPos = filmCounterRect.rectTransform.localPosition;
         filmCounterEndPos = filmCounterStartPos;
-        filmCounterEndPos.y += cameraOffSet *maxShots;
+        filmCounterEndPos.x -= cameraOffSet *maxShots;
         cameraShots = maxShots;
+        reloadTimer = reloadTime;
     }
 
     void Update()
@@ -83,16 +84,17 @@ public class InGameCamera : MonoBehaviour
         {
             if (reloadTimer >= 0)
             {
-                filmCounterRect.rectTransform.localPosition = Vector3.Lerp( filmCounterEndPos, filmCounterCurrentPos, Mathf.Clamp01((reloadTimer / reloadTime)));
+                filmCounterRect.rectTransform.localPosition = Vector3.Lerp( filmCounterStartPos, filmCounterRect.rectTransform.localPosition, Mathf.Clamp01((reloadTimer / reloadTime)));
                 reloadTimer -= Time.deltaTime;
             }
             else
             {
 
-                filmCounterRect.rectTransform.localPosition = filmCounterEndPos;
+                filmCounterRect.rectTransform.localPosition = filmCounterStartPos;
                 cameraShots = maxShots;
                 reloadingFilm = false;
                 reloadTimer = reloadTime;
+                shotCountText.text = cameraShots.ToString();
             }
         }
         if (timerBetweenShotsTime < timeBetweenShots )
@@ -215,7 +217,8 @@ public class InGameCamera : MonoBehaviour
         {
             cameraShots += shotsToAdd;
             float thisOffset = shotsToAdd * cameraOffSet;
-            Vector3 shotoffset = new Vector3(0, thisOffset, 0);
+            shotCountText.text = cameraShots.ToString();
+            Vector3 shotoffset = new Vector3(thisOffset, 0, 0);
             filmCounterRect.rectTransform.localPosition = filmCounterRect.rectTransform.localPosition + shotoffset;
         }
        

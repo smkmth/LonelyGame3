@@ -6,10 +6,6 @@ using TMPro;
 public enum PlayerState
 {
     freeMovement,
-    noMovement,
-    noCameraMovement,
-    inspectMode,
-    noCameraAndMovementCursorFree,
     fullyPaused,
     cameraAimMode,
     menuMode,
@@ -59,7 +55,7 @@ public class PlayerManager : MonoBehaviour
     public TextMeshProUGUI seenHintsText;
     public GameObject seenHintsUI;
     public ObjectiveDisplayer objectiveDisplayer;
-
+    public GameObject lampObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -169,73 +165,13 @@ public class PlayerManager : MonoBehaviour
                 Cursor.visible = false;
                 hintText.gameObject.SetActive(true);
                 crosshair.SetActive(true);
-
-                break;
-
-            case PlayerState.noMovement:
-                menuManager.ToggleMenu(false);
-                interact.interactIsActive = true;
-                Time.timeScale = 1;
-                controller.characterIsActive = false;
-                mouseLook.cameraControl = true;
-                lamp.canUseLamp = true;
-
-                inGameCamera.cameraIsActive = false;
-                controller.playerCanRun = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                crosshair.SetActive(true);
-                hintText.gameObject.SetActive(true);
-
-                break;
-            case PlayerState.noCameraMovement:
-                menuManager.ToggleMenu(false);
-                interact.interactIsActive = true;
-                Time.timeScale = 1;
-                controller.characterIsActive = true;
-                mouseLook.cameraControl = false;
-                inGameCamera.cameraIsActive = false;
-                controller.playerCanRun = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                crosshair.SetActive(true);
-                lamp.canUseLamp = true;
-                hintText.gameObject.SetActive(true);
+                lampObject.SetActive(true);
+                lamp.ToggleLamp(true);
 
 
                 break;
-            case PlayerState.inspectMode:
-                menuManager.ToggleMenu(false);
-                interact.interactIsActive = true;
-                Time.timeScale = 1;
-                controller.characterIsActive = false;
-                controller.playerCanRun = false;
-                mouseLook.cameraControl = false;
-                inGameCamera.cameraIsActive = false;
-                lamp.canUseLamp = true;
-                hintText.gameObject.SetActive(true);
 
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                crosshair.SetActive(false);
-
-                break;
-            case PlayerState.noCameraAndMovementCursorFree:
-                menuManager.ToggleMenu(false);
-                Time.timeScale = 1;
-                interact.interactIsActive = false;
-                controller.playerCanRun = false;
-                controller.characterIsActive = false;
-                mouseLook.cameraControl = false;
-                inGameCamera.cameraIsActive = false;
-                Cursor.visible = true;
-                lamp.canUseLamp = true;
-                hintText.gameObject.SetActive(true);
-
-                Cursor.lockState = CursorLockMode.None;
-                crosshair.SetActive(true);
-
-                break;
+           
 
             case PlayerState.fullyPaused:
                 menuManager.ToggleMenu(false);
@@ -247,6 +183,7 @@ public class PlayerManager : MonoBehaviour
                 Cursor.visible = true;
                 lamp.canUseLamp = true;
                 hintText.gameObject.SetActive(false);
+                lampObject.SetActive(true);
 
                 Cursor.lockState = CursorLockMode.None;
                 crosshair.SetActive(true);
@@ -262,9 +199,10 @@ public class PlayerManager : MonoBehaviour
                 Cursor.visible = true;
                 lamp.canUseLamp = true;
                 hintText.gameObject.SetActive(false);
+                lampObject.SetActive(false);
 
                 Cursor.lockState = CursorLockMode.None;
-                crosshair.SetActive(true);
+                crosshair.SetActive(false);
                 menuManager.ToggleMenu(true);
 
                 Time.timeScale = 0;
@@ -280,6 +218,8 @@ public class PlayerManager : MonoBehaviour
                 crosshair.SetActive(false);
                 lamp.canUseLamp = false;
                 lamp.ToggleLamp(false);
+                lampObject.SetActive(false);
+
                 hintText.gameObject.SetActive(true);
 
                 Cursor.lockState = CursorLockMode.Locked;

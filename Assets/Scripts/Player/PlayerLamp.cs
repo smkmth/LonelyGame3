@@ -15,6 +15,7 @@ public class PlayerLamp : MonoBehaviour
     private float timeStartedLerp;
     private bool isLerping;
     public bool canUseLamp;
+    public GameObject fillLight;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,11 +56,13 @@ public class PlayerLamp : MonoBehaviour
 
                     lampOn = false;
                     ToggleLamp(false);
+                    fillLight.SetActive(false);
                 }
                 else
                 {
                     lampOn = true;
                     ToggleLamp(true);
+                    fillLight.SetActive(true);
                 }
 
             }

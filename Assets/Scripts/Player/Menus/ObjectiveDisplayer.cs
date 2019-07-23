@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ObjectiveDisplayer : MonoBehaviour
 {
@@ -9,99 +10,66 @@ public class ObjectiveDisplayer : MonoBehaviour
     public GameObject objectivePrefab;
     public Transform objectiveScrollRect;
     public GameObject objectivePanel;
-    public List<GameObject> objectiveObjList;
+    public Dictionary<GameObjective,GameObject> objectiveObjList = new Dictionary<GameObjective, GameObject>();
 
+    public GameObject objectiveViewer;
+    public GameObject objectiveMenu;
+    public GameObjective startObjective;
+    public TextMeshProUGUI objectiveText;
+    public TextMeshProUGUI objectiveTitle;
+
+    public void Start()
+    {
+        AddObjective(startObjective);
+    }
 
     public void ToggleObjectivesMenu(bool objectivesOn)
     {
+        objectiveMenu.SetActive(true);
         objectivePanel.SetActive(objectivesOn);
+        objectiveViewer.SetActive(false);
 
     }
 
     public void AddObjective(GameObjective objectiveToAdd)
     {
-        if (objectiveToAdd.objectiveType == ObjectiveType.MainObjective)
-        {
-            foreach(GameObject objectiveObj in objectiveObjList)
-            {
-                if (objectiveObj.activeSelf == false)
-                {
-                    objectiveObj.SetActive(true);
-                    objectiveObj.GetComponent<ObjectiveContainer>().mainObjective.text = objectiveToAdd.objectiveString;
-                    objectiveObj.name = objectiveToAdd.objectiveName;
-                    return;
-                }
-            }
-            
+        GameObject obj = Instantiate(objectivePrefab, objectiveScrollRect);
+        obj.transform.GetChild(0).GetComponent<Text>().text = objectiveToAdd.objectiveName;
+        obj.transform.GetChild(1).GetComponent<Text>().text = "In Progress";
+        objectiveObjList.Add(objectiveToAdd, obj);
+        obj.GetComponent<Button>().onClick.AddListener(() => ViewObjective(objectiveToAdd));
 
-        }
-        else if(objectiveToAdd.objectiveType == ObjectiveType.SubObjective)
-        {
-            foreach (GameObject objective in objectiveObjList)
-            { 
-                if (objective.name == objectiveToAdd.mainObjective.objectiveName)
-                {
-                    TextMeshProUGUI[] subObjectiveObjs = objective.GetComponent<ObjectiveContainer>().subObjectives;
-                    foreach(TextMeshProUGUI subOjectiveObj in subObjectiveObjs)
-                    {
-                        if (subOjectiveObj.gameObject.activeSelf == false)
-                        {
-                            subOjectiveObj.gameObject.SetActive(true);
-                            subOjectiveObj.name = objectiveToAdd.objectiveName;
 
-                            subOjectiveObj.text = objectiveToAdd.objectiveString;
-                            return;
 
-                        }
-                    }
-                }
-
-            }
-        }
     }
 
     public void FinishObjective(GameObjective objectiveToFinish)
     {
-        if (objectiveToFinish.objectiveType == ObjectiveType.MainObjective)
+        GameObject objectiveObj;
+        if (objectiveObjList.TryGetValue(objectiveToFinish, out objectiveObj))
         {
-            foreach (GameObject objectiveObj in objectiveObjList)
-            {
-                if (objectiveObj.name == objectiveToFinish.objectiveName)
-                {
-                    objectiveObj.GetComponent<ObjectiveContainer>().mainObjective.text = "";
-                    objectiveObj.name = "None";
-                    objectiveObj.SetActive(false);
-                    return;
-                }
-            }
-
-
-        }
-        else if (objectiveToFinish.objectiveType == ObjectiveType.SubObjective)
-        {
-            foreach (GameObject objective in objectiveObjList)
-            {
-                if (objective.name == objectiveToFinish.mainObjective.objectiveName)
-                {
-                    TextMeshProUGUI[] subObjectiveObjs = objective.GetComponent<ObjectiveContainer>().subObjectives;
-                    foreach (TextMeshProUGUI subOjectiveObj in subObjectiveObjs)
-                    {
-                        if (subOjectiveObj.gameObject.name == objectiveToFinish.objectiveName)
-                        {
-                            subOjectiveObj.gameObject.SetActive(false);
-                            subOjectiveObj.text = "";
-                            subOjectiveObj.name= "";
-
-                            return;
-
-                        }
-                    }
-                }
-
-            }
+            objectiveObj.transform.GetChild(1).GetComponent<Text>().text = "Completed!";
         }
 
     }
-   
+
+    public void ViewObjective(GameObjective objective)
+    {
+        objectiveMenu.SetActive(false);
+        objectiveViewer.SetActive(true);
+        objectiveTitle.text = objective.objectiveName;
+        objectiveText.text= objective.objectiveString;
+
+
+    }
+
+    public void CloseObjective()
+    {
+        objectiveMenu.SetActive(true);
+
+        ToggleObjectivesMenu(true);
+        objectiveViewer.SetActive(false);
+    }
+
 }
 
