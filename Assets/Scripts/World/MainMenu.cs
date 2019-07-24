@@ -36,6 +36,7 @@ public class MainMenu : MonoBehaviour
     public string playerScene;
     public string firstScene;
     public string secondScene;
+    public string thirdScene;
 
     public GameObject logo;
 
@@ -169,6 +170,7 @@ public class MainMenu : MonoBehaviour
         yield return new WaitForEndOfFrame();
         AsyncOperation async = SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
         async = SceneManager.LoadSceneAsync(secondScene, LoadSceneMode.Additive);
+        async = SceneManager.LoadSceneAsync(thirdScene, LoadSceneMode.Additive);
         async = SceneManager.LoadSceneAsync(playerScene, LoadSceneMode.Additive);
 
         while (!async.isDone)
