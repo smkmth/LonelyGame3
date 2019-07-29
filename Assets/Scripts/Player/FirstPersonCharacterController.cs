@@ -46,7 +46,8 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float playerLowHeight;
     public float playerCrouchedHeight;
     public float playerCrouchedLowHeight;
-
+    public Vector3 playerStart;
+    public float upAmount;
 
     private void Start()
     {
@@ -54,7 +55,7 @@ public class FirstPersonCharacterController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         audioSource = GetComponent<AudioSource>();
-
+        playerStart = transform.position;
     }
 
 
@@ -66,7 +67,6 @@ public class FirstPersonCharacterController : MonoBehaviour
 
             playerIsCrouching = true;
             playerCollider.localScale= crouchingScale;
-          //  playerCamera.transform.localPosition = new Vector3(0, (playerCrouchedCameraHeight), 0);
 ;
         }
         else
@@ -76,9 +76,7 @@ public class FirstPersonCharacterController : MonoBehaviour
             {
 
                 playerIsCrouching = false;
-              //  playerCamera.transform.localPosition = new Vector3(0, (playerCameraHeight),0);
                 playerCollider.localScale = Vector3.one;
-             //   playerCollider.transform.localPosition = new Vector3(0, 0, 0);
             }
 
         }
@@ -105,7 +103,18 @@ public class FirstPersonCharacterController : MonoBehaviour
             heightdist = transform.position.y - hit.point.y;
             Debug.DrawRay(transform.position, Vector3.down * Vector3.Distance(transform.position, hit.point * heightdist));
         }
+
+        if (Input.GetButtonDown("FixMe"))
+        {
+            transform.position = playerStart; 
+        }
      
+        if (Input.GetButton("GoUp"))
+        {
+            Debug.Log("tryingup");
+            transform.position += Vector3.up * upAmount;
+
+        }
         if (Input.GetButtonDown("VolUp"))
         {
             AudioListener.volume += 3.0f;

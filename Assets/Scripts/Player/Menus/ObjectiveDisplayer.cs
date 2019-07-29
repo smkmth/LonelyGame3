@@ -48,6 +48,7 @@ public class ObjectiveDisplayer : MonoBehaviour
         GameObject objectiveObj;
         if (objectiveObjList.TryGetValue(objectiveToFinish, out objectiveObj))
         {
+
             objectiveObj.transform.GetChild(1).GetComponent<Text>().text = "Completed!";
         }
 

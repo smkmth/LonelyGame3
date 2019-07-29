@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.007267261, g: 0.005002559, b: 0.009201877, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9065,6 +9065,7 @@ GameObject:
   - component: {fileID: 1023533906}
   - component: {fileID: 1023533908}
   - component: {fileID: 1023533907}
+  - component: {fileID: 1023533909}
   m_Layer: 0
   m_Name: CorridorWall_01 (1)
   m_TagString: Untagged
@@ -9131,6 +9132,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023533905}
+  m_Mesh: {fileID: -4856763820121547231, guid: 0588c18e36820944dbc66db9acd35599, type: 3}
+--- !u!64 &1023533909
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023533905}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
   m_Mesh: {fileID: -4856763820121547231, guid: 0588c18e36820944dbc66db9acd35599, type: 3}
 --- !u!1001 &1030564190
 PrefabInstance:

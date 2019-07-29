@@ -41,6 +41,8 @@ public class MainMenu : MonoBehaviour
     public GameObject logo;
 
     public TextMeshProUGUI explainationText;
+    public AudioSource sound;
+    public AudioClip clip;
 
     [TextArea]
     public string newGameText;
@@ -155,13 +157,14 @@ public class MainMenu : MonoBehaviour
         if (pressAnyKeyObject.activeSelf)
         {
             pressAnyKeyText.color = new Color(pressAnyKeyText.color.r, pressAnyKeyText.color.g, pressAnyKeyText.color.b, Mathf.PingPong(Time.time * anyKeyPulseSpeed, 1));
+            if (Input.anyKey)
+            {
+                sound.PlayOneShot(clip, 1.0f);
+                pressAnyKeyObject.SetActive(false);
+            }
 
         }
-
-        if (Input.anyKey)
-        {
-            pressAnyKeyObject.SetActive(false);
-        }
+       
     }
 
     IEnumerator LoadNewScene()
@@ -179,7 +182,7 @@ public class MainMenu : MonoBehaviour
         }
 
         //after scene is loaded - wait for 2 seconds for the player to fall a bit - and everything to kind of shuffle in 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.1f);
         menuObject.SetActive(false);
 
     }
