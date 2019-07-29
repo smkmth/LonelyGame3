@@ -8,6 +8,7 @@ public enum ItemType
     EquipOnUse,
     NoUse
 }
+[System.Serializable]
 public class Item : ScriptableObject {
 
     public Vector3 yposMenu;

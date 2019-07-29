@@ -25,7 +25,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i <= MaxItemSlots; i++)
         {
-            itemSlots.Add(new ItemSlot(null, 0, false));
+            itemSlots.Add(new ItemSlot(null, false));
         }
         foreach(Item item in startItems)
         {
@@ -34,6 +34,8 @@ public class Inventory : MonoBehaviour
 
 
     }
+     
+
     public List<int> CheckRequiredItems(List<Item> itemsToCheck)
     {
         List<int> count = new List<int>();
@@ -57,7 +59,7 @@ public class Inventory : MonoBehaviour
             {
                 if (itemSlots[i].item.title == itemToCheck.title)
                 {
-                    count = itemSlots[i].quantity;
+                    count = 1;
                     break;
                 }
 
@@ -66,23 +68,41 @@ public class Inventory : MonoBehaviour
 
         return count;
     }
+
+    public string[] GetItemList()
+    {
+        string[] items = new string[MaxItemSlots]; 
+        for (int i=0; i < totalItemsStored; i++)
+        {
+            if (itemSlots[i].filled)
+            {
+
+                items[i] = itemSlots[i].item.title;
+            }
+
+        }
+
+        return items;
+    }
     public bool AddItem(Item itemToAdd)
     {
         //check we dont already have this item, if not, then add it, else increase the amount we have of it
-
+        if (itemToAdd == null)
+        {
+            return false;
+        }
         for (int i = 0; i < MaxItemSlots; ++i)
         {
 
-            if (itemSlots[i].filled)
-            {
-                if (itemSlots[i].item.title == itemToAdd.title)
-                {
-                    itemSlots[i].quantity += 1;
-                    totalItemsStored += 1;
-                    return true;
-                }
 
+            if(itemSlots[i].item == itemToAdd)
+            {
+                Debug.Log("already have " + itemToAdd.title);
+                return false;
             }
+
+            
+
         }
         for (int i = 0; i < MaxItemSlots; ++i)
         {
@@ -92,7 +112,6 @@ public class Inventory : MonoBehaviour
             {
                 totalItemsStored += 1;
                 itemSlots[i].item = itemToAdd;
-                itemSlots[i].quantity += 1;
                 itemSlots[i].filled = true;
                 return true;
 
@@ -115,15 +134,10 @@ public class Inventory : MonoBehaviour
                 {
                     if (itemSlots[i].item.title == itemToRemove.title)
                     {
-                        itemSlots[i].quantity -= 1;
-                        totalItemsStored -= 1;
+                        itemSlots[i].filled = false;
+                        itemSlots[i].item = null;
 
-                        if (itemSlots[i].quantity <= 0)
-                        {
-                            itemSlots[i].filled = false;
-                            itemSlots[i].item = null;
-
-                        }
+                        
                         return true;
                     }
                 }
@@ -141,14 +155,12 @@ public class Inventory : MonoBehaviour
 public class ItemSlot
 {
     public Item item;
-    public int quantity;
     public bool filled;
     public bool equiped = false;
 
-    public ItemSlot(Item item, int quantity, bool filled)
+    public ItemSlot(Item item,  bool filled)
     {
         this.item = item;
-        this.quantity = quantity;
         this.filled = filled;
     }
 }

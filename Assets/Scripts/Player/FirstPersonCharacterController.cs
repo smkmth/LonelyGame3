@@ -48,7 +48,7 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float playerCrouchedLowHeight;
     public Vector3 playerStart;
     public float upAmount;
-
+    public Transform sprintVingetteObj;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -56,6 +56,7 @@ public class FirstPersonCharacterController : MonoBehaviour
         Cursor.visible = false;
         audioSource = GetComponent<AudioSource>();
         playerStart = transform.position;
+        sprintVingetteObj.localPosition = new Vector3(0, sprintTime, 0);
     }
 
 
@@ -229,6 +230,9 @@ public class FirstPersonCharacterController : MonoBehaviour
 
             }
         }
+
+        sprintVingetteObj.localPosition = new Vector3(0, (sprintTime - sprintTimer), 0);
+
 
     }
 

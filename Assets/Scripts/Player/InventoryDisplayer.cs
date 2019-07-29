@@ -89,8 +89,7 @@ public class InventoryDisplayer : MonoBehaviour
         int selectedIndex = int.Parse(buttonIndex);
         if (inventory.itemSlots[selectedIndex].filled)
         {
-            Debug.Log("you selected " + selectedIndex + " which corisponds to " + inventory.itemSlots[selectedIndex].item.name +
-                " You have " + inventory.itemSlots[selectedIndex].quantity + " of this item ");
+            Debug.Log("you selected " + selectedIndex + " which corisponds to " + inventory.itemSlots[selectedIndex].item.name);
 
             Item selectedItem = inventory.itemSlots[selectedIndex].item;
 

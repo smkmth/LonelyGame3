@@ -21,12 +21,13 @@ public class PlayerManager : MonoBehaviour
     public PlayerInteract interact;
     public PlayerLamp lamp;
     public MenuManager menuManager;
-    
 
+    public TextDisplayer textDisplayer;
     public GameObject PlayerCameraObject;
     public Camera playerCamera;
     public InGameCamera inGameCamera;
     public SmoothMouseLook mouseLook;
+    private Inventory inv;
 
     public PlayerState currentPlayerState;
     public PlayerState nextPlayerState;
@@ -41,10 +42,10 @@ public class PlayerManager : MonoBehaviour
     public TextMeshProUGUI gameOverTextObj;
     public string gameWinText;
     public string gameLooseText;
+    public TextMeshProUGUI hintText;
     public GameObject gameWinScreen;
 
 
-    public TextMeshProUGUI hintText;
     public bool showHints;
     public bool hintOnScreen;
     public float hintOnScreenTime;
@@ -56,6 +57,8 @@ public class PlayerManager : MonoBehaviour
     public GameObject seenHintsUI;
     public ObjectiveDisplayer objectiveDisplayer;
     public GameObject lampObject;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -125,6 +128,8 @@ public class PlayerManager : MonoBehaviour
             Debug.LogError("No mouselook , add one to player camera obj");
 
         }
+        textDisplayer = GetComponent<TextDisplayer>();
+        inv = GetComponent<Inventory>();
     }
 
     public void GameLose()
@@ -304,6 +309,33 @@ public class PlayerManager : MonoBehaviour
         
 
     }
+    public PlayerData SavePlayer()
+    {
+        PlayerData data = new PlayerData(inv.GetItemList(), objectiveDisplayer.GetObjectiveList(), textDisplayer.GetTextList());
+        return data;
+
+    }
+    public void LoadPlayer(PlayerData data)
+    {
+        MasterAssetList masterAssetList = GameObject.Find("GameReset").GetComponent<MasterAssetList>();
+        foreach(string item in data.playerItems)
+        {
+            if (item != null)
+            {
+                inv.AddItem(masterAssetList.findItemByName(item));
+            }
+        }
+        foreach (string obj in data.playerObjectives)
+        {
+            objectiveDisplayer.AddObjective(masterAssetList.findObjectiveByName(obj));
+        }
+        foreach (string tex in data.playerTextAssets)
+        {
+
+            textDisplayer.AddTextAsset(masterAssetList.findTextByName(tex));
+        }
+
+    }
 
     public void ToggleViewdHints()
     {
@@ -312,3 +344,19 @@ public class PlayerManager : MonoBehaviour
 
     }
 }
+
+[System.Serializable]
+public class PlayerData
+{
+    public string[]      playerItems;
+    public string[]     playerObjectives;
+    public string[]    playerTextAssets;
+
+    public PlayerData(string[] _playerItems, string[] _playerObjectives, string[] _playerTextAssets)
+    {
+        this.playerItems = _playerItems;
+        this.playerObjectives = _playerObjectives;
+        this.playerTextAssets = _playerTextAssets;
+    }
+}
+

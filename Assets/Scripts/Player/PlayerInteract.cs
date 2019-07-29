@@ -235,8 +235,8 @@ public class PlayerInteract : MonoBehaviour
                 inv.AddItem(item);
                 break;
         }
-        gameObjectPickUp.GetComponent<BoxCollider>().enabled = false;
-        gameObjectPickUp.GetComponent<MeshRenderer>().enabled = false;
+        gameObjectPickUp.GetComponent<ItemContainer>().PickUpItem();
+
     }
 
 

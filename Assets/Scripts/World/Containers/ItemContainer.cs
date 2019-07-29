@@ -7,6 +7,8 @@ public class ItemContainer : MonoBehaviour
 {
 
     public Item heldItem;
+    public bool pickedup;
+
     private void Start()
     {
         if (!heldItem)
@@ -15,5 +17,12 @@ public class ItemContainer : MonoBehaviour
         }
         
         name = heldItem.title;
+    }
+
+    public void PickUpItem()
+    {
+        pickedup = true;
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = false;
     }
 }

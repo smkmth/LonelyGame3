@@ -7,11 +7,10 @@ public enum ObjectiveType
     SubObjective
 }
 [CreateAssetMenu(menuName = "Objective")]
+[System.Serializable]
 public class GameObjective : ScriptableObject 
 {
     public string objectiveString;
     public string objectiveName;
-    public GameObjective mainObjective;
-    public ObjectiveType objectiveType;
 
 }

@@ -111,6 +111,7 @@ public class MainMenu : MonoBehaviour
                 StartCoroutine(LoadNewScene());
                 break;
             case MainMenuButtonType.LoadGameButton:
+                StartCoroutine(LoadExistingScene());
                 break;
             case MainMenuButtonType.SettingsButton:
                 logo.SetActive(false);
@@ -184,6 +185,27 @@ public class MainMenu : MonoBehaviour
         //after scene is loaded - wait for 2 seconds for the player to fall a bit - and everything to kind of shuffle in 
         yield return new WaitForSeconds(0.1f);
         menuObject.SetActive(false);
+
+    }
+
+    IEnumerator LoadExistingScene()
+    {
+        loadingScreen.SetActive(true);
+        yield return new WaitForEndOfFrame();
+        AsyncOperation async = SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
+        async = SceneManager.LoadSceneAsync(secondScene, LoadSceneMode.Additive);
+        async = SceneManager.LoadSceneAsync(thirdScene, LoadSceneMode.Additive);
+        async = SceneManager.LoadSceneAsync(playerScene, LoadSceneMode.Additive);
+
+        while (!async.isDone)
+        {
+            yield return null;
+        }
+
+        //after scene is loaded - wait for 2 seconds for the player to fall a bit - and everything to kind of shuffle in 
+        yield return new WaitForSeconds(0.1f);
+        menuObject.SetActive(false);
+        GameObject.Find("GameReset").GetComponent<SaveLoad>().LoadPlayer();
 
     }
 }
