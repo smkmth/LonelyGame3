@@ -67,7 +67,11 @@ public class CheckpointManager : MonoBehaviour
     {
         for (int i = 0; i < globalGameTriggers.Length; i++)
         {
-            globalGameTriggers[i].hasBeenTriggered = data.savedGameTriggers[i];
+            if (data.savedGameTriggers[i])
+            {
+                globalGameTriggers[i].TriggerEvent();
+                
+            }
         }
 
         for (int i = 0; i < globalItemContainers.Length; i++)

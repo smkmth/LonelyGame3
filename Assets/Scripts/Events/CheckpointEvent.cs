@@ -5,15 +5,17 @@ using UnityEngine;
 public class CheckpointEvent : GameEventReceiver
 {
     public Transform player;
-    public CheckpointManager checkPointManager;
+    public SaveLoad saveData;
 
     public void Start()
     {
         player = GameObject.Find("Player").transform;
-        checkPointManager = GameObject.Find("GameReset").GetComponent<CheckpointManager>();
+
+        saveData = GameObject.Find("GameReset").GetComponent<SaveLoad>();
     }
     public override void DoEvent()
     {
+        saveData.SaveGame();
       
     }
 }

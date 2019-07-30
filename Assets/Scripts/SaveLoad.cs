@@ -28,20 +28,7 @@ public class SaveLoad : MonoBehaviour
     }
 
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-
-            SaveGame();
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            
-            LoadGame();
-        }
-    }
+    
 
     //this function is the io operation which saves a file to the persistant data path
     public void SaveGame()

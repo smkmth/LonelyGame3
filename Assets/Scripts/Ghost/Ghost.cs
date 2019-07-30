@@ -99,6 +99,7 @@ public class Ghost : MonoBehaviour
     public GhostModel ghostModel;
 
     public Material ghostMat;
+    public Material plainMat;
 
     public PlayerDamage playerDamage;
     public bool playerInHitBox;
@@ -109,6 +110,7 @@ public class Ghost : MonoBehaviour
     public int helperId = 1;
     private void Start()
     {
+
         GameObject playerObj = GameObject.Find("Player");
         player = playerObj.transform;
         playerDamage = playerObj.GetComponentInChildren<PlayerDamage>();
@@ -143,10 +145,13 @@ public class Ghost : MonoBehaviour
 
             //set up light itencity and alpha
             ghostLight.intensity = ghostLightInitIntensity;
+            
             ghostMat.SetFloat("_Alpha", 0.7f);
+            plainMat.SetFloat("_Alpha", 0.7f);
             fadeOut = StartCoroutine(FadeTo(ghostMat, 0f, ghostFadeDuration));
+            fadeOut = StartCoroutine(FadeTo(plainMat, 0f, ghostFadeDuration));
             lightFade = StartCoroutine(LightFade(0f, ghostLightDuration));
-
+            
 
         }
        
