@@ -16,6 +16,9 @@ public class PlayerLamp : MonoBehaviour
     private bool isLerping;
     public bool canUseLamp;
     public GameObject fillLight;
+    public AudioSource source;
+    public AudioClip gasLampLight;
+    public AudioClip gasLampLit;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,13 +56,18 @@ public class PlayerLamp : MonoBehaviour
             {
                 if (lampOn)
                 {
-
+                    source.Stop();
                     lampOn = false;
                     ToggleLamp(false);
                     fillLight.SetActive(false);
                 }
                 else
                 {
+                    source.PlayOneShot(gasLampLight ,1);
+                    source.clip = gasLampLit;
+                    source.volume = .01f;
+                    source.Play();
+                    source.loop = true;
                     lampOn = true;
                     ToggleLamp(true);
                     fillLight.SetActive(true);
