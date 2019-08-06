@@ -4,6 +4,7 @@ using UnityEngine;
 public enum ObjectiveEventType
 {
     AddObjective,
+    UpdateObjective,
     FinishObjective
 }
 
@@ -13,6 +14,7 @@ public class GameObjectiveEvent : GameEventReceiver
 
     public ObjectiveEventType objectiveType;
     public GameObjective gameObjectiveToTrigger;
+    public GameObjective gameObjectiveToUpdate;
     private ObjectiveDisplayer player;
 
     public void Start()
@@ -29,6 +31,10 @@ public class GameObjectiveEvent : GameEventReceiver
                 break;
             case (ObjectiveEventType.FinishObjective):
                 player.FinishObjective(gameObjectiveToTrigger);
+                break;
+            case (ObjectiveEventType.UpdateObjective):
+                player.UpdateObjective(gameObjectiveToTrigger, gameObjectiveToUpdate);
+
                 break;
 
         }

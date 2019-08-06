@@ -2,11 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+public enum FloorType
+{
+    Carpet,
+    Stone,
+    Wood
 
+}
 public class FirstPersonCharacterController : MonoBehaviour
 {
-    public AudioClip[] footsteps;
+
+    [Header("Player Audio")]
     private AudioSource audioSource;
+    public AudioClip[] woodFootsteps;
+    public AudioClip[] stoneFootsteps;
+    public AudioClip[] carpetFootsteps;
+    public FloorType currentFloorType;
+    public int helperId = 39;
+    public float footstepTime;
+    public float footstepRunTime;
+    private float footsteptimer =0.0f;
+
+
     Rigidbody rb;
     public float moveSpeed;
     public GameObject playerCamera;
@@ -15,9 +32,6 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float runSpeed;
     public float maxRunSpeed;
     public bool isRunning;
-    private float footsteptimer =0.0f;
-    public float footstepTime;
-    public float footstepRunTime;
     public bool characterIsActive= true;
     public float sprintTime;
 
@@ -99,8 +113,23 @@ public class FirstPersonCharacterController : MonoBehaviour
     public void Update()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, Vector3.down, out hit,groundLayer))
+        if(Physics.Raycast(transform.position, Vector3.down, out hit, groundLayer))
         {
+            if (hit.collider.tag == "Carpet")
+            {
+                currentFloorType = FloorType.Carpet;
+
+            }
+            if (hit.collider.tag == "Wood")
+            {
+                currentFloorType = FloorType.Wood;
+
+            }
+            if (hit.collider.tag == "Stone")
+            {
+                currentFloorType = FloorType.Stone;
+
+            }
             heightdist = transform.position.y - hit.point.y;
             Debug.DrawRay(transform.position, Vector3.down * Vector3.Distance(transform.position, hit.point * heightdist));
         }
@@ -195,8 +224,7 @@ public class FirstPersonCharacterController : MonoBehaviour
 
 
             }
-            int index = Random.Range(0, footsteps.Length);
-            AudioClip footstep = footsteps[index];
+     
             if (moving)
             {
                 if (!isRunning)
@@ -204,8 +232,26 @@ public class FirstPersonCharacterController : MonoBehaviour
 
                     if (footsteptimer >= footstepTime)
                     {
-                        audioSource.clip = footstep;
-                        audioSource.PlayOneShot(footstep, 0.5f);
+                        if (currentFloorType == FloorType.Wood)
+                        {
+
+                            HelperFunctions.Helper.PlayRandomNoiseInArray(woodFootsteps,audioSource, 1,helperId);
+                        }
+                        else if (currentFloorType == FloorType.Carpet)
+                        {
+                            HelperFunctions.Helper.PlayRandomNoiseInArray(carpetFootsteps, audioSource, 1, helperId);
+
+                        }
+                        else if (currentFloorType == FloorType.Stone)
+                        {
+                            HelperFunctions.Helper.PlayRandomNoiseInArray(stoneFootsteps, audioSource, 1, helperId);
+
+                        }
+                        else
+                        {
+                            HelperFunctions.Helper.PlayRandomNoiseInArray(woodFootsteps, audioSource, 1, helperId);
+
+                        }
                         footsteptimer = 0;
                     }
                     else
@@ -218,8 +264,26 @@ public class FirstPersonCharacterController : MonoBehaviour
 
                     if (footsteptimer >= footstepRunTime)
                     {
-                        audioSource.clip = footstep;
-                        audioSource.PlayOneShot(footstep, 0.5f);
+                        if (currentFloorType == FloorType.Wood)
+                        {
+
+                            HelperFunctions.Helper.PlayRandomNoiseInArray(woodFootsteps, audioSource, 1, helperId);
+                        }
+                        else if (currentFloorType == FloorType.Carpet)
+                        {
+                            HelperFunctions.Helper.PlayRandomNoiseInArray(carpetFootsteps, audioSource, 1, helperId);
+
+                        }
+                        else if (currentFloorType == FloorType.Stone)
+                        {
+                            HelperFunctions.Helper.PlayRandomNoiseInArray(stoneFootsteps, audioSource, 1, helperId);
+
+                        }
+                        else
+                        {
+                            HelperFunctions.Helper.PlayRandomNoiseInArray(woodFootsteps, audioSource, 1, helperId);
+
+                        }
                         footsteptimer = 0;
                     }
                     else
