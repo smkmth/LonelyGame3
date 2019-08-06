@@ -49,7 +49,6 @@ public class PlayerInteract : MonoBehaviour
 
      public float distanceToObject;
 
-    [Header("Holding Object")]
     public Image curser;
     public Color interactColor;
     public Color noColor;
@@ -60,7 +59,7 @@ public class PlayerInteract : MonoBehaviour
     public float pickUpDistance;
 
     private Transform heldObject;
- public HoldState currentHoldState;
+    public HoldState currentHoldState;
     public float throwForce;
 
     public float holdStateDelay;
@@ -77,11 +76,12 @@ public class PlayerInteract : MonoBehaviour
     public bool interactIsActive =true;
 
     public Image crosshair;
-    public AudioSource source;
     //LookAt event stuff
     public GameEventTrigger lookAtEventObj;
     public bool lookingAt;
 
+    [Header("Player Audio")]
+    public AudioSource source;
     public AudioClip paperPickup;
     public AudioClip objectPickup;
     public float pickupVol;

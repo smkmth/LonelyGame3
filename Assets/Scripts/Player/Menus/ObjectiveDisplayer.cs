@@ -75,6 +75,26 @@ public class ObjectiveDisplayer : MonoBehaviour
 
 
     }
+    public void UpdateObjective(GameObjective objectiveToUpdate, GameObjective objectiveToUpdateWith)
+    {
+        GameObject objectiveObj;
+        if (objectiveObjList.TryGetValue(objectiveToUpdate, out objectiveObj))
+        {
+
+        }
+        onScreenObjectiveView.SetActive(true);
+        onScreenObjective.text = "Objective Updated : " + objectiveToUpdate.objectiveName;
+        showingObjective = true;
+        objectiveTimer = onScreenObjectiveTime;
+        objectiveObj.GetComponent<Button>().onClick.AddListener(() => ViewObjective(objectiveToUpdateWith));
+
+        objectiveObjList.Remove(objectiveToUpdate);
+        objectiveObjList.Add(objectiveToUpdate,objectiveObj);
+        inumObjectiveList.Add(objectiveToUpdateWith);
+        inumObjectiveList.Remove(objectiveToUpdate);
+
+
+    }
 
     public void FinishObjective(GameObjective objectiveToFinish)
     {
