@@ -26,6 +26,7 @@ public class InGameCamera : MonoBehaviour
     public float CameraRadius;
     public float CameraRange;
     public LayerMask ghostLayerMask;
+    public LayerMask normalLayerMask;
     public float ghostOnScreenTime;
     public Ghost ghostObj;
 
@@ -205,9 +206,11 @@ public class InGameCamera : MonoBehaviour
         shutterObj.SetActive(false);
 
         ghostObj.ToggleGhost(true);
+        Camera.main.cullingMask = ghostLayerMask;
         yield return new WaitForSeconds(ghostOnScreenTime);
         ghostObj.ToggleGhost(false);
-        
+        Camera.main.cullingMask = normalLayerMask;
+
 
     }
     public void UpdateShots(int shotsToAdd)
