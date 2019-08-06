@@ -15,7 +15,7 @@ public enum MenuType
 public class MenuManager : MonoBehaviour
 {
 
-
+    public GameObject inGameUI;
 
     private InventoryDisplayer invDisplay;
     private TextDisplayer textDisplay;
@@ -55,6 +55,7 @@ public class MenuManager : MonoBehaviour
     {
         if (menuOn)
         {
+            inGameUI.SetActive(false);
             menu.SetActive(true);
             objectiveDisplayer.ToggleObjectivesMenu(false);
             invDisplay.ToggleInventoryMenu(false);
@@ -65,6 +66,8 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
+            inGameUI.SetActive(true);
+
             objectiveDisplayer.ToggleObjectivesMenu(false);
             invDisplay.ToggleInventoryMenu(false);
             textDisplay.ToggleTextDisplay(false);

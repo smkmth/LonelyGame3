@@ -82,6 +82,10 @@ public class ObjectiveDisplayer : MonoBehaviour
         {
 
         }
+        if(!objectiveObj)
+        {
+            AddObjective(objectiveToUpdate);
+        }
         onScreenObjectiveView.SetActive(true);
         onScreenObjective.text = "Objective Updated : " + objectiveToUpdate.objectiveName;
         showingObjective = true;

@@ -13,7 +13,7 @@ public class FirstPersonCharacterController : MonoBehaviour
 {
 
     [Header("Player Audio")]
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     public AudioClip[] woodFootsteps;
     public AudioClip[] stoneFootsteps;
     public AudioClip[] carpetFootsteps;
@@ -68,7 +68,6 @@ public class FirstPersonCharacterController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        audioSource = GetComponent<AudioSource>();
         playerStart = transform.position;
         sprintVingetteObj.localPosition = new Vector3(0, sprintTime, 0);
     }
