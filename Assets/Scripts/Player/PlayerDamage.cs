@@ -14,11 +14,18 @@ public class PlayerDamage : MonoBehaviour
     public float timeDamaged;
     public AudioClip impactSound;
     public AudioSource playerAudio;
+    public Button resetButton;
+    private GameReset reset;
 
+  
+  
     public void Start()
     {
         
         timer = timeDamaged;
+        reset = GameObject.Find("GameReset").GetComponent<GameReset>();
+        resetButton.onClick.AddListener(() => reset.ResetLevel());
+
     }
 
     public void TakeDamage()
@@ -37,6 +44,8 @@ public class PlayerDamage : MonoBehaviour
             bloodImage.SetActive(false);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            gameOver.SetActive(false);
+
             manager.GameLose();
         }
     }

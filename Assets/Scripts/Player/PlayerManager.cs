@@ -58,6 +58,8 @@ public class PlayerManager : MonoBehaviour
     public ObjectiveDisplayer objectiveDisplayer;
     public GameObject lampObject;
 
+    public SaveLoad saveLoad;
+
 
     // Start is called before the first frame update
     void Start()
@@ -130,6 +132,8 @@ public class PlayerManager : MonoBehaviour
         }
         textDisplayer = GetComponent<TextDisplayer>();
         inv = GetComponent<Inventory>();
+        saveLoad = GameObject.Find("GameReset").GetComponent<SaveLoad>();
+        saveLoad.SaveGame();
     }
 
     public void GameLose()
@@ -351,7 +355,7 @@ public class PlayerData
     public string[]      playerItems;
     public string[]     playerObjectives;
     public string[]    playerTextAssets;
-
+    public Vector3 playerPos;
     public PlayerData(string[] _playerItems, string[] _playerObjectives, string[] _playerTextAssets)
     {
         this.playerItems = _playerItems;
