@@ -321,6 +321,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void LoadPlayer(PlayerData data)
     {
+        /*
         MasterAssetList masterAssetList = GameObject.Find("GameReset").GetComponent<MasterAssetList>();
         foreach(string item in data.playerItems)
         {
@@ -338,6 +339,7 @@ public class PlayerManager : MonoBehaviour
 
             textDisplayer.AddTextAsset(masterAssetList.findTextByName(tex));
         }
+        */
 
     }
 
