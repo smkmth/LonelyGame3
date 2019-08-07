@@ -12,7 +12,14 @@ public class GameReset : MonoBehaviour
     public string secondScene;
     public string thirdScene;
     public string playerScene;
- 
+    public SaveLoad load;
+
+    private void Start()
+    {
+        load = GetComponent<SaveLoad>();
+    }
+
+
     public void ResetLevel()
     {
         Time.timeScale = 1.0f;
@@ -23,6 +30,9 @@ public class GameReset : MonoBehaviour
     IEnumerator LoadNewScene()
     {
         loadingScreen.SetActive(true);
+        load.LoadPlayer();
+
+        /*
         yield return new WaitForEndOfFrame();
         AsyncOperation async = SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
         async = SceneManager.LoadSceneAsync(secondScene, LoadSceneMode.Additive);
@@ -35,9 +45,9 @@ public class GameReset : MonoBehaviour
         }
 
         //after scene is loaded - wait for 2 seconds for the player to fall a bit - and everything to kind of shuffle in 
+        */
+
         yield return new WaitForSeconds(0.1f);
         loadingScreen.SetActive(false);
-
-
     }
 }
