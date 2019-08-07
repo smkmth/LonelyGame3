@@ -134,7 +134,7 @@ public class PlayerManager : MonoBehaviour
         inv = GetComponent<Inventory>();
         saveLoad = GameObject.Find("GameReset").GetComponent<SaveLoad>();
         saveLoad.SaveGame();
-        Cursor.lockState = CursorLockMode.Locked;
+       // Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void GameLose()
