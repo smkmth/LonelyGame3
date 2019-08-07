@@ -30,6 +30,7 @@ public class MenuManager : MonoBehaviour
     public Button objectiveButton;
     public Button optionsButton;
     public Button mainMenuButton;
+    public GameObject sprintVingette;
 
     private void Start()
     {
@@ -55,6 +56,7 @@ public class MenuManager : MonoBehaviour
     {
         if (menuOn)
         {
+            sprintVingette.SetActive(false);
             inGameUI.SetActive(false);
             menu.SetActive(true);
             objectiveDisplayer.ToggleObjectivesMenu(false);
@@ -66,6 +68,8 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
+            sprintVingette.SetActive(true);
+
             inGameUI.SetActive(true);
 
             objectiveDisplayer.ToggleObjectivesMenu(false);

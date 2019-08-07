@@ -49,7 +49,7 @@ public class GameReset : MonoBehaviour
         //after scene is loaded - wait for 2 seconds for the player to fall a bit - and everything to kind of shuffle in 
         
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         loadingScreen.SetActive(false);
         yield return null;
     }
