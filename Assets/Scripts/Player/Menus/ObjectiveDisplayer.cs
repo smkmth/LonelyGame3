@@ -28,7 +28,7 @@ public class ObjectiveDisplayer : MonoBehaviour
     public void Start()
     {
         onScreenObjectiveView.SetActive(false);
-        AddObjective(startObjective);
+        //AddObjective(startObjective);
     }
 
     public void ToggleObjectivesMenu(bool objectivesOn)
@@ -85,17 +85,20 @@ public class ObjectiveDisplayer : MonoBehaviour
         if(!objectiveObj)
         {
             AddObjective(objectiveToUpdate);
+            objectiveObjList.TryGetValue(objectiveToUpdate, out objectiveObj);
+
+
         }
         onScreenObjectiveView.SetActive(true);
         onScreenObjective.text = "Objective Updated : " + objectiveToUpdate.objectiveName;
         showingObjective = true;
         objectiveTimer = onScreenObjectiveTime;
-        objectiveObj.GetComponent<Button>().onClick.AddListener(() => ViewObjective(objectiveToUpdateWith));
+         objectiveObj.GetComponent<Button>().onClick.AddListener(() => ViewObjective(objectiveToUpdateWith));
 
-        objectiveObjList.Remove(objectiveToUpdate);
-        objectiveObjList.Add(objectiveToUpdate,objectiveObj);
-        inumObjectiveList.Add(objectiveToUpdateWith);
+        //objectiveObjList.Remove(objectiveToUpdate);
+        //objectiveObjList.Add(objectiveToUpdate,objectiveObj);
         inumObjectiveList.Remove(objectiveToUpdate);
+        inumObjectiveList.Add(objectiveToUpdateWith);
 
 
     }
@@ -112,7 +115,10 @@ public class ObjectiveDisplayer : MonoBehaviour
         onScreenObjective.text = "Objective Complete : " + objectiveToFinish.objectiveName;
         showingObjective = true;
         objectiveTimer = onScreenObjectiveTime;
-        inumObjectiveList.Remove(objectiveToFinish);
+
+       // objectiveObjList.Remove(objectiveToFinish);
+       // inumObjectiveList.Remove(objectiveToFinish);
+
 
     }
 
@@ -133,6 +139,8 @@ public class ObjectiveDisplayer : MonoBehaviour
         ToggleObjectivesMenu(true);
         objectiveViewer.SetActive(false);
     }
+
+
     public void Update()
     {
         if (showingObjective)
@@ -140,9 +148,11 @@ public class ObjectiveDisplayer : MonoBehaviour
             objectiveTimer -= Time.deltaTime;
             if (objectiveTimer <= 0)
             {
-                onScreenObjectiveView.SetActive(false);
-                showingObjective = false;
+            
+                    onScreenObjectiveView.SetActive(false);
+                    showingObjective = false;
 
+                
             }
         }
        
