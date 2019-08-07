@@ -65,7 +65,7 @@ public class CheckpointManager : MonoBehaviour
     }
     public void LoadState(CheckpointData data)
     {
-        for (int i = 0; i < globalGameTriggers.Length; i++)
+        for (int i = 0; i < globalGameTriggers.Length; ++i)
         {
             if (data.savedGameTriggers[i])
             {
@@ -74,7 +74,7 @@ public class CheckpointManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < globalItemContainers.Length; i++)
+        for (int i = 0; i < globalItemContainers.Length; ++i)
         {
             if (data.savedItemContainers[i])
             {

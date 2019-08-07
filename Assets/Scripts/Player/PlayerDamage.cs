@@ -24,10 +24,15 @@ public class PlayerDamage : MonoBehaviour
         
         timer = timeDamaged;
         reset = GameObject.Find("GameReset").GetComponent<GameReset>();
-        resetButton.onClick.AddListener(() => reset.ResetLevel());
+        resetButton.onClick.AddListener(() => ResetGame());
 
     }
+    void ResetGame()
+    {
+        gameOver.SetActive(false);
+        reset.ResetLevel();
 
+    }
     public void TakeDamage()
     {
         if (!isDamaged)
@@ -53,7 +58,7 @@ public class PlayerDamage : MonoBehaviour
     {
         screenFlash.SetActive(true);
 
-        yield return new WaitForSeconds(.05f);
+        yield return new WaitForSeconds(.5f);
         screenFlash.SetActive(false);
 
     }

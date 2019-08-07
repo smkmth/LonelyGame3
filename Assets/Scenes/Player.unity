@@ -19941,6 +19941,18 @@ Transform:
   m_Father: {fileID: 1598772178}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &994302335 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7539868660169670175, guid: 9cd9884b73d532a4396d92fd1fd3f804,
+    type: 3}
+  m_PrefabInstance: {fileID: 1506595451}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &997109118
 GameObject:
   m_ObjectHideFlags: 0
@@ -22569,8 +22581,6 @@ GameObject:
   - component: {fileID: 1323792898}
   - component: {fileID: 1323792897}
   - component: {fileID: 1323792896}
-  - component: {fileID: 1323792903}
-  - component: {fileID: 1323792901}
   m_Layer: 0
   m_Name: TalesFromTheMoor
   m_TagString: Pickup
@@ -22590,7 +22600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58659d4f2ab41eb49b2135e6e3975000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heldItem: {fileID: 11400000, guid: eb0a5bbeda37d244cb2bc57ae36e95ba, type: 2}
+  heldItem: {fileID: 11400000, guid: 77092256b93b13744aff827cd945e3d9, type: 2}
   pickedup: 0
 --- !u!65 &1323792897
 BoxCollider:
@@ -22664,46 +22674,6 @@ Transform:
   m_Father: {fileID: 253632947}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1323792901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323792895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cca2c9c119f63c478d64911c2162814, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectiveType: 1
-  gameObjectiveToTrigger: {fileID: 11400000, guid: adb195455510e824895948d8209ffe8c,
-    type: 2}
-  gameObjectiveToUpdate: {fileID: 11400000, guid: 000301dbb466eb94f85e573fdab1083f,
-    type: 2}
---- !u!114 &1323792903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323792895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e75108fa2450a14c9827e3ceca0685c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  howEventIsTriggered: 3
-  canTriggerAgain: 1
-  hasBeenTriggered: 0
-  afterTime: 0
-  timeToWait: 0
-  timeToHold: 0
-  deactivateSelfOnFinish: 0
-  timerStarted: 0
-  timerFinished: 0
-  lookedAt: 0
-  locked: 0
 --- !u!1 &1342595167
 GameObject:
   m_ObjectHideFlags: 0
@@ -23637,7 +23607,7 @@ PrefabInstance:
     - target: {fileID: 5070230334021935471, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.5
+      value: -6.799
       objectReference: {fileID: 0}
     - target: {fileID: 5070230334021935471, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
@@ -23647,7 +23617,7 @@ PrefabInstance:
     - target: {fileID: 5070230334021935471, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -14.33
+      value: 17.046
       objectReference: {fileID: 0}
     - target: {fileID: 5070230334021935471, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
@@ -24026,6 +23996,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 77.97504
       objectReference: {fileID: 0}
+    - target: {fileID: 5070230334203791847, guid: 9cd9884b73d532a4396d92fd1fd3f804,
+        type: 3}
+      propertyPath: resetButton
+      value: 
+      objectReference: {fileID: 994302335}
     - target: {fileID: 224984425359147629, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -24084,6 +24059,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878557302105337071, guid: 9cd9884b73d532a4396d92fd1fd3f804,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cd9884b73d532a4396d92fd1fd3f804, type: 3}
