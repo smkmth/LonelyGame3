@@ -20,7 +20,15 @@ public class GameReset : MonoBehaviour
         load = GetComponent<SaveLoad>();
     }
 
+    public void QuitGameToMenu()
+    {
+        loadingScreen.SetActive(true);
 
+        Time.timeScale = 1.0f;
+        //load.LoadPlayer();
+        StartCoroutine(QuitToMenu());
+
+    }
     public void ResetLevel()
     {
         loadingScreen.SetActive(true);
@@ -60,6 +68,34 @@ public class GameReset : MonoBehaviour
 
         //after scene is loaded - wait for 2 seconds for the player to fall a bit - and everything to kind of shuffle in 
         
+
+        yield return new WaitForSeconds(2f);
+
+        loadingScreen.GetComponent<Image>().CrossFadeAlpha(0.0f, 2.0f, false);
+        yield return new WaitForSeconds(2.1f);
+        loadingScreen.SetActive(false);
+        yield return null;
+    }
+    IEnumerator QuitToMenu()
+    {
+
+        AsyncOperation async = SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
+        async = SceneManager.UnloadSceneAsync(firstScene);
+        async = SceneManager.UnloadSceneAsync(secondScene);
+        async = SceneManager.UnloadSceneAsync(thirdScene);
+        async = SceneManager.UnloadSceneAsync(playerScene);
+
+        async = SceneManager.LoadSceneAsync(menuScene, LoadSceneMode.Additive);
+;
+
+        yield return new WaitForEndOfFrame();
+        while (!async.isDone)
+        {
+            yield return null;
+        }
+
+        //after scene is loaded - wait for 2 seconds for the player to fall a bit - and everything to kind of shuffle in 
+
 
         yield return new WaitForSeconds(2f);
 

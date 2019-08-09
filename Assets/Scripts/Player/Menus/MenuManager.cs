@@ -14,7 +14,7 @@ public enum MenuType
 }
 public class MenuManager : MonoBehaviour
 {
-
+    public GameReset gameReset;
     public GameObject inGameUI;
 
     private InventoryDisplayer invDisplay;
@@ -34,6 +34,8 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
+        gameReset = GameObject.Find("GameReset").GetComponent<GameReset>();
+
         invDisplay = GetComponent<InventoryDisplayer>();
         textDisplay = GetComponent<TextDisplayer>();
         mapDisplay = GetComponent<PlayerMapDisplayer>();
@@ -141,13 +143,7 @@ public class MenuManager : MonoBehaviour
                 Debug.Log("reading");
                 break;
             case MenuType.MainMenu:
-                mapDisplay.ToggleMap(false);
-                invDisplay.ToggleInventoryMenu(false);
-                textDisplay.ToggleTextDisplay(false);
-                objectiveDisplayer.ToggleObjectivesMenu(false);
-                settingsDisplayer.ToggleSettingsDisplay(false);
-                mainMenuDispalyer.ToggleMainMenuDisplay(true);
-                Debug.Log("saveload");
+                gameReset.QuitGameToMenu();
                 break;
         }
     }

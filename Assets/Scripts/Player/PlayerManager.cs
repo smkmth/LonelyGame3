@@ -273,11 +273,51 @@ public class PlayerManager : MonoBehaviour
                 {
                     ChangePlayerState(PlayerState.menuMode);
                 }
+                if (Input.GetButtonDown("ViewInv"))
+                {
+                    ChangePlayerState(PlayerState.menuMode);
+                    menuManager.ToggleMenu(MenuType.Inventory);
+
+                }
+                if (Input.GetButtonDown("ViewObj"))
+                {
+                    ChangePlayerState(PlayerState.menuMode);
+                    menuManager.ToggleMenu(MenuType.Objectives);
+
+                }
+                if (Input.GetButtonDown("ViewMap"))
+                {
+                    ChangePlayerState(PlayerState.menuMode);
+                    menuManager.ToggleMenu(MenuType.Map);
+
+                }
+                if (Input.GetButtonDown("ViewReading"))
+                {
+                    ChangePlayerState(PlayerState.menuMode);
+                    menuManager.ToggleMenu(MenuType.Reading);
+
+                }
                 break;
             case PlayerState.menuMode:
                 if (Input.GetButtonDown("ViewMenu"))
                 {
                     ChangePlayerState(PlayerState.freeMovement);
+                }
+                if (Input.GetButtonDown("ViewInv"))
+                {
+                    menuManager.ToggleMenu(MenuType.Inventory);
+                }
+                if (Input.GetButtonDown("ViewObj"))
+                {
+                    menuManager.ToggleMenu(MenuType.Objectives);
+                }
+                if (Input.GetButtonDown("ViewMap"))
+                {
+                    menuManager.ToggleMenu(MenuType.Map);
+                }
+                if (Input.GetButtonDown("ViewReading"))
+                {
+                    menuManager.ToggleMenu(MenuType.Reading);
                 }
                 break;
             case PlayerState.delay:
