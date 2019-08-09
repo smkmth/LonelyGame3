@@ -48,9 +48,7 @@ public class FirstPersonCharacterController : MonoBehaviour
 
     public float heightdist;
     public float fallmod;
-    bool isLerping;
-    private float timeStartedLerp;
-    public Image sprintVingette;
+
     public Vector3 sprintMax;
     public Vector3 sprintMin;
     public bool coroutineRunning;
