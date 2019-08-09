@@ -12,6 +12,7 @@ public class GameReset : MonoBehaviour
     public string secondScene;
     public string thirdScene;
     public string playerScene;
+    public string menuScene;
     public SaveLoad load;
 
     private void Start()
@@ -22,14 +23,25 @@ public class GameReset : MonoBehaviour
 
     public void ResetLevel()
     {
+        loadingScreen.SetActive(true);
+
         Time.timeScale = 1.0f;
         //load.LoadPlayer();
-        StartCoroutine(LoadNewScene());
+        StartCoroutine(ReloadScene());
 
     }
-
-    IEnumerator LoadNewScene()
+    public void LoadNewScene()
     {
+        loadingScreen.SetActive(true);
+
+        Time.timeScale = 1.0f;
+
+        StartCoroutine(InitLoadScene());
+
+    }
+    IEnumerator ReloadScene()
+    {
+
         AsyncOperation async = SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
         async = SceneManager.UnloadSceneAsync(firstScene);
         async = SceneManager.UnloadSceneAsync(secondScene);
@@ -50,7 +62,39 @@ public class GameReset : MonoBehaviour
         
 
         yield return new WaitForSeconds(2f);
+
+        loadingScreen.GetComponent<Image>().CrossFadeAlpha(0.0f, 2.0f, false);
+        yield return new WaitForSeconds(2.1f);
         loadingScreen.SetActive(false);
+        yield return null;
+    }
+
+    IEnumerator InitLoadScene()
+    {
+
+        AsyncOperation async = SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
+        async = SceneManager.UnloadSceneAsync(menuScene);
+  
+        async = SceneManager.LoadSceneAsync(secondScene, LoadSceneMode.Additive);
+        async = SceneManager.LoadSceneAsync(thirdScene, LoadSceneMode.Additive);
+        async = SceneManager.LoadSceneAsync(playerScene, LoadSceneMode.Additive);
+
+        yield return new WaitForEndOfFrame();
+        while (!async.isDone)
+        {
+            yield return null;
+        }
+
+        //after scene is loaded - wait for 2 seconds for the player to fall a bit - and everything to kind of shuffle in 
+
+
+        yield return new WaitForSeconds(2f);
+
+        loadingScreen.GetComponent<Image>().CrossFadeAlpha(0.0f, 2.0f, false);
+        yield return new WaitForSeconds(2.1f);
+        loadingScreen.SetActive(false);
+
+        // loadingScreen.SetActive(false);
         yield return null;
     }
 }

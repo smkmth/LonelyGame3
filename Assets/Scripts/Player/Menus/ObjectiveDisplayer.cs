@@ -23,7 +23,8 @@ public class ObjectiveDisplayer : MonoBehaviour
     public TextMeshProUGUI onScreenObjective;
     public float onScreenObjectiveTime;
     private float objectiveTimer;
-    private bool showingObjective; 
+    private bool showingObjective;
+    public Image onScreenObjectiveImage;
 
     public void Start()
     {
@@ -71,6 +72,8 @@ public class ObjectiveDisplayer : MonoBehaviour
         showingObjective = true;
         objectiveTimer = onScreenObjectiveTime;
         inumObjectiveList.Add(objectiveToAdd);
+        StartCoroutine(FadeImage(false, onScreenObjectiveImage));
+        StartCoroutine(FadeText(false, onScreenObjective));
 
 
 
@@ -95,10 +98,13 @@ public class ObjectiveDisplayer : MonoBehaviour
         objectiveTimer = onScreenObjectiveTime;
          objectiveObj.GetComponent<Button>().onClick.AddListener(() => ViewObjective(objectiveToUpdateWith));
 
-        //objectiveObjList.Remove(objectiveToUpdate);
-        //objectiveObjList.Add(objectiveToUpdate,objectiveObj);
         inumObjectiveList.Remove(objectiveToUpdate);
         inumObjectiveList.Add(objectiveToUpdateWith);
+
+        StartCoroutine(FadeImage(false, onScreenObjectiveImage));
+        StartCoroutine(FadeText(false, onScreenObjective));
+
+
 
 
     }
@@ -115,9 +121,8 @@ public class ObjectiveDisplayer : MonoBehaviour
         onScreenObjective.text = "Objective Complete : " + objectiveToFinish.objectiveName;
         showingObjective = true;
         objectiveTimer = onScreenObjectiveTime;
-
-       // objectiveObjList.Remove(objectiveToFinish);
-       // inumObjectiveList.Remove(objectiveToFinish);
+        StartCoroutine(FadeImage(false, onScreenObjectiveImage));
+        StartCoroutine(FadeText(false, onScreenObjective));
 
 
     }
@@ -148,14 +153,59 @@ public class ObjectiveDisplayer : MonoBehaviour
             objectiveTimer -= Time.deltaTime;
             if (objectiveTimer <= 0)
             {
-            
-                    onScreenObjectiveView.SetActive(false);
+                    StartCoroutine(FadeImage(true, onScreenObjectiveImage));
+                    StartCoroutine(FadeText(true, onScreenObjective));
+                //onScreenObjectiveView.SetActive(false);
                     showingObjective = false;
 
                 
             }
         }
        
+    }
+
+
+    IEnumerator FadeImage(bool fadeAway, Image image)
+    {
+        if (fadeAway)
+        {
+            for (float i = 1; i >= 0; i -= Time.deltaTime)
+            {
+                // set color with i as alpha
+                image.color = new Color(1, 1, 1, i);
+                yield return null;
+            }
+        }
+        else
+        {
+            for (float i = 0; i <= 1; i += Time.deltaTime)
+            {
+                // set color with i as alpha
+                image.color = new Color(1, 1, 1, i);
+                yield return null;
+            }
+        }
+    }
+    IEnumerator FadeText(bool fadeAway, TextMeshProUGUI text)
+    {
+        if (fadeAway)
+        {
+            for (float i = 1; i >= 0; i -= Time.deltaTime)
+            {
+                // set color with i as alpha
+                text.color = new Color(1, 1, 1, i);
+                yield return null;
+            }
+        }
+        else
+        {
+            for (float i = 0; i <= 1; i += Time.deltaTime)
+            {
+                // set color with i as alpha
+                text.color = new Color(1, 1, 1, i);
+                yield return null;
+            }
+        }
     }
 }
 

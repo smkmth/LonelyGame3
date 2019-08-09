@@ -44,6 +44,8 @@ public class MainMenu : MonoBehaviour
     public AudioSource sound;
     public AudioClip clip;
 
+    public GameReset gameReset;
+
     [TextArea]
     public string newGameText;
     [TextArea]
@@ -59,7 +61,6 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         SceneManager.LoadScene("GameControlScene", LoadSceneMode.Additive);
-
         logo.SetActive(true);
         mainMenuObject.SetActive(true);
         settingsMenuObject.SetActive(false);
@@ -107,8 +108,9 @@ public class MainMenu : MonoBehaviour
         switch (menuTypeClicked)
         {
             case MainMenuButtonType.NewGameButton:
-                
-                StartCoroutine(LoadNewScene());
+                gameReset = GameObject.Find("GameReset").GetComponent<GameReset>();
+
+                gameReset.LoadNewScene();                
                 break;
             case MainMenuButtonType.LoadGameButton:
                 StartCoroutine(LoadExistingScene());
