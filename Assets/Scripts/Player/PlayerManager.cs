@@ -60,6 +60,11 @@ public class PlayerManager : MonoBehaviour
 
     public SaveLoad saveLoad;
 
+    public GameObject currentBrightness;
+    public float maxBrightness;
+    public float minBrightness;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -331,10 +336,19 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
         }
-        if (Input.GetButtonDown("Help"))
+        if (Input.GetButtonDown("TurnUpBrightness"))
         {
-            if (viewingSeenHints)
+            if (currentBrightness.transform.position.y < (maxBrightness + 1.5))
             {
+                currentBrightness.transform.position -= Vector3.down;
+
+            }
+        }
+        if (Input.GetButtonDown("TurnDownBrightness"))
+        {
+            if (currentBrightness.transform.position.y  > (minBrightness - 1.5))
+            {
+                currentBrightness.transform.position += Vector3.down;
 
             }
         }

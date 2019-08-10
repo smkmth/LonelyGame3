@@ -7,6 +7,7 @@ public enum GhostEventType
     MoveGhost,
     TeleportGhost,
     DeActivateGhost,
+    SetPlayerInvisible
 }
 
 [AddComponentMenu("GameEvents/Ghost Event")]
@@ -15,6 +16,7 @@ public class GhostEvent : GameEventReceiver
     public Ghost ghostToBeAffected;
     public GhostEventType thisGhostEvent;
     public Transform ghostTarget;
+    public bool playerInvisible;
 
     public override void DoEvent()
     {
@@ -34,6 +36,9 @@ public class GhostEvent : GameEventReceiver
             case (GhostEventType.DeActivateGhost):
                 ghostToBeAffected.ghostActive = false;
                 ghostToBeAffected.gameObject.SetActive(false);
+                break;
+            case (GhostEventType.SetPlayerInvisible):
+                ghostToBeAffected.playerIsInvisible = playerInvisible;
                 break;
 
         }

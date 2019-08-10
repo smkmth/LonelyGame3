@@ -10,6 +10,8 @@ public class SettingsDisplayer : MonoBehaviour
     public int currentResolutionIndex;
     public Text resolutionText;
     private InGameSettings settings;
+    public float brightness;
+
 
     private void Start()
     {
@@ -23,6 +25,11 @@ public class SettingsDisplayer : MonoBehaviour
         resolutionText.text = settings.resolutionDatas[currentResolutionIndex].screenHeight.ToString() + " X " + settings.resolutionDatas[currentResolutionIndex].screenWidth.ToString();
 
     }
+
+    public void SetBrightness()
+    {
+
+    } 
 
 
     public void SelectNextResolution()

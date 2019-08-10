@@ -40,6 +40,8 @@ public class Ghost : MonoBehaviour
     public bool canSeePlayer;
 
     [Header("Ghost Patrol AI")]
+
+    public bool playerIsInvisible;
     public Transform[] points;
     public int destPoint;
     public float rotSpeed;
@@ -178,60 +180,69 @@ public class Ghost : MonoBehaviour
 
         if (ghostActive)
         {
+           
             Vector3 transpos = transform.position;
 
             Debug.DrawRay((transpos + transform.right * ghostSpotRadius), transform.forward * ghostSpotDistance, Color.green);
             Debug.DrawRay((transpos + transform.right * ghostSpotRadius * -1f), transform.forward * ghostSpotDistance, Color.green);
             Debug.DrawRay(transform.position, transform.forward * distanceToTarget, Color.red);
             RaycastHit hit;
-
-            if (Physics.SphereCast(transform.position, ghostSpotRadius, transform.forward,out hit, ghostSpotDistance, playerLayer))
+            if (!playerIsInvisible)
             {
-               
-                if (hit.collider.tag == "Player")
+
+
+                if (Physics.SphereCast(transform.position, ghostSpotRadius, transform.forward, out hit, ghostSpotDistance, playerLayer))
                 {
-                    RaycastHit testHit;
-                    if (Physics.Raycast(transform.position, (player.position - transform.position), out testHit ,100000.0f , notGhostLayer))
+
+                    if (hit.collider.tag == "Player")
                     {
-                        if (testHit.collider.tag == "Player")
+                        RaycastHit testHit;
+                        if (Physics.Raycast(transform.position, (player.position - transform.position), out testHit, 100000.0f, notGhostLayer))
                         {
-                            Debug.DrawRay(transform.position, (player.position- transform.position), Color.yellow, 5.0f );
+                            if (testHit.collider.tag == "Player")
+                            {
+                                Debug.DrawRay(transform.position, (player.position - transform.position), Color.yellow, 5.0f);
 
-                            canSeePlayer = true;
+                                canSeePlayer = true;
 
+                            }
+                            else
+                            {
+                                Debug.DrawRay(transform.position, (player.position - transform.position), Color.red, 5.0f);
+
+
+                                canSeePlayer = false;
+                            }
                         }
-                        else
-                        {
-                            Debug.DrawRay(transform.position, (player.position - transform.position), Color.red, 5.0f);
 
 
-                            canSeePlayer = false;
-                        }
                     }
-                   
+                    else
+                    {
+                        canSeePlayer = false;
 
+                    }
                 }
                 else
                 {
                     canSeePlayer = false;
 
+
                 }
             }
-            else
+            if (!playerIsInvisible)
             {
-                canSeePlayer = false;
 
-
-            }
-            Collider[] objs = Physics.OverlapSphere(transform.position + transform.forward * overlapOffset, closeToPlayerRad, playerLayer);
-            foreach(Collider ob in objs) 
-            {
-                if (ob.tag == "Player")
+            
+                Collider[] objs = Physics.OverlapSphere(transform.position + transform.forward * overlapOffset, closeToPlayerRad, playerLayer);
+                foreach (Collider ob in objs)
                 {
-                    canSeePlayer = true;
+                    if (ob.tag == "Player")
+                    {
+                        canSeePlayer = true;
 
+                    }
                 }
-               
 
             }
 
@@ -320,6 +331,7 @@ public class Ghost : MonoBehaviour
             }
         
         }
+
         
     }
     public void DeactivateGhost()
