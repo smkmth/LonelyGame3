@@ -69,6 +69,10 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         menuManager = GetComponent<MenuManager>();
         if (!menuManager)
         {
@@ -139,7 +143,6 @@ public class PlayerManager : MonoBehaviour
         inv = GetComponent<Inventory>();
         saveLoad = GameObject.Find("GameReset").GetComponent<SaveLoad>();
         saveLoad.SaveGame();
-       // Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void GameLose()

@@ -5,7 +5,8 @@ public enum SoundEffectType
 {
     OneShot,
     LoopConstant,
-    LoopForTime
+    LoopForTime,
+    StopLoop
 }
 
 [AddComponentMenu("GameEvents/Sound Event")]
@@ -15,6 +16,9 @@ public class SoundEvent : GameEventReceiver {
     public AudioSource placeSoundComesFrom;
     public float volumeSetting;
     public SoundEffectType typeOfSound;
+    float timer;
+    bool timing;
+    bool waitToStopLoop;
 
     public override void DoEvent()
     {
@@ -24,10 +28,32 @@ public class SoundEvent : GameEventReceiver {
                 placeSoundComesFrom.PlayOneShot(audioClip, volumeSetting);
                 break;
             case SoundEffectType.LoopConstant:
+                placeSoundComesFrom.clip = audioClip;
+                placeSoundComesFrom.loop = true;
+                placeSoundComesFrom.Play();
                 break;
             case SoundEffectType.LoopForTime:
+                placeSoundComesFrom.loop = true;
+                placeSoundComesFrom.Play();
                 break;
+            case SoundEffectType.StopLoop:
+                placeSoundComesFrom.loop =false;
+                break;
+        }
+    }
+
+    public void Update()
+    {
+        if (timing)
+        {
+            timer -= Time.deltaTime;
+            if (timer <=0)
+            {
+                placeSoundComesFrom.Stop();
+            }
 
         }
+       
+        
     }
 }

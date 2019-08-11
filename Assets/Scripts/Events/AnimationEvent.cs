@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// an animation event calls a parameter on an animator when 
+/// the event is triggered
+/// </summary>
 [AddComponentMenu("GameEvents/Animation Event")]
 public class AnimationEvent : GameEventReceiver
 {

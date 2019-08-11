@@ -11,6 +11,8 @@ public enum FloorType
 }
 public class FirstPersonCharacterController : MonoBehaviour
 {
+    Rigidbody rb;
+    public GameObject playerCamera;
 
     [Header("Player Audio")]
     public AudioSource audioSource;
@@ -23,15 +25,13 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float footstepRunTime;
     private float footsteptimer =0.0f;
 
-
-    Rigidbody rb;
+    [Header("Player Stats")]
     public float moveSpeed;
-    public GameObject playerCamera;
     public float maxSpeed;
-    public bool moving;
+    public bool playerIsMoving;
     public float runSpeed;
     public float maxRunSpeed;
-    public bool isRunning;
+    public bool playerIsRunning;
     public bool characterIsActive= true;
     public float sprintTime;
 
@@ -59,13 +59,12 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float playerCrouchedHeight;
     public float playerCrouchedLowHeight;
     public Vector3 playerStart;
-    public float upAmount;
     public Transform sprintVingetteObj;
+
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         playerStart = transform.position;
         sprintVingetteObj.localPosition = new Vector3(0, sprintTime, 0);
     }
@@ -98,7 +97,6 @@ public class FirstPersonCharacterController : MonoBehaviour
     {
         if(Physics.Raycast(transform.position,Vector3.up, 1))
         {
-            Debug.Log("somthing up");
             return false;
         }
         else
@@ -136,12 +134,7 @@ public class FirstPersonCharacterController : MonoBehaviour
             transform.position = playerStart; 
         }
      
-        if (Input.GetButton("GoUp"))
-        {
-            Debug.Log("tryingup");
-            transform.position += Vector3.up * upAmount;
 
-        }
         if (Input.GetButtonDown("VolUp"))
         {
             AudioListener.volume += 3.0f;
@@ -178,19 +171,19 @@ public class FirstPersonCharacterController : MonoBehaviour
                 {
                     if (enoughStamina)
                     {
-                        isRunning = true;
+                        playerIsRunning = true;
                     }
                 }
                 else
                 {
 
                     
-                    isRunning = false;
+                    playerIsRunning = false;
 
                 }
             }
    
-            if (isRunning)
+            if (playerIsRunning)
             {
                 if (sprintTimer < sprintTime)
                 {
@@ -201,7 +194,7 @@ public class FirstPersonCharacterController : MonoBehaviour
                 else
                 {
                     enoughStamina = false;
-                    isRunning = false;
+                    playerIsRunning = false;
 
                 }
 
@@ -222,33 +215,30 @@ public class FirstPersonCharacterController : MonoBehaviour
 
             }
      
-            if (moving)
+            if (playerIsMoving)
             {
-                if (!isRunning)
+                if (!playerIsRunning)
                 {
 
                     if (footsteptimer >= footstepTime)
                     {
-                        if (currentFloorType == FloorType.Wood)
+                        switch (currentFloorType)
                         {
+                            case FloorType.Carpet:
+                                HelperFunctions.Helper.PlayRandomNoiseInArray(carpetFootsteps, audioSource, 1, helperId);
 
-                            HelperFunctions.Helper.PlayRandomNoiseInArray(woodFootsteps,audioSource, 1,helperId);
-                        }
-                        else if (currentFloorType == FloorType.Carpet)
-                        {
-                            HelperFunctions.Helper.PlayRandomNoiseInArray(carpetFootsteps, audioSource, 1, helperId);
+                                break;
+                            case FloorType.Stone:
+                                HelperFunctions.Helper.PlayRandomNoiseInArray(stoneFootsteps, audioSource, 1, helperId);
+                                break;
+                            case FloorType.Wood:
+                                HelperFunctions.Helper.PlayRandomNoiseInArray(woodFootsteps, audioSource, 1, helperId);
+                                break;
 
-                        }
-                        else if (currentFloorType == FloorType.Stone)
-                        {
-                            HelperFunctions.Helper.PlayRandomNoiseInArray(stoneFootsteps, audioSource, 1, helperId);
-
-                        }
-                        else
-                        {
-                            HelperFunctions.Helper.PlayRandomNoiseInArray(woodFootsteps, audioSource, 1, helperId);
 
                         }
+
+                       
                         footsteptimer = 0;
                     }
                     else
@@ -261,24 +251,19 @@ public class FirstPersonCharacterController : MonoBehaviour
 
                     if (footsteptimer >= footstepRunTime)
                     {
-                        if (currentFloorType == FloorType.Wood)
+                        switch (currentFloorType)
                         {
+                            case FloorType.Carpet:
+                                HelperFunctions.Helper.PlayRandomNoiseInArray(carpetFootsteps, audioSource, 1, helperId);
 
-                            HelperFunctions.Helper.PlayRandomNoiseInArray(woodFootsteps, audioSource, 1, helperId);
-                        }
-                        else if (currentFloorType == FloorType.Carpet)
-                        {
-                            HelperFunctions.Helper.PlayRandomNoiseInArray(carpetFootsteps, audioSource, 1, helperId);
+                                break;
+                            case FloorType.Stone:
+                                HelperFunctions.Helper.PlayRandomNoiseInArray(stoneFootsteps, audioSource, 1, helperId);
+                                break;
+                            case FloorType.Wood:
+                                HelperFunctions.Helper.PlayRandomNoiseInArray(woodFootsteps, audioSource, 1, helperId);
+                                break;
 
-                        }
-                        else if (currentFloorType == FloorType.Stone)
-                        {
-                            HelperFunctions.Helper.PlayRandomNoiseInArray(stoneFootsteps, audioSource, 1, helperId);
-
-                        }
-                        else
-                        {
-                            HelperFunctions.Helper.PlayRandomNoiseInArray(woodFootsteps, audioSource, 1, helperId);
 
                         }
                         footsteptimer = 0;
@@ -335,18 +320,18 @@ public class FirstPersonCharacterController : MonoBehaviour
             Vector3 movementVector = new Vector3(inputX, 0, inputY);
             if (movementVector != Vector3.zero)
             {
-                moving = true;
+                playerIsMoving = true;
             }
             else
             {
-                moving = false;
+                playerIsMoving = false;
 
             }
          
 
             movementVector = playerCamera.transform.TransformDirection(movementVector);
             movementVector.y = 0;
-            if (!isRunning)
+            if (!playerIsRunning)
             {
 
                 if (rb.velocity.magnitude < maxSpeed)
