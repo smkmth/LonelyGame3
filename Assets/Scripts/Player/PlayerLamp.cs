@@ -23,6 +23,10 @@ public class PlayerLamp : MonoBehaviour
     void Start()
     {
         lampOn =true;
+        source.Stop();
+        lampOn = false;
+        ToggleLamp(false);
+        fillLight.SetActive(false);
     }
 
     // Update is called once per frame
