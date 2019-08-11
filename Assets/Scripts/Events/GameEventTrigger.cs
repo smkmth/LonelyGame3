@@ -25,24 +25,19 @@ public class GameEventTrigger : AbstractGameEventTrigger
         if (!hasBeenTriggered || canTriggerAgain)
         {
 
-            if (!afterTime || timerFinished)
+            if (!triggersAfterTime || timerFinished)
             {
-                if (!locked)
+               
+                foreach (GameEventReceiver receiver in eventReceivers)
                 {
-
-
-                    foreach (GameEventReceiver receiver in eventReceivers)
+                    receiver.DoEvent();
+                    if (deactivateSelfOnFinish)
                     {
-                        receiver.DoEvent();
-                        if (deactivateSelfOnFinish)
-                        {
-                            gameObject.SetActive(false);
-                        }
-
+                        gameObject.SetActive(false);
                     }
-                    hasBeenTriggered = true;
+
                 }
-             
+                hasBeenTriggered = true;
             }
             else
             {
