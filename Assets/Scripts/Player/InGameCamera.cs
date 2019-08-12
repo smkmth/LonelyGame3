@@ -62,6 +62,7 @@ public class InGameCamera : MonoBehaviour
     public float blinkTime;
     float blinkTimer;
     public GameObject readyObj;
+    public GameObject emptyObj;
 
     public void Start()
     {
@@ -85,6 +86,7 @@ public class InGameCamera : MonoBehaviour
         }
         if (reloadingFilm)
         {
+            emptyObj.SetActive(false);
             if (reloadTimer >= 0)
             {
                 blinkTimer -= Time.deltaTime;
@@ -93,13 +95,15 @@ public class InGameCamera : MonoBehaviour
                     blinkTimer = blinkTime;
                     readyObj.SetActive(!readyObj.activeSelf);
                 }
-               // filmCounterRect.rectTransform.localPosition = Vector3.Lerp( filmCounterStartPos, filmCounterRect.rectTransform.localPosition, Mathf.Clamp01((reloadTimer / reloadTime)));
+             
+                // filmCounterRect.rectTransform.localPosition = Vector3.Lerp( filmCounterStartPos, filmCounterRect.rectTransform.localPosition, Mathf.Clamp01((reloadTimer / reloadTime)));
                 filmCounterRect.rectTransform.localPosition = Vector3.Lerp( filmCounterStartPos, filmCounterEndPos, Mathf.Clamp01((reloadTimer / reloadTime)));
                 reloadTimer -= Time.deltaTime;
             }
             else
             {
 
+                readyObj.SetActive(true);
                 filmCounterRect.rectTransform.localPosition = filmCounterStartPos;
                 cameraShots = maxShots;
                 reloadingFilm = false;
@@ -109,10 +113,28 @@ public class InGameCamera : MonoBehaviour
         }
         if (timerBetweenShotsTime < timeBetweenShots )
         {
+            readyObj.SetActive(false);
             timerBetweenShotsTime += Time.deltaTime;
         }
+        else if ((timerBetweenShotsTime > timeBetweenShots) && !reloadingFilm && cameraShots > 0)
+        {
+            readyObj.SetActive(true);
 
-   
+
+        }
+
+
+        if (cameraShots == 0 && !reloadingFilm)
+        {
+            blinkTimer -= Time.deltaTime;
+            if (blinkTimer < 0)
+            {
+                blinkTimer = blinkTime;
+                emptyObj.SetActive(!emptyObj.activeSelf);
+            }
+        }
+
+
         if (!cameraIsActive)
         {
             return;
