@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.20170823, g: 0.15218376, b: 0.23555295, a: 1}
+  m_IndirectSpecularColor: {r: 0.2971575, g: 0.24193138, b: 0.33181572, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8390,13 +8390,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541921874}
-  m_LocalRotation: {x: -0, y: -0.095296025, z: -0, w: 0.99544907}
+  m_LocalRotation: {x: -0, y: 0.9133916, z: -0, w: 0.40708217}
   m_LocalPosition: {x: -102.453, y: 22.1893, z: -45.063}
-  m_LocalScale: {x: 0.21153, y: 0.019089999, z: 0.15935}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 857421684}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -11.024, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 131.957, z: 0}
 --- !u!114 &541921876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8422,7 +8422,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 5, z: 2}
+  m_Size: {x: 1, y: 0.45, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &541921878
 MeshRenderer:
@@ -8441,7 +8441,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c5e6ba01282b5394c9b72da6e854d85f, type: 2}
+  - {fileID: 2100000, guid: 4d24da6e1cb6fd04db87c44905e90bb2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8468,7 +8468,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541921874}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -485584604646427042, guid: 23957465683809244b4e14040f325d9c, type: 3}
 --- !u!1 &550469114
 GameObject:
   m_ObjectHideFlags: 0
@@ -57452,6 +57452,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 29
       objectReference: {fileID: 0}
+    - target: {fileID: 1235283549, guid: 9cd9884b73d532a4396d92fd1fd3f804, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 732145557, guid: 9cd9884b73d532a4396d92fd1fd3f804, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 79.57495
@@ -57516,7 +57520,7 @@ PrefabInstance:
     - target: {fileID: 5070230334340150942, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5374276408514627960, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 3}
