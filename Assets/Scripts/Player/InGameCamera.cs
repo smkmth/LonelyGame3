@@ -58,8 +58,10 @@ public class InGameCamera : MonoBehaviour
     public Vector3 filmCounterCurrentPos;
     public float cameraOffSet;           //offset is how far down the camera reel should move after a shot,
     public TextMeshProUGUI shotCountText;                                                  //start pos of camera is -254, end is 483, 737 discrete measurements to move through
-                                                        // 737/32 = 23 units to move down each time.
-
+                                                                                           // 737/32 = 23 units to move down each time.
+    public float blinkTime;
+    float blinkTimer;
+    public GameObject readyObj;
 
     public void Start()
     {
@@ -85,7 +87,14 @@ public class InGameCamera : MonoBehaviour
         {
             if (reloadTimer >= 0)
             {
-                filmCounterRect.rectTransform.localPosition = Vector3.Lerp( filmCounterStartPos, filmCounterRect.rectTransform.localPosition, Mathf.Clamp01((reloadTimer / reloadTime)));
+                blinkTimer -= Time.deltaTime;
+                if (blinkTimer < 0)
+                {
+                    blinkTimer = blinkTime;
+                    readyObj.SetActive(!readyObj.activeSelf);
+                }
+               // filmCounterRect.rectTransform.localPosition = Vector3.Lerp( filmCounterStartPos, filmCounterRect.rectTransform.localPosition, Mathf.Clamp01((reloadTimer / reloadTime)));
+                filmCounterRect.rectTransform.localPosition = Vector3.Lerp( filmCounterStartPos, filmCounterEndPos, Mathf.Clamp01((reloadTimer / reloadTime)));
                 reloadTimer -= Time.deltaTime;
             }
             else
