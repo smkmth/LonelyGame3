@@ -363,7 +363,7 @@ public class PlayerManager : MonoBehaviour
         {
             
             hintOnScreen = true;
-            hintText.text += "\n Game Hint : " + hintString;
+            hintText.text +="\n"+  hintString;
             seenHints.Add("\n " + hintString);
             hintTimer = hintOnScreenTime;
 

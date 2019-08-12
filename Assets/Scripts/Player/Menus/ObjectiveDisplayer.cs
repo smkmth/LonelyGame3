@@ -178,7 +178,8 @@ public class ObjectiveDisplayer : MonoBehaviour
             for (float i = 1; i >= 0; i -= Time.deltaTime)
             {
                 // set color with i as alpha
-                image.color = new Color(1, 1, 1, i);
+       
+                image.color = new Color(255, 254, 201, i);
 
                 yield return null;
                 image.gameObject.SetActive(false);
@@ -191,7 +192,7 @@ public class ObjectiveDisplayer : MonoBehaviour
             for (float i = 0; i <= 1; i += Time.deltaTime)
             {
                 // set color with i as alpha
-                image.color = new Color(1, 1, 1, i);
+                image.color = new Color(255, 254, 201, i);
                 yield return null;
             }
         }
@@ -203,10 +204,10 @@ public class ObjectiveDisplayer : MonoBehaviour
             for (float i = 1; i >= 0; i -= Time.deltaTime)
             {
                 // set color with i as alpha
-                text.color = new Color(1, 1, 1, i);
+                text.color = new Color(255, 254, 201, i);
                 yield return null;
+                text.gameObject.SetActive(false);
             }
-            text.gameObject.SetActive(false);
         }
         else
         {
@@ -214,7 +215,7 @@ public class ObjectiveDisplayer : MonoBehaviour
             for (float i = 0; i <= 1; i += Time.deltaTime)
             {
                 // set color with i as alpha
-                text.color = new Color(1, 1, 1, i);
+                text.color = new Color(255, 254, 201, i);
                 yield return null;
 
             }
