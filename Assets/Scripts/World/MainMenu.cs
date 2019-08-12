@@ -15,6 +15,9 @@ public enum MainMenuButtonType
 
 public class MainMenu : MonoBehaviour
 {
+
+    public Transform menuChoices;
+        
     public GameObject pressAnyKeyObject;
     public TextMeshProUGUI pressAnyKeyText;
     public float anyKeyPulseSpeed;
@@ -56,6 +59,10 @@ public class MainMenu : MonoBehaviour
     public string quitGameText;
     [TextArea]
     public string aboutGameText;
+
+    bool menuTrans;
+    public float transitionTime;
+    float transTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -105,19 +112,23 @@ public class MainMenu : MonoBehaviour
     }
     public void ToggleMenu(MainMenuButtonType menuTypeClicked)
     {
+
+        Debug.Log(menuChoices.transform.localPosition.x);
         switch (menuTypeClicked)
         {
             case MainMenuButtonType.NewGameButton:
                 gameReset = GameObject.Find("GameReset").GetComponent<GameReset>();
 
-                gameReset.LoadNewScene();                
+                gameReset.LoadNewScene();
                 break;
             case MainMenuButtonType.LoadGameButton:
                 StartCoroutine(LoadExistingScene());
                 break;
             case MainMenuButtonType.SettingsButton:
                 logo.SetActive(false);
+                explainationText.text = "";
                 mainMenuObject.SetActive(false);
+
                 settingsMenu.ToggleSettingsDisplay(true);
                 break;
             case MainMenuButtonType.AboutGameButton:
@@ -167,7 +178,8 @@ public class MainMenu : MonoBehaviour
             }
 
         }
-       
+
+
     }
 
     IEnumerator LoadNewScene()
@@ -210,4 +222,5 @@ public class MainMenu : MonoBehaviour
         GameObject.Find("GameReset").GetComponent<SaveLoad>().LoadPlayer();
 
     }
+
 }

@@ -18,6 +18,9 @@ public class TextDisplayer : MonoBehaviour
     public int numberOfTextAssets;
     public GameObject returnToMenuButton;
     public GameObject returnToGameButton;
+    public GameObject upArrow;
+    public GameObject downArrow;
+    
 
     public void Start()
     {

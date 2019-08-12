@@ -16,7 +16,7 @@ public class MenuManager : MonoBehaviour
 {
     public GameReset gameReset;
     public GameObject inGameUI;
-
+    
     private InventoryDisplayer invDisplay;
     private TextDisplayer textDisplay;
     private PlayerMapDisplayer mapDisplay;
@@ -85,7 +85,8 @@ public class MenuManager : MonoBehaviour
 
     }
 
-
+ 
+ 
     public void ToggleMenu(MenuType chosenMenu)
     {
         menu.SetActive(true);
