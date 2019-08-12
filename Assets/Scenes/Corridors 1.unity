@@ -120,83 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &49369003
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 49369004}
-  - component: {fileID: 49369006}
-  - component: {fileID: 49369005}
-  m_Layer: 0
-  m_Name: CorridorPillar_01
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &49369004
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49369003}
-  m_LocalRotation: {x: -0, y: 0.70710987, z: -0, w: -0.7071037}
-  m_LocalPosition: {x: -2.3729372, y: 4.07455, z: -21.582008}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 94510350}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &49369005
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49369003}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: -6490431609080171541, guid: 5d424db824cd190428d339c292e648ba, type: 3}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &49369006
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49369003}
-  m_Mesh: {fileID: 660426395362370773, guid: 5d424db824cd190428d339c292e648ba, type: 3}
 --- !u!1 &53240411
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,14 +245,13 @@ MonoBehaviour:
   howEventIsTriggered: 3
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
   trueEventTrigger: {fileID: 281400655}
   falseEventTrigger: {fileID: 1767090643}
   conditionIsTrue: 0
@@ -391,7 +313,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &71903223
 GameObject:
@@ -563,14 +485,13 @@ MonoBehaviour:
   howEventIsTriggered: 7
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!1 &83951334
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,14 +578,13 @@ MonoBehaviour:
   howEventIsTriggered: 4
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 3
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!65 &83951339
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -738,6 +658,7 @@ MonoBehaviour:
   ghostToBeAffected: {fileID: 0}
   thisGhostEvent: 0
   ghostTarget: {fileID: 0}
+  playerInvisible: 0
 --- !u!114 &83951343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,14 +861,13 @@ MonoBehaviour:
   howEventIsTriggered: 3
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!1 &94510349
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,7 +895,6 @@ Transform:
   m_LocalPosition: {x: -19.514, y: -0.1500001, z: -7.127}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 49369004}
   - {fileID: 1197609977}
   - {fileID: 2141216345}
   - {fileID: 1846873070}
@@ -992,7 +911,6 @@ Transform:
   - {fileID: 57627871}
   - {fileID: 2087109783}
   - {fileID: 1906194360}
-  - {fileID: 1526437657}
   - {fileID: 609472381}
   - {fileID: 486778780}
   - {fileID: 1167244325}
@@ -1502,7 +1420,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 27
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: 0}
 --- !u!65 &213533719
 BoxCollider:
@@ -1593,7 +1511,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 31
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &234761841
 MeshRenderer:
@@ -1918,14 +1836,13 @@ MonoBehaviour:
   howEventIsTriggered: 3
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!114 &281400656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1941,6 +1858,7 @@ MonoBehaviour:
   ghostToBeAffected: {fileID: 0}
   thisGhostEvent: 0
   ghostTarget: {fileID: 0}
+  playerInvisible: 0
 --- !u!1 &283682421
 GameObject:
   m_ObjectHideFlags: 0
@@ -2031,7 +1949,7 @@ Transform:
   m_LocalScale: {x: 0.21526271, y: 2.3433516, z: 0.26469526}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 25
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 91.297, y: -0.000015258789, z: -0.000015258789}
 --- !u!23 &327604965
 MeshRenderer:
@@ -2268,14 +2186,13 @@ MonoBehaviour:
   howEventIsTriggered: 3
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!1 &352284893
 GameObject:
   m_ObjectHideFlags: 0
@@ -2498,14 +2415,13 @@ MonoBehaviour:
   howEventIsTriggered: 3
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!1 &412746773
 GameObject:
   m_ObjectHideFlags: 0
@@ -3096,14 +3012,13 @@ MonoBehaviour:
   howEventIsTriggered: 7
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!1 &481300032 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: f426fb88da2086d429270f3e30e57e09,
@@ -3139,14 +3054,13 @@ MonoBehaviour:
   howEventIsTriggered: 3
   canTriggerAgain: 0
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!65 &481300035
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3191,7 +3105,7 @@ Transform:
   m_LocalScale: {x: 0.21526271, y: 0.26576084, z: 2.3422863}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 19
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &486778781
 MonoBehaviour:
@@ -3648,7 +3562,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 30
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: 0}
 --- !u!65 &510757632
 BoxCollider:
@@ -3899,14 +3813,13 @@ MonoBehaviour:
   howEventIsTriggered: 7
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!1 &596386978
 GameObject:
   m_ObjectHideFlags: 0
@@ -4057,7 +3970,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &609472380
 GameObject:
@@ -4090,7 +4003,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 18
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &609472382
 MeshRenderer:
@@ -4211,7 +4124,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 24
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &634278954
 MeshRenderer:
@@ -4562,7 +4475,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &717669330
 GameObject:
@@ -4626,14 +4539,13 @@ MonoBehaviour:
   howEventIsTriggered: 7
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
   trueEventTrigger: {fileID: 568566556}
   falseEventTrigger: {fileID: 1536435334}
   conditionIsTrue: 0
@@ -10319,7 +10231,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1014366208
 GameObject:
@@ -10352,7 +10264,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 22
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!65 &1014366210
 BoxCollider:
@@ -10625,7 +10537,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1047060654
 GameObject:
@@ -10658,7 +10570,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 28
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: 0}
 --- !u!65 &1047060656
 BoxCollider:
@@ -11216,7 +11128,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1160858220
 GameObject:
@@ -11340,7 +11252,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 20
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1167244326
 MeshRenderer:
@@ -11462,14 +11374,13 @@ MonoBehaviour:
   howEventIsTriggered: 2
   canTriggerAgain: 0
   hasBeenTriggered: 0
-  afterTime: 1
+  triggersAfterTime: 0
   timeToWait: 0.5
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!1 &1197609976
 GameObject:
   m_ObjectHideFlags: 0
@@ -11501,7 +11412,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1197609978
 MeshRenderer:
@@ -11620,7 +11531,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1222015017
 GameObject:
@@ -11653,7 +11564,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 21
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1222015019
 BoxCollider:
@@ -12103,14 +12014,13 @@ MonoBehaviour:
   howEventIsTriggered: 4
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!114 &1391802695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12514,14 +12424,13 @@ MonoBehaviour:
   howEventIsTriggered: 7
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!1001 &1500472200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12755,14 +12664,13 @@ MonoBehaviour:
   howEventIsTriggered: 3
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
   trueEventTrigger: {fileID: 93465881}
   falseEventTrigger: {fileID: 717669333}
   conditionIsTrue: 0
@@ -12824,83 +12732,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1522317173}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1526437656
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1526437657}
-  - component: {fileID: 1526437659}
-  - component: {fileID: 1526437658}
-  m_Layer: 0
-  m_Name: CorridorPillar_01
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1526437657
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1526437656}
-  m_LocalRotation: {x: -0, y: 0.70710987, z: -0, w: -0.7071037}
-  m_LocalPosition: {x: -0.04894638, y: 4.126, z: -21.608994}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 94510350}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1526437658
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1526437656}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: -6490431609080171541, guid: 5d424db824cd190428d339c292e648ba, type: 3}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &1526437659
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1526437656}
-  m_Mesh: {fileID: 660426395362370773, guid: 5d424db824cd190428d339c292e648ba, type: 3}
 --- !u!1 &1533887079
 GameObject:
   m_ObjectHideFlags: 0
@@ -12978,14 +12809,13 @@ MonoBehaviour:
   howEventIsTriggered: 3
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!114 &1536435335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13066,7 +12896,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 23
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!65 &1580100129
 BoxCollider:
@@ -13350,14 +13180,13 @@ MonoBehaviour:
   howEventIsTriggered: 0
   canTriggerAgain: 0
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!65 &1617877723
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13653,14 +13482,13 @@ MonoBehaviour:
   howEventIsTriggered: 3
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!1 &1665331059
 GameObject:
   m_ObjectHideFlags: 0
@@ -13689,7 +13517,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1676541740
 GameObject:
@@ -14058,14 +13886,13 @@ MonoBehaviour:
   howEventIsTriggered: 7
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
   trueEventTrigger: {fileID: 83100169}
   falseEventTrigger: {fileID: 1955745665}
   conditionIsTrue: 0
@@ -14641,14 +14468,13 @@ MonoBehaviour:
   howEventIsTriggered: 3
   canTriggerAgain: 0
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!114 &1832815428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14790,7 +14616,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
 --- !u!1 &1856418365
 GameObject:
@@ -15247,7 +15073,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1914847765
 GameObject:
@@ -15360,14 +15186,13 @@ MonoBehaviour:
   howEventIsTriggered: 0
   canTriggerAgain: 0
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 1
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!65 &1935687415
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15462,14 +15287,13 @@ MonoBehaviour:
   howEventIsTriggered: 5
   canTriggerAgain: 0
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 1
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!65 &1944737467
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15652,14 +15476,13 @@ MonoBehaviour:
   howEventIsTriggered: 3
   canTriggerAgain: 1
   hasBeenTriggered: 0
-  afterTime: 0
+  triggersAfterTime: 0
   timeToWait: 0
   timeToHold: 0
   deactivateSelfOnFinish: 0
   timerStarted: 0
   timerFinished: 0
   lookedAt: 0
-  locked: 0
 --- !u!114 &1955745666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15978,7 +15801,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1982771372
 GameObject:
@@ -16177,7 +16000,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2025348198
 GameObject:
@@ -16302,7 +16125,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 26
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!23 &2045178223
 MeshRenderer:
@@ -16394,7 +16217,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 29
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: 0}
 --- !u!65 &2048595054
 BoxCollider:
@@ -16513,7 +16336,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2071991130
 GameObject:
@@ -16650,7 +16473,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2105276715
 GameObject:
@@ -16929,5 +16752,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94510350}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
