@@ -25,6 +25,9 @@ public class ObjectiveDisplayer : MonoBehaviour
     private float objectiveTimer;
     private bool showingObjective;
     public Image onScreenObjectiveImage;
+    public AudioSource source;
+    public AudioClip objectiveSound;
+    public float objectiveVol;
 
     public void Start()
     {
@@ -72,6 +75,7 @@ public class ObjectiveDisplayer : MonoBehaviour
         showingObjective = true;
         objectiveTimer = onScreenObjectiveTime;
         inumObjectiveList.Add(objectiveToAdd);
+        source.PlayOneShot(objectiveSound, objectiveVol);
         StartCoroutine(FadeImage(false, onScreenObjectiveImage));
         StartCoroutine(FadeText(false, onScreenObjective));
 
@@ -100,6 +104,7 @@ public class ObjectiveDisplayer : MonoBehaviour
 
         inumObjectiveList.Remove(objectiveToUpdate);
         inumObjectiveList.Add(objectiveToUpdateWith);
+        source.PlayOneShot(objectiveSound, objectiveVol);
 
         StartCoroutine(FadeImage(false, onScreenObjectiveImage));
         StartCoroutine(FadeText(false, onScreenObjective));
@@ -123,6 +128,7 @@ public class ObjectiveDisplayer : MonoBehaviour
         objectiveTimer = onScreenObjectiveTime;
         StartCoroutine(FadeImage(false, onScreenObjectiveImage));
         StartCoroutine(FadeText(false, onScreenObjective));
+        source.PlayOneShot(objectiveSound, objectiveVol);
 
 
     }
@@ -173,11 +179,15 @@ public class ObjectiveDisplayer : MonoBehaviour
             {
                 // set color with i as alpha
                 image.color = new Color(1, 1, 1, i);
+
                 yield return null;
+                image.gameObject.SetActive(false);
             }
         }
         else
         {
+            image.gameObject.SetActive(true);
+
             for (float i = 0; i <= 1; i += Time.deltaTime)
             {
                 // set color with i as alpha
@@ -196,15 +206,19 @@ public class ObjectiveDisplayer : MonoBehaviour
                 text.color = new Color(1, 1, 1, i);
                 yield return null;
             }
+            text.gameObject.SetActive(false);
         }
         else
         {
+            text.gameObject.SetActive(true);
             for (float i = 0; i <= 1; i += Time.deltaTime)
             {
                 // set color with i as alpha
                 text.color = new Color(1, 1, 1, i);
                 yield return null;
+
             }
+
         }
     }
 }

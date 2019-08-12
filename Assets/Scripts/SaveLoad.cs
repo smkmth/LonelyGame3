@@ -51,11 +51,11 @@ public class SaveLoad : MonoBehaviour
         SaveData save = new SaveData();
 
 
-        player = GameObject.Find("Player").GetComponent<PlayerManager>();
-        checkpointManager = GameObject.Find("LevelStateManager").GetComponent<CheckpointManager>();
+      //  player = GameObject.Find("Player").GetComponent<PlayerManager>();
+        //checkpointManager = GameObject.Find("LevelStateManager").GetComponent<CheckpointManager>();
 
-        save.worldData = checkpointManager.SaveState();
-        save.playerData = player.SavePlayer();
+        //save.worldData = checkpointManager.SaveState();
+      //  save.playerData = player.SavePlayer();
         save.settings = settingsManager.GetSettingsData();
 
         return save;
