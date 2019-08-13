@@ -34,10 +34,10 @@ public class GhostDetector : MonoBehaviour
 
 
         spaceBetweenTicks = dist*dist * 0.01f;
-        timer -= Time.deltaTime;
-        if (timer <= 0)
+        timer += Time.deltaTime;
+        if (timer > spaceBetweenTicks)
         {
-            timer = spaceBetweenTicks;
+            timer = 0;
             HelperFunctions.Helper.PlayRandomNoiseInArray(gigerClicks, audioSource, .5f, helperId);
         }
 

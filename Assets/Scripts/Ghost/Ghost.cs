@@ -129,32 +129,36 @@ public class Ghost : MonoBehaviour
 
     public void ToggleGhost(bool ghostOn)
     {
-        if (ghostOn)
+        if (gameObject.activeSelf)
         {
-            ghostModel.FreezePos();
-            if (fadeOut != null)
+
+            if (ghostOn)
             {
-                StopCoroutine(fadeOut);
-            }
-            if (lightFade != null)
-            {
-                StopCoroutine(lightFade);
+                ghostModel.FreezePos();
+                if (fadeOut != null)
+                {
+                    StopCoroutine(fadeOut);
+                }
+                if (lightFade != null)
+                {
+                    StopCoroutine(lightFade);
 
-            }
-            //turn ghost on and move to correct position and rotation
-            ghostMesh.transform.position = transform.position;
-            ghostMesh.transform.rotation = transform.rotation;
+                }
+                //turn ghost on and move to correct position and rotation
+                ghostMesh.transform.position = transform.position;
+                ghostMesh.transform.rotation = transform.rotation;
 
-            //set up light itencity and alpha
-            ghostLight.intensity = ghostLightInitIntensity;
+                //set up light itencity and alpha
+                ghostLight.intensity = ghostLightInitIntensity;
             
-            ghostMat.SetFloat("_Alpha", 0.7f);
-            plainMat.SetFloat("_Alpha", 0.7f);
-            fadeOut = StartCoroutine(FadeTo(ghostMat, 0f, ghostFadeDuration));
-            fadeOut = StartCoroutine(FadeTo(plainMat, 0f, ghostFadeDuration));
-            lightFade = StartCoroutine(LightFade(0f, ghostLightDuration));
+                ghostMat.SetFloat("_Alpha", 0.7f);
+                plainMat.SetFloat("_Alpha", 0.7f);
+                fadeOut = StartCoroutine(FadeTo(ghostMat, 0f, ghostFadeDuration));
+                fadeOut = StartCoroutine(FadeTo(plainMat, 0f, ghostFadeDuration));
+                lightFade = StartCoroutine(LightFade(0f, ghostLightDuration));
             
 
+            }
         }
        
     }

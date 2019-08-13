@@ -22,7 +22,6 @@ public class PlayerMapDisplayer : MonoBehaviour
     void Start()
     {
 
-        mapMarkers = map.transform.GetChild(0).GetComponentsInChildren<Image>();
     }
 
     // Update is called once per frame

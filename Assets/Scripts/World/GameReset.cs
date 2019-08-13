@@ -49,7 +49,7 @@ public class GameReset : MonoBehaviour
     }
     IEnumerator ReloadScene()
     {
-
+        
         AsyncOperation async = SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
         async = SceneManager.UnloadSceneAsync(firstScene);
         async = SceneManager.UnloadSceneAsync(secondScene);

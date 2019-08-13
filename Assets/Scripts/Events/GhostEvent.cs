@@ -27,17 +27,25 @@ public class GhostEvent : GameEventReceiver
                 ghostToBeAffected.OnFirstActivateGhost();
                 break;
             case (GhostEventType.MoveGhost):
-                ghostToBeAffected.gotToPlaceTarget = ghostTarget;
-                ghostToBeAffected.ChangeGhostState(GhostState.GoToPlace);
+                
+
+                    ghostToBeAffected.gotToPlaceTarget = ghostTarget;
+                    ghostToBeAffected.ChangeGhostState(GhostState.GoToPlace);
+                
                 break;
             case (GhostEventType.TeleportGhost):
-                ghostToBeAffected.gameObject.transform.position = ghostTarget.position;
+               
+                    ghostToBeAffected.gameObject.transform.position = ghostTarget.position;
+                
                 break;
             case (GhostEventType.DeActivateGhost):
-                ghostToBeAffected.ghostActive = false;
-                ghostToBeAffected.gameObject.SetActive(false);
+                
+                    ghostToBeAffected.ghostActive = false;
+                    ghostToBeAffected.gameObject.SetActive(false);
+
                 break;
             case (GhostEventType.SetPlayerInvisible):
+
                 ghostToBeAffected.playerIsInvisible = playerInvisible;
                 break;
 
