@@ -15,6 +15,11 @@ public class GameReset : MonoBehaviour
     public string menuScene;
     public SaveLoad load;
 
+
+    public InGameText startText;
+    public InGameText manualText;
+    public TextDisplayer textDisplayer;
+
     private void Start()
     {
         load = GetComponent<SaveLoad>();
@@ -107,7 +112,6 @@ public class GameReset : MonoBehaviour
 
     IEnumerator InitLoadScene()
     {
-
         AsyncOperation async = SceneManager.LoadSceneAsync(firstScene, LoadSceneMode.Additive);
         async = SceneManager.UnloadSceneAsync(menuScene);
   
@@ -129,6 +133,11 @@ public class GameReset : MonoBehaviour
         loadingScreen.GetComponent<Image>().CrossFadeAlpha(0.0f, 2.0f, false);
         yield return new WaitForSeconds(2.1f);
         loadingScreen.SetActive(false);
+        textDisplayer = GameObject.Find("Player").GetComponent<TextDisplayer>();
+        InGameTextReader reader = GameObject.Find("Player").GetComponent<InGameTextReader>();
+        textDisplayer.AddTextAsset(startText);
+        textDisplayer.AddTextAsset(manualText);
+        reader.DisplayText(startText, false);
 
         // loadingScreen.SetActive(false);
         yield return null;
