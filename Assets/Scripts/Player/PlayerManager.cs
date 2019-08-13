@@ -64,7 +64,8 @@ public class PlayerManager : MonoBehaviour
     public float maxBrightness;
     public float minBrightness;
 
-
+    public InGameText startText;
+    public InGameText manualText;
 
     // Start is called before the first frame update
     void Start()
@@ -142,7 +143,11 @@ public class PlayerManager : MonoBehaviour
         textDisplayer = GetComponent<TextDisplayer>();
         inv = GetComponent<Inventory>();
         saveLoad = GameObject.Find("GameReset").GetComponent<SaveLoad>();
-        saveLoad.SaveGame();
+        // saveLoad.SaveGame();
+        reader.DisplayText(startText, false);
+        textDisplayer.AddTextAsset(startText);
+        textDisplayer.AddTextAsset(manualText);
+
     }
 
     public void GameLose()
