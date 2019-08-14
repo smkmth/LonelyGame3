@@ -31,7 +31,7 @@ public class MenuManager : MonoBehaviour
     public Button optionsButton;
     public Button mainMenuButton;
     public GameObject sprintVingette;
-
+    public MenuType currentMenu;
     private void Start()
     {
         gameReset = GameObject.Find("GameReset").GetComponent<GameReset>();
@@ -89,8 +89,9 @@ public class MenuManager : MonoBehaviour
  
     public void ToggleMenu(MenuType chosenMenu)
     {
+        
         menu.SetActive(true);
-
+        currentMenu = chosenMenu;
         switch (chosenMenu)
         {
             case MenuType.Inventory:

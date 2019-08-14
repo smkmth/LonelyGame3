@@ -18,7 +18,7 @@ public class PlayerDamage : MonoBehaviour
     public Button resetButton;
     private GameReset reset;
 
-  
+    public GameObject cameraOverlay;
   
     public void Start()
     {
@@ -51,7 +51,7 @@ public class PlayerDamage : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             gameOver.SetActive(false);
-
+            cameraOverlay.SetActive(false);
             manager.GameLose();
         }
     }

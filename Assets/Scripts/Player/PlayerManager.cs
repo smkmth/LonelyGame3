@@ -280,6 +280,7 @@ public class PlayerManager : MonoBehaviour
             case PlayerState.freeMovement:
                 if (Input.GetButtonDown("ViewMenu"))
                 {
+
                     ChangePlayerState(PlayerState.menuMode);
                 }
                 if (Input.GetButtonDown("ViewInv"))
@@ -314,19 +315,51 @@ public class PlayerManager : MonoBehaviour
                 }
                 if (Input.GetButtonDown("ViewInv"))
                 {
-                    menuManager.ToggleMenu(MenuType.Inventory);
+                    if (menuManager.currentMenu == MenuType.Inventory)
+                    {
+                        ChangePlayerState(PlayerState.freeMovement);
+
+                    }
+                    else
+                    {
+                        menuManager.ToggleMenu(MenuType.Inventory);
+                    }
                 }
                 if (Input.GetButtonDown("ViewObj"))
                 {
-                    menuManager.ToggleMenu(MenuType.Objectives);
+                    if (menuManager.currentMenu == MenuType.Objectives)
+                    {
+                        ChangePlayerState(PlayerState.freeMovement);
+
+                    }
+                    else
+                    {
+                        menuManager.ToggleMenu(MenuType.Objectives);
+                    }
                 }
                 if (Input.GetButtonDown("ViewMap"))
                 {
-                    menuManager.ToggleMenu(MenuType.Map);
+                    if (menuManager.currentMenu == MenuType.Map)
+                    {
+                        ChangePlayerState(PlayerState.freeMovement);
+
+                    }
+                    else
+                    {
+                        menuManager.ToggleMenu(MenuType.Map);
+                    }
                 }
                 if (Input.GetButtonDown("ViewReading"))
                 {
-                    menuManager.ToggleMenu(MenuType.Reading);
+                    if (menuManager.currentMenu == MenuType.Reading)
+                    {
+                        ChangePlayerState(PlayerState.freeMovement);
+
+                    }
+                    else
+                    {
+                        menuManager.ToggleMenu(MenuType.Reading);
+                    }
                 }
                 break;
             case PlayerState.delay:

@@ -134,6 +134,8 @@ public class GameReset : MonoBehaviour
         yield return new WaitForSeconds(1.1f);
         loadingScreen.SetActive(false);
         textDisplayer = GameObject.Find("Player").GetComponent<TextDisplayer>();
+        yield return new WaitForSeconds(1f);
+
         InGameTextReader reader = GameObject.Find("Player").GetComponent<InGameTextReader>();
         textDisplayer.AddTextAsset(startText);
         textDisplayer.AddTextAsset(manualText);

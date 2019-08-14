@@ -85,7 +85,7 @@ public class PlayerInteract : MonoBehaviour
     public AudioClip paperPickup;
     public AudioClip objectPickup;
     public float pickupVol;
-
+    public Item endGameItem;
 
     public void Start()
     {
@@ -424,37 +424,26 @@ public class PlayerInteract : MonoBehaviour
 
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Press <sprite=0> to pick up Film";
+                    itemPrompt.text = "Press <sprite=0> to remove crank";
                     if (Input.GetButtonDown("Interact"))
                     {
-                        if (itemtrigger)
-                        {
-                            itemtrigger.TriggerEvent();
-                        }
-                        inGameCamera.filmCanisters += 1;
-                        AddToInventory(detectedObj);
-                        
-                        Destroy(detectedObj);
+
+                        detectedObj.GetComponent<AbstractGameEventTrigger>().TriggerEvent();
+                        return;
+
                     }
                     break;
 
                 case ItemTypes.Camera:
-
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Press <sprite=0> to pick up Camera";
+                    itemPrompt.text = "Press <sprite=0> to operate crank";
                     if (Input.GetButtonDown("Interact"))
                     {
 
-                        if (itemtrigger)
-                        {
-                            itemtrigger.TriggerEvent();
-                        }
-                        inGameCamera.UpdateShots(12);
-                        inGameCamera.playerHasCamera = true;
-                        inGameCamera.cameraIsActive = true;
+                        detectedObj.GetComponent<AbstractGameEventTrigger>().TriggerEvent();
+                        return;
 
-                        Destroy(detectedObj);
                     }
                     break;
                 case ItemTypes.Interact:
@@ -474,29 +463,20 @@ public class PlayerInteract : MonoBehaviour
 
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Hold <sprite=0> to Interact";
-
-                    if (Input.GetButtonDown("Interact"))
+                    if (inv.GetItemCount(endGameItem) > 0)
                     {
-                        holdTimer = detectedObj.GetComponent<AbstractGameEventTrigger>().timeToHold;
-                    }
-                    if (Input.GetButton("Interact"))
-                    {
-                        itemPrompt.text = "Working...";
 
-                        holdTimer -= Time.deltaTime;
-
-                        if (holdTimer < 0)
+                        itemPrompt.text = "Press <sprite=0> to perform ritual prayer";
+                        if (Input.GetButtonDown("Interact"))
                         {
-                            itemPrompt.text = "Done";
 
                             detectedObj.GetComponent<AbstractGameEventTrigger>().TriggerEvent();
+                            return;
 
                         }
-
                     }
                     break;
-        
+
                 case ItemTypes.Wall:
                     curser.color = noColor;
 
