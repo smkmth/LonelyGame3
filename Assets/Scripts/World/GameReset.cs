@@ -130,8 +130,8 @@ public class GameReset : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        loadingScreen.GetComponent<Image>().CrossFadeAlpha(0.0f, 2.0f, false);
-        yield return new WaitForSeconds(2.1f);
+        loadingScreen.GetComponent<Image>().CrossFadeAlpha(0.0f, 1.0f, false);
+        yield return new WaitForSeconds(1.1f);
         loadingScreen.SetActive(false);
         textDisplayer = GameObject.Find("Player").GetComponent<TextDisplayer>();
         InGameTextReader reader = GameObject.Find("Player").GetComponent<InGameTextReader>();
