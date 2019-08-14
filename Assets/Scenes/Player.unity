@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.23573487, g: 0.18304504, b: 0.27061504, a: 1}
+  m_IndirectSpecularColor: {r: 0.025241604, g: 0.015770085, b: 0.033515316, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -946,6 +946,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 1609c8ff03cc313448a52f12cba1e923,
     type: 3}
   m_PrefabInstance: {fileID: 79184965}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &81092479 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 18f1fa63e99324740a0a6f2ac205182e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1329930021}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &83100165
 GameObject:
@@ -38286,6 +38292,7 @@ GameObject:
   - component: {fileID: 968719375}
   - component: {fileID: 968719384}
   - component: {fileID: 968719381}
+  - component: {fileID: 968719385}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Interact
@@ -38468,6 +38475,21 @@ MonoBehaviour:
   placeSoundComesFrom: {fileID: 1775525344}
   volumeSetting: 1
   typeOfSound: 0
+--- !u!114 &968719385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968719373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5e31415b12d6c4cb9c0d7bbc1b87c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisEventType: 0
+  parameterToTrigger: Close
+  animatorToActivate: {fileID: 81092479}
 --- !u!1 &977533694
 GameObject:
   m_ObjectHideFlags: 0
@@ -47367,6 +47389,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.99814117
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 18f1fa63e99324740a0a6f2ac205182e,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7c727b4a77dc92a4183c3b3c9dac2777, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18f1fa63e99324740a0a6f2ac205182e, type: 3}
 --- !u!4 &1329930022 stripped
@@ -52590,7 +52617,6 @@ GameObject:
   - component: {fileID: 1391802688}
   - component: {fileID: 1391802689}
   - component: {fileID: 1391802694}
-  - component: {fileID: 1391802693}
   - component: {fileID: 1391802696}
   - component: {fileID: 1391802695}
   - component: {fileID: 1391802698}
@@ -52600,6 +52626,7 @@ GameObject:
   - component: {fileID: 1391802690}
   - component: {fileID: 1391802691}
   - component: {fileID: 1391802692}
+  - component: {fileID: 1391802693}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Interact
@@ -52690,13 +52717,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1391802687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 722d4d4b484cdd54290f3a19d91e6f81, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b5e31415b12d6c4cb9c0d7bbc1b87c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectToEffect: {fileID: 2105276715}
-  eventType: 1
-  teleportTarget: {fileID: 0}
-  scaleTarget: {x: 0, y: 0, z: 0}
+  thisEventType: 0
+  parameterToTrigger: Open
+  animatorToActivate: {fileID: 81092479}
 --- !u!114 &1391802694
 MonoBehaviour:
   m_ObjectHideFlags: 0
