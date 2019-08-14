@@ -12,6 +12,7 @@ public class PlayerDamage : MonoBehaviour
     public GameObject gameOver;
     public float timer;
     public float timeDamaged;
+    public float damageFade;
     public AudioClip impactSound;
     public AudioSource playerAudio;
     public Button resetButton;
@@ -58,7 +59,7 @@ public class PlayerDamage : MonoBehaviour
     {
         screenFlash.SetActive(true);
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.2f);
         screenFlash.SetActive(false);
 
     }
@@ -67,9 +68,10 @@ public class PlayerDamage : MonoBehaviour
     {
         if (isDamaged)
         {
-            StartCoroutine(SpriteFade(bloodImage.GetComponent<Image>(), 0, 10.0f));
+            
             timer -= Time.deltaTime;
             bloodImage.SetActive(true);
+            bloodImage.GetComponent<Image>().CrossFadeAlpha(0.0f, damageFade, false);
             if (timer <= 0)
             {
                 timer = timeDamaged;
