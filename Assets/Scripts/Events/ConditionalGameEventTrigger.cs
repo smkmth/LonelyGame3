@@ -25,11 +25,25 @@ public class ConditionalGameEventTrigger : AbstractGameEventTrigger
     public override void TriggerEvent()
     {
         conditionIsTrue =conditionToTrigger.CheckCondition();
-
         if (conditionIsTrue)
         {
+            if (!hasBeenTriggered || canTriggerAgain)
+            {
 
-            trueEventTrigger.TriggerEvent();
+                if (!triggersAfterTime || timerFinished)
+                {
+
+
+                    trueEventTrigger.TriggerEvent();
+                }
+                hasBeenTriggered = true;
+
+            }
+            else
+            {
+                timerStarted = true;
+
+            }
         }
         else
         {
