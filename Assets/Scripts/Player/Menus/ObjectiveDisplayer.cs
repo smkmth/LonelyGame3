@@ -27,6 +27,7 @@ public class ObjectiveDisplayer : MonoBehaviour
     public Image onScreenObjectiveImage;
     public AudioSource source;
     public AudioClip objectiveSound;
+    public AudioClip transitionSound;
     public float objectiveVol;
 
     public void Start()
@@ -135,6 +136,7 @@ public class ObjectiveDisplayer : MonoBehaviour
 
     public void ViewObjective(GameObjective objective)
     {
+        source.PlayOneShot(transitionSound, 1);
         objectiveMenu.SetActive(false);
         objectiveViewer.SetActive(true);
         objectiveTitle.text = objective.objectiveName;

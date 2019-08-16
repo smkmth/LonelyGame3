@@ -34,6 +34,9 @@ public class InventoryDisplayer : MonoBehaviour
     public TextMeshProUGUI selectedItemName;
     public TextMeshProUGUI selectedItemDescription;
 
+    public AudioSource source;
+    public AudioClip transitionNoise;
+
     public void Start()
     {
 
@@ -86,6 +89,7 @@ public class InventoryDisplayer : MonoBehaviour
     //gets called by the ui button on click method - setup in create inventory ui
     public void SelectInventorySlot(string buttonIndex)
     {
+        source.PlayOneShot(transitionNoise, 1);
         int selectedIndex = int.Parse(buttonIndex);
         if (inventory.itemSlots[selectedIndex].filled)
         {

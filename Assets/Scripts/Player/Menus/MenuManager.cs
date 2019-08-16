@@ -32,6 +32,11 @@ public class MenuManager : MonoBehaviour
     public Button mainMenuButton;
     public GameObject sprintVingette;
     public MenuType currentMenu;
+
+    public AudioSource source;
+    public AudioClip transitionNoise;
+    public AudioClip enterMenuNoise;
+
     private void Start()
     {
         gameReset = GameObject.Find("GameReset").GetComponent<GameReset>();
@@ -56,6 +61,8 @@ public class MenuManager : MonoBehaviour
 
     public void ToggleMenu(bool menuOn)
     {
+        source.PlayOneShot(enterMenuNoise, 1);
+
         if (menuOn)
         {
             sprintVingette.SetActive(false);
@@ -89,7 +96,9 @@ public class MenuManager : MonoBehaviour
  
     public void ToggleMenu(MenuType chosenMenu)
     {
-        
+        source.PlayOneShot(transitionNoise, 1);
+
+
         menu.SetActive(true);
         currentMenu = chosenMenu;
         switch (chosenMenu)

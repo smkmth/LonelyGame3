@@ -20,7 +20,8 @@ public class TextDisplayer : MonoBehaviour
     public GameObject returnToGameButton;
     public GameObject upArrow;
     public GameObject downArrow;
-    
+    public AudioSource source;
+    public AudioClip transitionSound;
 
     public void Start()
     {
@@ -40,6 +41,7 @@ public class TextDisplayer : MonoBehaviour
 
     public void SelectTextItem(InGameText textItem)
     {
+        source.PlayOneShot(transitionSound, 1);
         reader.DisplayText(textItem, true);
 
     }
