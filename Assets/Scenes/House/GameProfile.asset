@@ -16,89 +16,13 @@ MonoBehaviour:
   m_AdvancedMode: 0
   skyType:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 0
   skyAmbientMode:
     m_OverrideState: 1
     m_Value: 1
   fogType:
     m_OverrideState: 1
     m_Value: 2
---- !u!114 &-7892551614775827213
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3df29e7cc05fbec4aa43e06ea875565d, type: 3}
-  m_Name: ProceduralSky
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  rotation:
-    m_OverrideState: 0
-    m_Value: 0
-    min: 0
-    max: 360
-  skyIntensityMode:
-    m_OverrideState: 0
-    m_Value: 0
-  exposure:
-    m_OverrideState: 1
-    m_Value: 0
-  multiplier:
-    m_OverrideState: 1
-    m_Value: 1
-    min: 0
-  upperHemisphereLuxValue:
-    m_OverrideState: 0
-    m_Value: 1
-    min: 0
-  desiredLuxValue:
-    m_OverrideState: 0
-    m_Value: 20000
-  updateMode:
-    m_OverrideState: 1
-    m_Value: 0
-  updatePeriod:
-    m_OverrideState: 0
-    m_Value: 0
-    min: 0
-  includeSunInBaking:
-    m_OverrideState: 1
-    m_Value: 0
-  sunSize:
-    m_OverrideState: 1
-    m_Value: 0.04
-    min: 0
-    max: 1
-  sunSizeConvergence:
-    m_OverrideState: 1
-    m_Value: 5
-    min: 1
-    max: 10
-  atmosphereThickness:
-    m_OverrideState: 1
-    m_Value: 3
-    min: 0
-    max: 5
-  skyTint:
-    m_OverrideState: 1
-    m_Value: {r: 0.8301887, g: 0.7313793, b: 0, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
-  groundColor:
-    m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
-  enableSunDisk:
-    m_OverrideState: 1
-    m_Value: 1
 --- !u!114 &-6272713416506127266
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -148,80 +72,6 @@ MonoBehaviour:
   anamorphic:
     m_OverrideState: 0
     m_Value: 1
---- !u!114 &-5385206334042049867
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29b00527f85bb3346a4d2cb710971587, type: 3}
-  m_Name: VolumetricFog
-  m_EditorClassIdentifier: 
-  active: 0
-  m_AdvancedMode: 0
-  colorMode:
-    m_OverrideState: 0
-    m_Value: 1
-  color:
-    m_OverrideState: 0
-    m_Value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    hdr: 1
-    showAlpha: 0
-    showEyeDropper: 1
-  density:
-    m_OverrideState: 0
-    m_Value: 1
-    min: 0
-    max: 1
-  maxFogDistance:
-    m_OverrideState: 1
-    m_Value: 100
-    min: 0
-  mipFogMaxMip:
-    m_OverrideState: 0
-    m_Value: 0.5
-    min: 0
-    max: 1
-  mipFogNear:
-    m_OverrideState: 0
-    m_Value: 0
-    min: 0
-  mipFogFar:
-    m_OverrideState: 0
-    m_Value: 1000
-    min: 0
-  albedo:
-    m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
-    hdr: 0
-    showAlpha: 1
-    showEyeDropper: 1
-  meanFreePath:
-    m_OverrideState: 1
-    m_Value: 50000
-    min: 1
-  baseHeight:
-    m_OverrideState: 1
-    m_Value: 1
-  meanHeight:
-    m_OverrideState: 1
-    m_Value: 10
-  anisotropy:
-    m_OverrideState: 1
-    m_Value: 0.43
-    min: -1
-    max: 1
-  globalLightProbeDimmer:
-    m_OverrideState: 1
-    m_Value: 0.3
-    min: 0
-    max: 1
-  enableDistantFog:
-    m_OverrideState: 1
-    m_Value: 0
 --- !u!114 &-5369125926817014171
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -415,13 +265,10 @@ MonoBehaviour:
   - {fileID: 7176305121548276590}
   - {fileID: -9123960100987027171}
   - {fileID: 2529156197193680621}
-  - {fileID: -7892551614775827213}
   - {fileID: 145866789303805744}
   - {fileID: 6487985369971140919}
   - {fileID: -3442980961459291142}
-  - {fileID: 2554388704541611378}
   - {fileID: -2615727465564625336}
-  - {fileID: -5385206334042049867}
 --- !u!114 &145866789303805744
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -434,14 +281,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b145d2b9ee1ac4f846968484e7485a, type: 3}
   m_Name: ContactShadows
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   enable:
     m_OverrideState: 1
     m_Value: 1
   length:
     m_OverrideState: 1
-    m_Value: 0.15
+    m_Value: 0.64
     min: 0
     max: 1
   opacity:
@@ -511,29 +358,6 @@ MonoBehaviour:
   cascadeShadowBorder3:
     m_OverrideState: 0
     m_Value: 0
---- !u!114 &2554388704541611378
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4910d90e50201484ba448b791a192696, type: 3}
-  m_Name: VolumetricLightingController
-  m_EditorClassIdentifier: 
-  active: 0
-  m_AdvancedMode: 0
-  depthExtent:
-    m_OverrideState: 1
-    m_Value: 32
-    min: 0.1
-  sliceDistributionUniformity:
-    m_OverrideState: 1
-    m_Value: 0.554
-    min: 0
-    max: 1
 --- !u!114 &2565348167467200737
 MonoBehaviour:
   m_ObjectHideFlags: 3
