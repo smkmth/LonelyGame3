@@ -35,7 +35,7 @@ public abstract class AbstractGameEventTrigger : MonoBehaviour
 
 
     public float timeToHold;
-    private float timer;
+    public float timer;
 
     [Header("After the event, turn this gameObject off")]
     public bool deactivateSelfOnFinish;

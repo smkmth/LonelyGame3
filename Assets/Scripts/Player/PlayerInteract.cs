@@ -461,11 +461,11 @@ public class PlayerInteract : MonoBehaviour
                     break;
                 case ItemTypes.HoldInteract:
 
-                    curser.color = interactColor;
 
                     if (inv.GetItemCount(endGameItem) > 0)
                     {
 
+                        curser.color = interactColor;
                         itemPrompt.text = "Press <sprite=0> to perform ritual prayer";
                         if (Input.GetButtonDown("Interact"))
                         {

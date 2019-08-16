@@ -11,9 +11,9 @@ public class ConditionalGameEventTrigger : AbstractGameEventTrigger
     public AbstractGameEventTrigger falseEventTrigger;
 
     private Condition conditionToTrigger;
-    public bool conditionIsTrue =false;
+    public bool conditionIsTrue = false;
 
-    
+
 
     public override void Start()
     {
@@ -24,7 +24,7 @@ public class ConditionalGameEventTrigger : AbstractGameEventTrigger
 
     public override void TriggerEvent()
     {
-        conditionIsTrue =conditionToTrigger.CheckCondition();
+        conditionIsTrue = conditionToTrigger.CheckCondition();
         if (conditionIsTrue)
         {
             if (!hasBeenTriggered || canTriggerAgain)
@@ -51,4 +51,5 @@ public class ConditionalGameEventTrigger : AbstractGameEventTrigger
 
         }
     }
+
 }
