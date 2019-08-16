@@ -64,7 +64,11 @@ public class PlayerManager : MonoBehaviour
     public float maxBrightness;
     public float minBrightness;
 
+    float winGameTimer;
+    public float winGameTime;
+    public bool winGame;
 
+    public GameObject cameraOverlay;
     // Start is called before the first frame update
     void Start()
     {
@@ -157,9 +161,9 @@ public class PlayerManager : MonoBehaviour
 
     public void WinGame()
     {
-        ChangePlayerState(PlayerState.fullyPaused);
-        gameWinScreen.SetActive(true);
-        gameOverTextObj.text = gameWinText;
+        winGameTimer = winGameTime;
+        winGame = true;
+   
     }
 
     public void ChangePlayerState(PlayerState newPlayerState, bool stateChangeDelay =true)
@@ -266,6 +270,18 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (winGame)
+        {
+            winGameTimer -= Time.deltaTime;
+            if (winGameTimer <= 0.0f)
+            {
+                cameraOverlay.SetActive(false);
+                ChangePlayerState(PlayerState.fullyPaused);
+                gameWinScreen.SetActive(true);
+                gameOverTextObj.text = gameWinText;
+
+            }
+        }
         if (hintOnScreen)
         {
             hintTimer -= Time.deltaTime;

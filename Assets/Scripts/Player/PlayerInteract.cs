@@ -424,7 +424,7 @@ public class PlayerInteract : MonoBehaviour
 
                     curser.color = interactColor;
 
-                    itemPrompt.text = "Press <sprite=0> to remove crank";
+                    itemPrompt.text = "Press <sprite=0> to insert/remove crank";
                     if (Input.GetButtonDown("Interact"))
                     {
 
