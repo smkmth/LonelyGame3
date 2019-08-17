@@ -405,6 +405,17 @@ public class PlayerManager : MonoBehaviour
 
             }
         }
+
+
+        if (Input.GetButtonDown("VolUp"))
+        {
+            AudioListener.volume += 3.0f;
+        }
+        if (Input.GetButtonDown("VolDown"))
+        {
+            AudioListener.volume -= 3.0f;
+        }
+
     }
 
     public void DisplayHint(string hintString ,float hintOnScreenTime)
